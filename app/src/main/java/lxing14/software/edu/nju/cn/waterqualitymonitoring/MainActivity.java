@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.MapView;
+
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -17,6 +20,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MapView mapView = (MapView) findViewById(R.id.map);
+        mapView.onCreate(savedInstanceState);// 此方法必须重写
+        AMap aMap = mapView.getMap();
+
     }
 
     @Override
