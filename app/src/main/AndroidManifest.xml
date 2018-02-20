@@ -29,7 +29,7 @@
             android:value="e00ae4dd70e29c60e51a8e0d4c124535" />
 
         <activity
-            android:name=".module.MapActivity"
+            android:name=".module.map.MapActivity"
             android:label="@string/title_activity_map"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

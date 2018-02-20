@@ -1,4 +1,4 @@
-package lxing14.software.edu.nju.cn.waterqualitymonitoring.module;
+package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -7,19 +7,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.MapView;
-import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.MarkerOptions;
-
-import java.util.List;
-
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterMapInfoVO;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ActivityUtils;
 
 public class MapActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -32,38 +21,17 @@ public class MapActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        MapView mapView = (MapView) findViewById(R.id.map);
-        mapView.onCreate(savedInstanceState);// 此方法必须重写
-        final AMap aMap = mapView.getMap();
+        // generate the view and the presenter
+        MapFragment mapFragment = (MapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.contentFrame);
+        if (mapFragment == null) {
+            mapFragment = MapFragment.generateFragment();
 
-        RetrofitHelper.getWaterInterface().getMapInfo(0)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<WaterMapInfoVO>>() {
-                    @Override
-                    public void onCompleted() {
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+                    mapFragment, R.id.contentFrame);
+        }
 
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<WaterMapInfoVO> waterMapInfoVOs) {
-                        LatLng latLng;
-                        for(WaterMapInfoVO vo: waterMapInfoVOs){
-                            double x = Double.parseDouble(vo.getX());
-                            double y = Double.parseDouble(vo.getY());
-
-                            latLng = new LatLng(y, x);
-                            aMap.addMarker(new MarkerOptions().position(latLng));
-                        }
-
-                    }
-                });
-
+        new MapPresenter(mapFragment);
     }
 
     @Override
