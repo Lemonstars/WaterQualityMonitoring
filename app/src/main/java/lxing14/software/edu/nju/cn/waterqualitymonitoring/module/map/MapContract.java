@@ -1,5 +1,9 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map;
 
+import com.amap.api.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BasePresenter;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BaseView;
 
@@ -13,6 +17,8 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.BaseView;
 public interface MapContract {
 
     interface View extends BaseView<Presenter>{
+
+        void showInitPoint(ArrayList<MarkerOptions> markerOptionsList);
 
     }
 

@@ -9,17 +9,11 @@ import android.view.ViewGroup;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
-import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterMapInfoVO;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class MapFragment extends Fragment implements MapContract.View{
 
@@ -28,50 +22,48 @@ public class MapFragment extends Fragment implements MapContract.View{
     private MapView mMapView;
 
     public static MapFragment generateFragment(){
-        MapFragment fragment = new MapFragment();
-        return fragment;
+        return new MapFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_map, container, false);
-
         mMapView = (MapView) root.findViewById(R.id.map);
-        mMapView.onCreate(savedInstanceState);// 此方法必须重写
-        final AMap aMap = mMapView.getMap();
-
-        RetrofitHelper.getWaterInterface().getMapInfo(0)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<WaterMapInfoVO>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<WaterMapInfoVO> waterMapInfoVOs) {
-                        LatLng latLng;
-                        for(WaterMapInfoVO vo: waterMapInfoVOs){
-                            double x = Double.parseDouble(vo.getX());
-                            double y = Double.parseDouble(vo.getY());
-
-                            latLng = new LatLng(y, x);
-                            MarkerOptions markerOptions = new MarkerOptions();
-                            markerOptions.position(latLng).title(vo.getStnName());
-                            aMap.addMarker(markerOptions);
-                        }
-
-                    }
-                });
-
+        mMapView.onCreate(savedInstanceState);
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+
+        mPresenter.start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mMapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void showInitPoint(ArrayList<MarkerOptions> markerOptionsList) {
+        AMap aMap = mMapView.getMap();
+        aMap.addMarkers(markerOptionsList, false);
     }
 
     @Override
