@@ -9,8 +9,17 @@ import android.view.MenuItem;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
+
+import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterMapInfoVO;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MapActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,7 +34,35 @@ public class MapActivity extends AppCompatActivity
 
         MapView mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
-        AMap aMap = mapView.getMap();
+        final AMap aMap = mapView.getMap();
+
+        RetrofitHelper.getWaterInterface().getMapInfo(0)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<WaterMapInfoVO>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<WaterMapInfoVO> waterMapInfoVOs) {
+                        LatLng latLng;
+                        for(WaterMapInfoVO vo: waterMapInfoVOs){
+                            double x = Double.parseDouble(vo.getX());
+                            double y = Double.parseDouble(vo.getY());
+
+                            latLng = new LatLng(y, x);
+                            aMap.addMarker(new MarkerOptions().position(latLng));
+                        }
+
+                    }
+                });
 
     }
 

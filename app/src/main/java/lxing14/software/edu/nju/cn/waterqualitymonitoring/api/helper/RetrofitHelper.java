@@ -1,6 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.UserInterface;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.WaterInterface;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -19,6 +20,7 @@ public class RetrofitHelper {
     private static Retrofit retrofit;
 
     private static UserInterface userInterface;
+    private static WaterInterface waterInterface;
 
     private static void initRetrofit(){
         OkHttpClient mClient = new OkHttpClient.Builder()
@@ -40,6 +42,16 @@ public class RetrofitHelper {
             userInterface = retrofit.create(UserInterface.class);
         }
         return userInterface;
+    }
+
+    public static WaterInterface getWaterInterface(){
+        if(waterInterface == null){
+            if(retrofit == null){
+                initRetrofit();
+            }
+            waterInterface = retrofit.create(WaterInterface.class);
+        }
+        return waterInterface;
     }
 
 }
