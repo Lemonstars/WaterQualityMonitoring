@@ -2,9 +2,6 @@
     <string name="app_name">WaterQualityMonitoring</string>
     <string name="title_activity_map">MapActivity</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
 
     <string name="waterLevel">水位</string>
@@ -13,10 +10,9 @@
     <string name="waterForce">水动力</string>
     <string name="floatingMaterial">漂浮物</string>
 
+    <string name="map">地图</string>
+
     <string name="MORE">MORE</string>
     <string name="title_activity_water_level">WaterLevelActivity</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

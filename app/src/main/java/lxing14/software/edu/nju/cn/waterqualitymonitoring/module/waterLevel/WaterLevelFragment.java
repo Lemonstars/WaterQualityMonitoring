@@ -7,11 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.amap.api.maps.MapView;
+
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 
 public class WaterLevelFragment extends Fragment implements WaterLevelContract.View{
 
-    private WaterLevelContract.Presenter presenter;
+    private WaterLevelContract.Presenter mPresenter;
+
+    private MapView mMapView;
 
     public static WaterLevelFragment generateFragment(){
         return new WaterLevelFragment();
@@ -20,12 +24,16 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_water_level, container, false);
+        View root = inflater.inflate(R.layout.fragment_water_level, container, false);
+        mMapView = (MapView) root.findViewById(R.id.map);
+        mMapView.onCreate(savedInstanceState);
+
+        return root;
     }
 
     @Override
     public void setPresenter(WaterLevelContract.Presenter presenter) {
-        this.presenter = presenter;
+        this.mPresenter = presenter;
     }
 
 }

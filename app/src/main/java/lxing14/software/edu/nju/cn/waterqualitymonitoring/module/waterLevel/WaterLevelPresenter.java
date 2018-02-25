@@ -9,11 +9,11 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 
 public class WaterLevelPresenter implements WaterLevelContract.Presenter{
 
-    private WaterLevelContract.View view;
+    private WaterLevelContract.View mView;
 
     public WaterLevelPresenter(WaterLevelContract.View view) {
-        this.view = view;
-        view.setPresenter(this);
+        this.mView = view;
+        mView.setPresenter(this);
     }
 
     @Override
