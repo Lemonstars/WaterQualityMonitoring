@@ -23,7 +23,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="e00ae4dd70e29c60e51a8e0d4c124535" />
@@ -38,7 +37,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".module.waterLevel.WaterLevelActivity"
+            android:label="@string/title_activity_water_level"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
