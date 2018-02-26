@@ -11,6 +11,14 @@
     <string name="floatingMaterial">漂浮物</string>
 
     <string name="map">地图</string>
+    <string name="currentWaterLevel">当前水位：</string>
+    <string name="historicalWaterLevel">历史水位：</string>
+    <string name="photoBy">拍摄于：</string>
+
+    <string name="warningNum">预警值</string>
+    <string name="argumentSetting">参数设置</string>
+    <string name="changeVideo">切换视频</string>
+    <string name="remoteSwitch">远程开关</string>
 
     <string name="MORE">MORE</string>
     <string name="title_activity_water_level">WaterLevelActivity</string>
