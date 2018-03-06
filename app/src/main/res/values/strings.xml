@@ -19,6 +19,7 @@
     <string name="argumentSetting">参数设置</string>
     <string name="changeVideo">切换视频</string>
     <string name="remoteSwitch">远程开关</string>
+    <string name="chartOfCurrentWaterLevel">当前水位折线图</string>
 
     <string name="MORE">MORE</string>
     <string name="title_activity_water_level">WaterLevelActivity</string>
