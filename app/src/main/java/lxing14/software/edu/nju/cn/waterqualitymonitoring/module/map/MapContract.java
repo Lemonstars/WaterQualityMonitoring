@@ -24,6 +24,16 @@ public interface MapContract {
 
     interface Presenter extends BasePresenter{
 
+        void loadAllWaterTypeInfo();
+
+        void loadWaterLevelInfo();
+
+        void loadWaterForceInfo();
+
+        void loadWaterQualityInfo();
+
+        void loadFloatingMaterialInfo();
+
     }
 
 }

@@ -13,6 +13,8 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ActivityUtils;
 public class MapActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private MapContract.Presenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +33,7 @@ public class MapActivity extends AppCompatActivity
                     mapFragment, R.id.contentFrame);
         }
 
-        new MapPresenter(mapFragment);
+        presenter = new MapPresenter(mapFragment);
     }
 
     @Override
@@ -49,13 +51,13 @@ public class MapActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_waterLevel) {
-
+            presenter.loadWaterLevelInfo();
         } else if (id == R.id.nav_waterForce) {
-
+            presenter.loadWaterForceInfo();
         } else if (id == R.id.nav_waterQuality) {
-
+            presenter.loadWaterQualityInfo();
         } else if (id == R.id.nav_floatingMaterial) {
-
+            presenter.loadFloatingMaterialInfo();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

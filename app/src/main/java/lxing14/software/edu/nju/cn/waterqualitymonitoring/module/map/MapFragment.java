@@ -67,6 +67,7 @@ public class MapFragment extends Fragment implements MapContract.View{
     @Override
     public void showInitPoint(ArrayList<MarkerOptions> markerOptionsList) {
         AMap aMap = mMapView.getMap();
+        aMap.clear();
         aMap.addMarkers(markerOptionsList, false);
     }
 

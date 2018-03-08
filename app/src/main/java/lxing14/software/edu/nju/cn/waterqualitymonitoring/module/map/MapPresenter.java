@@ -10,6 +10,7 @@ import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterMapInfoVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterTypeEnum;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -32,11 +33,36 @@ public class MapPresenter implements MapContract.Presenter {
 
     @Override
     public void start() {
-        loadInitPointInfo();
+        loadAllWaterTypeInfo();
     }
 
-    private void loadInitPointInfo(){
-        RetrofitHelper.getWaterInterface().getMapInfo(0)
+    @Override
+    public void loadAllWaterTypeInfo() {
+        loadPointInfo(WaterTypeEnum.ALL);
+    }
+
+    @Override
+    public void loadWaterLevelInfo() {
+        loadPointInfo(WaterTypeEnum.WATER_LEVEL);
+    }
+
+    @Override
+    public void loadWaterForceInfo() {
+        loadPointInfo(WaterTypeEnum.WATER_FORCE);
+    }
+
+    @Override
+    public void loadWaterQualityInfo() {
+        loadPointInfo(WaterTypeEnum.WATER_QUALITY);
+    }
+
+    @Override
+    public void loadFloatingMaterialInfo() {
+        loadPointInfo(WaterTypeEnum.FLOATING_MATERIAL);
+    }
+
+    private void loadPointInfo(int waterType){
+        RetrofitHelper.getWaterInterface().getMapInfo(waterType)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<WaterMapInfoVO>>() {
