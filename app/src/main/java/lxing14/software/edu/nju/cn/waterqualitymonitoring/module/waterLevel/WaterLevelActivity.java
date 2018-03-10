@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ActivityUtils;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ActivityUtil;
 
 public class WaterLevelActivity extends AppCompatActivity {
 
@@ -23,7 +23,7 @@ public class WaterLevelActivity extends AppCompatActivity {
                 .findFragmentById(R.id.contentFrame);
         if(waterLevelFragment == null){
             waterLevelFragment = WaterLevelFragment.generateFragment();
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+            ActivityUtil.addFragmentToActivity(getSupportFragmentManager(),
                     waterLevelFragment, R.id.contentFrame);
         }
 

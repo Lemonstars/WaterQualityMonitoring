@@ -35,16 +35,18 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter{
             infoWindow = (LinearLayout)LayoutInflater.from(context).inflate(R.layout.bg_info_window, null);
 
             WaterInfoView view1 = new WaterInfoView(context, context.getString(R.string.waterLevel), "1.0mm");
-            WaterInfoView view2 = new WaterInfoView(context, context.getString(R.string.waterQuality), "1.0mm");
-            infoWindow.addView(view1);
-            infoWindow.addView(view2);
-
-            infoWindow.setOnClickListener(new View.OnClickListener() {
+            view1.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     context.startActivity(new Intent(context, WaterLevelActivity.class));
                 }
             });
+            WaterInfoView view2 = new WaterInfoView(context, context.getString(R.string.waterQuality), "1.0mm");
+            infoWindow.addView(view1);
+            infoWindow.addView(view2);
+
+
+
         }
         return infoWindow;
     }

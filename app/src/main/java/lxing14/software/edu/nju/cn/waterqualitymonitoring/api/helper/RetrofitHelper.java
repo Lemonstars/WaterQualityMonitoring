@@ -2,6 +2,7 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.UserInterface;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.WaterInterface;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -15,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitHelper {
 
-    private static final String API_BASE_URL = "http://www.hawkcloud.cn:8099/Intelligence_Water/";
+
 
     private static Retrofit retrofit;
 
@@ -28,7 +29,7 @@ public class RetrofitHelper {
                 .build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
+                .baseUrl(WebSite.API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .client(mClient).build();

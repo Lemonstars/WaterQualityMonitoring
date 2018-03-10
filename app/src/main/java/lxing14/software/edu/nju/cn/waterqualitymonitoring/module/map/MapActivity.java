@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ActivityUtils;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ActivityUtil;
 
 public class MapActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,7 +29,7 @@ public class MapActivity extends AppCompatActivity
         if (mapFragment == null) {
             mapFragment = MapFragment.generateFragment();
 
-            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
+            ActivityUtil.addFragmentToActivity(getSupportFragmentManager(),
                     mapFragment, R.id.contentFrame);
         }
 

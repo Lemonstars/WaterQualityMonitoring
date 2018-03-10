@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
 
-public class ActivityUtils {
+public class ActivityUtil {
 
     public static void addFragmentToActivity (@NonNull FragmentManager fragmentManager,
                                               @NonNull Fragment fragment, int frameId) {
