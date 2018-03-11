@@ -11,6 +11,7 @@ import com.amap.api.maps.model.Marker;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel.WaterLevelActivity;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterQuality.WaterQualityActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.WaterInfoView;
 
 /**
@@ -42,6 +43,12 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter{
                 }
             });
             WaterInfoView view2 = new WaterInfoView(context, context.getString(R.string.waterQuality), "1.0mm");
+            view2.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    context.startActivity(new Intent(context, WaterQualityActivity.class));
+                }
+            });
             infoWindow.addView(view1);
             infoWindow.addView(view2);
 

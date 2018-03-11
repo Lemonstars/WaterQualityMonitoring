@@ -32,10 +32,10 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
 
     private MapView mMapView;
     private LineChartView mChart;
-    private ImageView currentWaterLevelImg_iv;
-    private TextView currentWaterLevelNum_tv;
-    private TextView historicalWaterLevelNum_tv;
-    private TextView photoByDate_tv;
+    private ImageView mCurrentWaterLevelImg_iv;
+    private TextView mCurrentWaterLevelNum_tv;
+    private TextView mHistoricalWaterLevelNum_tv;
+    private TextView mPhotoByDate_tv;
 
     public static WaterLevelFragment generateFragment(){
         return new WaterLevelFragment();
@@ -49,10 +49,10 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mMapView = (MapView) root.findViewById(R.id.map);
         mChart = (LineChartView) root.findViewById(R.id.chart);
 
-        currentWaterLevelImg_iv = (ImageView) root.findViewById(R.id.currentWaterLevelImg_iv);
-        currentWaterLevelNum_tv = (TextView) root.findViewById(R.id.currentWaterLevelNum_tv);
-        historicalWaterLevelNum_tv = (TextView) root.findViewById(R.id.historicalWaterLevelNum_tv);
-        photoByDate_tv = (TextView) root.findViewById(R.id.photoByDate_tv);
+        mCurrentWaterLevelImg_iv = (ImageView) root.findViewById(R.id.currentWaterLevelImg_iv);
+        mCurrentWaterLevelNum_tv = (TextView) root.findViewById(R.id.currentWaterLevelNum_tv);
+        mHistoricalWaterLevelNum_tv = (TextView) root.findViewById(R.id.historicalWaterLevelNum_tv);
+        mPhotoByDate_tv = (TextView) root.findViewById(R.id.photoByDate_tv);
 
         mMapView.onCreate(savedInstanceState);
 
@@ -124,9 +124,9 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     @Override
     public void showCurrentWaterLevelDetailInfo(String picUrl, String currentWaterLevel,
                                                 String historicalWaterLevel, String photoByDate) {
-        PicassoUtil.loadUrl(getContext(), picUrl, currentWaterLevelImg_iv);
-        currentWaterLevelNum_tv.setText(currentWaterLevel);
-        historicalWaterLevelNum_tv.setText(historicalWaterLevel);
-        photoByDate_tv.setText(photoByDate);
+        PicassoUtil.loadUrl(getContext(), picUrl, mCurrentWaterLevelImg_iv);
+        mCurrentWaterLevelNum_tv.setText(currentWaterLevel);
+        mHistoricalWaterLevelNum_tv.setText(historicalWaterLevel);
+        mPhotoByDate_tv.setText(photoByDate);
     }
 }

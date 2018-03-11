@@ -1,8 +1,5 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 

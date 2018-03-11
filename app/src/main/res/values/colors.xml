@@ -11,5 +11,9 @@
     <color name="lightBlue">#2a799b</color>
     <color name="lightRed">#fced2b09</color>
     <color name="lightGray">#495b64</color>
+    
+    <color name="ph_color">#ff2aacdf</color>
+    <color name="temperature_color">#ff5c7cbd</color>
+    <color name="transparency_color">#ff2990c7</color>
 
 </resources>
