@@ -15,7 +15,7 @@ public class WaterLevelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_water_level);
 
         //set the text of the toolbar
-        TextView toolBarTV = (TextView)findViewById(R.id.toolbar);
+        TextView toolBarTV = findViewById(R.id.toolbar);
         toolBarTV.setText(R.string.waterLevel);
 
         //generate the view and the presenter

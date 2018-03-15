@@ -46,13 +46,13 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_water_level, container, false);
 
-        mMapView = (MapView) root.findViewById(R.id.map);
-        mChart = (LineChartView) root.findViewById(R.id.chart);
+        mMapView = root.findViewById(R.id.map);
+        mChart = root.findViewById(R.id.chart);
 
-        mCurrentWaterLevelImg_iv = (ImageView) root.findViewById(R.id.currentWaterLevelImg_iv);
-        mCurrentWaterLevelNum_tv = (TextView) root.findViewById(R.id.currentWaterLevelNum_tv);
-        mHistoricalWaterLevelNum_tv = (TextView) root.findViewById(R.id.historicalWaterLevelNum_tv);
-        mPhotoByDate_tv = (TextView) root.findViewById(R.id.photoByDate_tv);
+        mCurrentWaterLevelImg_iv = root.findViewById(R.id.currentWaterLevelImg_iv);
+        mCurrentWaterLevelNum_tv = root.findViewById(R.id.currentWaterLevelNum_tv);
+        mHistoricalWaterLevelNum_tv = root.findViewById(R.id.historicalWaterLevelNum_tv);
+        mPhotoByDate_tv = root.findViewById(R.id.photoByDate_tv);
 
         mMapView.onCreate(savedInstanceState);
 

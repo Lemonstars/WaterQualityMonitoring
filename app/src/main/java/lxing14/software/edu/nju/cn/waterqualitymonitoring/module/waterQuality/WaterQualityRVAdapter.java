@@ -22,7 +22,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
  * @time : 下午8:33
  */
 
-public class WaterQualityRVAdapter extends RecyclerView.Adapter<WaterQualityRVAdapter.WaterQualityVH>{
+public class WaterQualityRVAdapter extends RecyclerView.Adapter<WaterQualityRVAdapter.WaterQualityVH> {
 
     private Context mContext;
     private List<WaterQualityTypeVO> data;
@@ -50,7 +50,7 @@ public class WaterQualityRVAdapter extends RecyclerView.Adapter<WaterQualityRVAd
 
     @Override
     public int getItemCount() {
-        return data == null ? 0:data.size();
+        return data == null ? 0 : data.size();
     }
 
     public void setData(List<WaterQualityTypeVO> data) {
@@ -58,7 +58,7 @@ public class WaterQualityRVAdapter extends RecyclerView.Adapter<WaterQualityRVAd
         notifyDataSetChanged();
     }
 
-    class WaterQualityVH extends RecyclerView.ViewHolder{
+    class WaterQualityVH extends RecyclerView.ViewHolder {
 
         RelativeLayout root_layout;
         ImageView icon_iv;
@@ -68,10 +68,10 @@ public class WaterQualityRVAdapter extends RecyclerView.Adapter<WaterQualityRVAd
         public WaterQualityVH(View itemView) {
             super(itemView);
 
-            root_layout = (RelativeLayout) itemView.findViewById(R.id.root_layout);
-            icon_iv = (ImageView) itemView.findViewById(R.id.icon_iv);
-            typeNum_tv = (TextView) itemView.findViewById(R.id.typeNum_tv);
-            typeHint_tv = (TextView) itemView.findViewById(R.id.typeHint_tv);
+            root_layout = itemView.findViewById(R.id.root_layout);
+            icon_iv = itemView.findViewById(R.id.icon_iv);
+            typeNum_tv = itemView.findViewById(R.id.typeNum_tv);
+            typeHint_tv = itemView.findViewById(R.id.typeHint_tv);
         }
 
     }

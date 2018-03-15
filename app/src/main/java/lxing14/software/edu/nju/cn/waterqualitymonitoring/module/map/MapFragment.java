@@ -29,7 +29,7 @@ public class MapFragment extends Fragment implements MapContract.View{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_map, container, false);
-        mMapView = (MapView) root.findViewById(R.id.map);
+        mMapView = root.findViewById(R.id.map);
 
         AMap aMap = mMapView.getMap();
         aMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getContext()));

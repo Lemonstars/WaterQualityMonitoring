@@ -17,7 +17,7 @@ public class WaterQualityActivity extends AppCompatActivity {
         setContentView(R.layout.activity_water_quality);
 
         //set the text of the toolbar
-        TextView toolBarTV = (TextView)findViewById(R.id.toolbar);
+        TextView toolBarTV = findViewById(R.id.toolbar);
         toolBarTV.setText(R.string.waterQuality);
 
         //generate the view and the presenter

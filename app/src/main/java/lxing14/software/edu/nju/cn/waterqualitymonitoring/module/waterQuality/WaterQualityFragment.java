@@ -31,9 +31,9 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_water_quality, container, false);
 
-        mType_rv = (RecyclerView) root.findViewById(R.id.type_rv);
+        mType_rv = root.findViewById(R.id.type_rv);
         initRecyclerView();
-        mMapView = (MapView) root.findViewById(R.id.map);
+        mMapView = root.findViewById(R.id.map);
 
         mMapView.onCreate(savedInstanceState);
         return root;
