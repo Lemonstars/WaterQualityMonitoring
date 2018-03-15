@@ -39,9 +39,11 @@
         </activity>
         <activity
             android:name=".module.waterLevel.WaterLevelActivity"
-            android:label="@string/title_activity_water_level"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".module.waterQuality.WaterQualityActivity"
+        <activity
+            android:name=".module.waterQuality.WaterQualityActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".module.waterFlow.WaterFlowActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

@@ -39,6 +39,27 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         return root;
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+
+        mPresenter.start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroyView() {
+        mMapView.onDestroy();
+        super.onDestroyView();
+    }
+
     @Override
     public void setPresenter(WaterQualityContract.Presenter presenter) {
         this.mPresenter = presenter;

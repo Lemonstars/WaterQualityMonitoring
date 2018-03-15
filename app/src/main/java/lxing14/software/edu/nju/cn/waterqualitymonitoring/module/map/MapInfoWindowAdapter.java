@@ -10,6 +10,7 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.model.Marker;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFlow.WaterFlowActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel.WaterLevelActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterQuality.WaterQualityActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.WaterInfoView;
@@ -21,7 +22,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.WaterInfoView;
  * @time : 下午12:56
  */
 
-public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter{
+public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
 
     private Context context;
     private LinearLayout infoWindow = null;
@@ -32,27 +33,19 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter{
 
     @Override
     public View getInfoWindow(Marker marker) {
-        if(infoWindow == null) {
-            infoWindow = (LinearLayout)LayoutInflater.from(context).inflate(R.layout.bg_info_window, null);
+        if (infoWindow == null) {
+            infoWindow = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bg_info_window, null);
 
             WaterInfoView view1 = new WaterInfoView(context, context.getString(R.string.waterLevel), "1.0mm");
-            view1.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    context.startActivity(new Intent(context, WaterLevelActivity.class));
-                }
-            });
+            view1.setOnClickListener(v -> context.startActivity(new Intent(context, WaterLevelActivity.class)));
             WaterInfoView view2 = new WaterInfoView(context, context.getString(R.string.waterQuality), "1.0mm");
-            view2.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    context.startActivity(new Intent(context, WaterQualityActivity.class));
-                }
-            });
+            view2.setOnClickListener(v -> context.startActivity(new Intent(context, WaterQualityActivity.class)));
+            WaterInfoView view3 = new WaterInfoView(context, context.getString(R.string.waterFlow), "10 m/s");
+            view3.setOnClickListener(v -> context.startActivity(new Intent(context, WaterFlowActivity.class)));
+
             infoWindow.addView(view1);
             infoWindow.addView(view2);
-
-
+            infoWindow.addView(view3);
 
         }
         return infoWindow;

@@ -67,6 +67,18 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroyView() {
+        mMapView.onDestroy();
+        super.onDestroyView();
+    }
+
+    @Override
     public void setPresenter(WaterLevelContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
