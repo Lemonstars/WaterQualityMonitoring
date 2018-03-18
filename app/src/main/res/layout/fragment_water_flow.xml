@@ -31,6 +31,213 @@
         android:paddingRight="15dp"
         android:background="@drawable/bg_white_radius_corner">
 
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/camera_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"/>
+
+        </HorizontalScrollView>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp">
+
+            <ImageView
+                android:id="@+id/flow_iv"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_default_pic"/>
+
+            <TextView
+                android:id="@+id/cameraHint_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/flow_iv"
+                android:layout_toRightOf="@id/flow_iv"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:text="相机A表面流速"/>
+            
+            <View
+                android:id="@+id/split_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_toRightOf="@id/flow_iv"
+                android:layout_below="@id/cameraHint_tv"
+                android:background="@color/lightGray"/>
+            
+            <TextView
+                android:id="@+id/flowSpeed_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/flow_iv"
+                android:layout_below="@id/split_view"
+                android:layout_marginTop="5dp"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:text="流速："/>
+
+            <TextView
+                android:id="@+id/averageFlowSpeed_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/flow_iv"
+                android:layout_below="@id/flowSpeed_tv"
+                android:layout_marginTop="2dp"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:text="平均流速："/>
+
+            <TextView
+                android:id="@+id/flowSpeedNum_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/flowSpeed_tv"
+                android:layout_below="@id/split_view"
+                android:layout_marginTop="5dp"
+                android:textSize="12sp"
+                android:textColor="@color/lightRed"
+                android:text="8m/s"/>
+
+            <TextView
+                android:id="@+id/averageFlowSpeedNum_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/averageFlowSpeed_tv"
+                android:layout_below="@id/flowSpeedNum_tv"
+                android:layout_marginTop="2dp"
+                android:textSize="12sp"
+                android:textColor="@color/lightRed"
+                android:text="5m/s"/>
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/lightGray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/ic_warning_num"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:text="@string/warningNum"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/lightGray"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/ic_argument_setting"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:text="@string/argumentSetting"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/lightGray"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/ic_change_video"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:text="@string/changeVideo"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/lightGray"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/ic_remote_switch"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:text="@string/remoteSwitch"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

@@ -14,6 +14,12 @@ public interface WaterFlowContract {
 
     interface View extends BaseView<WaterFlowContract.Presenter>{
 
+        /**
+         * 显示选择相机的UI
+         * @param num
+         */
+        void showCameraChoiceView(int num);
+
     }
 
     interface Presenter extends BasePresenter{
