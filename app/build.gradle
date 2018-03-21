@@ -40,8 +40,8 @@ dependencies {
     compile 'com.amap.api:3dmap:latest.integration'
     compile 'com.amap.api:location:latest.integration'
     compile 'com.amap.api:search:latest.integration'
-    //hello chart
-    compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
+    //MPAndroidChart
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     //Picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
     //double date picker
