@@ -19,5 +19,9 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
     @Override
     public void start() {
         mView.showCameraChoiceView(5);
+        mView.showWaterLevelChart();
     }
+
+
+
 }

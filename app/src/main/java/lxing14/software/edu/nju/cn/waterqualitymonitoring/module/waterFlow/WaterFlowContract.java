@@ -20,6 +20,8 @@ public interface WaterFlowContract {
          */
         void showCameraChoiceView(int num);
 
+        void showWaterLevelChart();
+
     }
 
     interface Presenter extends BasePresenter{
