@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 
 import com.amap.api.maps.MapView;
 import com.github.mikephil.charting.charts.CandleStickChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
@@ -84,21 +86,55 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
 
     @Override
     public void showWaterLevelChart() {
+        mChart.setDrawGridBackground(false);
+        mChart.setDrawBorders(false);
+        mChart.setBorderWidth(1f);
+        mChart.setTouchEnabled(true);
+        mChart.setDragEnabled(true);
+        mChart.setScaleEnabled(true);
+        mChart.setPinchZoom(false);
+        mChart.setScaleYEnabled(false);
+        mChart.setScaleXEnabled(false);
+        mChart.animateX(2500);
+
+        Legend legend  = mChart.getLegend();
+        legend.setEnabled(false);
+
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setDrawAxisLine(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.enableGridDashedLine(10f, 5f, 0f);
+        xAxis.setAvoidFirstLastClipping(true);
+
+        YAxis yAxisLeft = mChart.getAxisLeft();
+        yAxisLeft.setDrawGridLines(true);
+        yAxisLeft.setDrawAxisLine(true);
+        yAxisLeft.setDrawLabels(true);
+        yAxisLeft.enableGridDashedLine(10f, 10f, 0f);
+        yAxisLeft.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        yAxisLeft.setLabelCount(4, false);
+        yAxisLeft.setSpaceTop(10);
+
+        YAxis yAxisRight = mChart.getAxisRight();
+        yAxisRight.setEnabled(false);
+
         List<CandleEntry> candleEntryList = new ArrayList<>();
-        for(int i=0;i<50;i++){
+        for(int i=0;i<500;i++){
             candleEntryList.add(new CandleEntry(i, 2*i, i, 2*i, i));
         }
         CandleDataSet candleDataSet = new CandleDataSet(candleEntryList, "data");
-        candleDataSet.setHighlightEnabled(false);
-        candleDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-        candleDataSet.setDecreasingColor(Color.GREEN);
-        candleDataSet.setIncreasingColor(Color.RED);
-        candleDataSet.setShadowColorSameAsCandle(true);
-        candleDataSet.setShowCandleBar(true);
-        candleDataSet.setDecreasingPaintStyle(Paint.Style.STROKE);
-        candleDataSet.setIncreasingPaintStyle(Paint.Style.STROKE);
+        candleDataSet.setShadowWidth(0.7f);
+        candleDataSet.setDecreasingColor(R.color.temperature_color);
+        candleDataSet.setDecreasingPaintStyle(Paint.Style.FILL);
+        candleDataSet.setIncreasingColor(R.color.temperature_color);
+        candleDataSet.setIncreasingPaintStyle(Paint.Style.FILL);
+        candleDataSet.setHighlightLineWidth(1f);
+        candleDataSet.setDrawValues(false);
 
         CandleData candleData = new CandleData(candleDataSet);
+
         mChart.setData(candleData);
+
     }
 }

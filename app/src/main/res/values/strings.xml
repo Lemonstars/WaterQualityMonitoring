@@ -24,7 +24,8 @@
     <string name="MORE">MORE</string>
     <string name="title_activity_water_level">WaterLevelActivity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="realTime">实时</string>
+    <string name="monthDecided">按月</string>
+    <string name="dayDecided">按天</string>
 
 </resources>
