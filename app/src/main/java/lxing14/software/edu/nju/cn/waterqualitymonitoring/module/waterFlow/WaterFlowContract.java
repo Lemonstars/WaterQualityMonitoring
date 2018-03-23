@@ -20,7 +20,20 @@ public interface WaterFlowContract {
          */
         void showCameraChoiceView(int num);
 
-        void showWaterLevelChart();
+        /**
+         * 展示实时数据
+         */
+        void showRealTimeChart();
+
+        /**
+         * 显示按天数据
+         */
+        void showDayChart();
+
+        /**
+         * 显示按月数据
+         */
+        void showMonthChart();
 
     }
 
