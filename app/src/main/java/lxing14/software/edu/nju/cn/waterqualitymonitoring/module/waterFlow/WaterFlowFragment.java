@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,7 +31,7 @@ import java.util.List;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.CameraChoiceView;
 
-public class WaterFlowFragment extends Fragment implements WaterFlowContract.View {
+public class WaterFlowFragment extends Fragment implements WaterFlowContract.View, View.OnClickListener{
 
     private WaterFlowContract.Presenter mPresenter;
 
@@ -40,6 +42,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     private TextView mRealTime_tv;
     private TextView mDay_tv;
     private TextView mMonth_tv;
+    private WebView mWebView;
 
     public static WaterFlowFragment generateFragment() {
         return new WaterFlowFragment();
@@ -57,10 +60,12 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         mRealTime_tv = root.findViewById(R.id.realTime_tv);
         mDay_tv = root.findViewById(R.id.day_tv);
         mMonth_tv = root.findViewById(R.id.month_tv);
+        mWebView = root.findViewById(R.id.webView);
 
         configLineChart();
         configCandleStickChart();
         initTabListener();
+        loadWebFile();
 
         mMapView.onCreate(savedInstanceState);
         return root;
@@ -192,7 +197,6 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         mCandleStickChart.setDragEnabled(true);
         mCandleStickChart.setScaleYEnabled(false);
         mCandleStickChart.setScaleXEnabled(true);
-        mCandleStickChart.animateX(2000);
         mCandleStickChart.setAutoScaleMinMaxEnabled(true);
     }
 
@@ -228,14 +232,48 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         mLineChart.setDragEnabled(true);
         mLineChart.setScaleYEnabled(false);
         mLineChart.setScaleXEnabled(true);
-        mLineChart.animateX(2000);
         mLineChart.setAutoScaleMinMaxEnabled(true);
     }
 
+    //initialize the listener
     private void initTabListener(){
-        mRealTime_tv.setOnClickListener(e -> showRealTimeChart());
-        mDay_tv.setOnClickListener(e -> showDayChart());
-        mMonth_tv.setOnClickListener(e -> showMonthChart());
+        mRealTime_tv.setOnClickListener(this);
+        mDay_tv.setOnClickListener(this);
+        mMonth_tv.setOnClickListener(this);
+    }
+
+    //finalize the listener
+    private void removeTabListener(){
+        mRealTime_tv.setOnClickListener(null);
+        mDay_tv.setOnClickListener(null);
+        mMonth_tv.setOnClickListener(null);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.realTime_tv:
+                showRealTimeChart();
+                break;
+            case R.id.day_tv:
+                showDayChart();
+                break;
+            case R.id.month_tv:
+                showMonthChart();
+                break;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        removeTabListener();
+        super.onDestroy();
+    }
+
+    private void loadWebFile(){
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        mWebView.loadUrl("file:///android_asset/index.html");
     }
 
 }
