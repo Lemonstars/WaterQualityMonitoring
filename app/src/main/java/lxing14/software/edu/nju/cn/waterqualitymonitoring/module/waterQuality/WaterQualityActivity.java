@@ -26,12 +26,7 @@ public class WaterQualityActivity extends AppCompatActivity {
         toolBarTV.setText(R.string.waterQuality);
 
         ImageView date_iv = findViewById(R.id.date_iv);
-        date_iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showCustomTimePicker();
-            }
-        });
+        date_iv.setOnClickListener(e -> showCustomTimePicker());
 
         //generate the view and the presenter
         WaterQualityFragment waterQualityFragment = (WaterQualityFragment) getSupportFragmentManager()

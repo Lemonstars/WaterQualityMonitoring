@@ -1,5 +1,8 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.UserInterface;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.WaterInterface;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
@@ -15,24 +18,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitHelper {
-
-
-
     private static Retrofit retrofit;
 
     private static UserInterface userInterface;
     private static WaterInterface waterInterface;
 
     private static void initRetrofit(){
-        OkHttpClient mClient = new OkHttpClient.Builder()
+        OkHttpClient okHttpClient= new OkHttpClient.Builder()
                 .addNetworkInterceptor(new LogInterceptor())
                 .build();
 
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
         retrofit = new Retrofit.Builder()
                 .baseUrl(WebSite.API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .client(mClient).build();
+                .client(okHttpClient).build();
     }
 
     public static UserInterface getUserInterface(){

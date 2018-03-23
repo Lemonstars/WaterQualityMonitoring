@@ -28,4 +28,12 @@
     <string name="monthDecided">按月</string>
     <string name="dayDecided">按天</string>
 
+    <string name="pleaseInputUserName">请输入用户名</string>
+    <string name="pleaseInputPassword">请输入密码</string>
+    <string name="pleaseInputCorrectUserName">请输入正确的用户名</string>
+    <string name="pleaseInputCorrectPassword">请输入正确的密码</string>
+
+    <string name="login">登  录</string>
+    <string name="intellgenceWater">INTELLGENCE WATER</string>
+
 </resources>
