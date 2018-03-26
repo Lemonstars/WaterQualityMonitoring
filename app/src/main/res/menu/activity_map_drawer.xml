@@ -18,6 +18,11 @@
             android:id="@+id/nav_floatingMaterial"
             android:icon="@drawable/ic_location"
             android:title="@string/floatingMaterial" />
+
+        <item
+            android:id="@+id/nav_unmannedShip"
+            android:icon="@drawable/ic_location"
+            android:title="@string/unmannedShip" />
     </group>
 
 </menu>

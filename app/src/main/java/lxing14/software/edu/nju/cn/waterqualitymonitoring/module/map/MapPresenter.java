@@ -61,6 +61,11 @@ public class MapPresenter implements MapContract.Presenter {
         loadPointInfo(WaterTypeEnum.FLOATING_MATERIAL);
     }
 
+    @Override
+    public void loadUnmannedShipInfo() {
+
+    }
+
     private void loadPointInfo(int waterType){
         RetrofitHelper.getWaterInterface().getMapInfo(waterType)
                 .subscribeOn(Schedulers.io())

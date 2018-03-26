@@ -58,6 +58,8 @@ public class MapActivity extends AppCompatActivity
             presenter.loadWaterQualityInfo();
         } else if (id == R.id.nav_floatingMaterial) {
             presenter.loadFloatingMaterialInfo();
+        } else if (id == R.id.nav_unmannedShip){
+            presenter.loadUnmannedShipInfo();
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

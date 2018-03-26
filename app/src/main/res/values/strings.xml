@@ -9,6 +9,7 @@
     <string name="waterQuality">水质</string>
     <string name="waterForce">水动力</string>
     <string name="floatingMaterial">漂浮物</string>
+    <string name="unmannedShip">无人船</string>
 
     <string name="map">地图</string>
     <string name="currentWaterLevel">当前水位：</string>

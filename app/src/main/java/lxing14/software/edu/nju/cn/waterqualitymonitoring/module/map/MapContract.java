@@ -26,13 +26,30 @@ public interface MapContract {
 
         void loadAllWaterTypeInfo();
 
+        /**
+         * 加载水位信息
+         */
         void loadWaterLevelInfo();
 
+        /**
+         * 加载水动力信息
+         */
         void loadWaterForceInfo();
 
+        /**
+         * 加载水质信息
+         */
         void loadWaterQualityInfo();
 
+        /**
+         * 加载漂浮物信息
+         */
         void loadFloatingMaterialInfo();
+
+        /**
+         * 加载无人船信息
+         */
+        void loadUnmannedShipInfo();
 
     }
 
