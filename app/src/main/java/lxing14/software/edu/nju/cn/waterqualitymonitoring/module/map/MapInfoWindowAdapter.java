@@ -10,6 +10,7 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.model.Marker;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating.WaterFloatingActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFlow.WaterFlowActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel.WaterLevelActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterQuality.WaterQualityActivity;
@@ -42,10 +43,13 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
             view2.setOnClickListener(v -> context.startActivity(new Intent(context, WaterQualityActivity.class)));
             WaterInfoView view3 = new WaterInfoView(context, context.getString(R.string.waterFlow), "10 m/s");
             view3.setOnClickListener(v -> context.startActivity(new Intent(context, WaterFlowActivity.class)));
+            WaterInfoView view4 = new WaterInfoView(context, context.getString(R.string.floatingMaterial), "floating");
+            view4.setOnClickListener(v -> context.startActivity(new Intent(context, WaterFloatingActivity.class)));
 
             infoWindow.addView(view1);
             infoWindow.addView(view2);
             infoWindow.addView(view3);
+            infoWindow.addView(view4);
 
         }
         return infoWindow;

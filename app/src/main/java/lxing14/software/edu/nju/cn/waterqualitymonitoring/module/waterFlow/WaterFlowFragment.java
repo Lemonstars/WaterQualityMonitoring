@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
@@ -115,7 +114,6 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         mRealTime_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
         mDay_tv.setTextColor(getResources().getColor(R.color.black));
         mMonth_tv.setTextColor(getResources().getColor(R.color.black));
-
 
         List<Entry> lineEntry = new ArrayList<>();
         for(int i=0;i<30;i++){
