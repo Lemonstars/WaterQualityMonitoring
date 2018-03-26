@@ -5,10 +5,15 @@
 <body>
 	<canvas id="video-canvas" style="width: 100%; height: 100%"></canvas>
 	<script type="text/javascript" src="jsmpeg.min.js"></script>
-	<script type="text/javascript">
-		var canvas = document.getElementById('video-canvas');
-		var url = 'ws://47.92.84.138:8604/123';
-		var player = new JSMpeg.Player(url, {canvas: canvas});
+	<!--<script type="text/javascript">-->
+		<!--var canvas = document.getElementById('video-canvas');-->
+		<!--var player = new JSMpeg.Player('ws://47.92.84.138:8599/123', {canvas: canvas});-->
+	<!--</script>-->
+    <script type="text/javascript">
+		function getRealTimeStream(var url){
+			var canvas = document.getElementById('video-canvas');
+			var player = new JSMpeg.Player(url, {canvas: canvas});
+		}
 	</script>
 </body>
 </html>
