@@ -14,6 +14,11 @@ public interface WaterQualityContract {
 
     interface View extends BaseView<WaterQualityContract.Presenter>{
 
+        /**
+         * 显示水质图表
+         */
+        void showWaterQualityChart();
+
     }
 
     interface Presenter extends BasePresenter{

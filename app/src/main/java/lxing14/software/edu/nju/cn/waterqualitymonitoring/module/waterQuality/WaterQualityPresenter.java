@@ -18,6 +18,6 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
 
     @Override
     public void start() {
-
+        mView.showWaterQualityChart();
     }
 }

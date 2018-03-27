@@ -1,5 +1,6 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amap.api.maps.MapView;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
@@ -20,6 +30,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
 
     private WaterLevelContract.Presenter mPresenter;
 
+    private LineChart mLineChart;
     private MapView mMapView;
     private ImageView mCurrentWaterLevelImg_iv;
     private TextView mCurrentWaterLevelNum_tv;
@@ -41,8 +52,11 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mCurrentWaterLevelNum_tv = root.findViewById(R.id.currentWaterLevelNum_tv);
         mHistoricalWaterLevelNum_tv = root.findViewById(R.id.historicalWaterLevelNum_tv);
         mPhotoByDate_tv = root.findViewById(R.id.photoByDate_tv);
+        mLineChart = root.findViewById(R.id.lineChart);
 
         mMapView.onCreate(savedInstanceState);
+
+        configLineChart();
 
         return root;
     }
@@ -73,7 +87,13 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
 
     @Override
     public void showWaterLevelInfo(List<String> waterLevelDate, List<Float> waterLevelData) {
-
+        List<Entry> lineEntry = new ArrayList<>();
+        for(int i=0;i<15;i++){
+            lineEntry.add(new Entry(i, i));
+        }
+        LineDataSet lineDataSet = new LineDataSet(lineEntry, "line");
+        LineData lineData = new LineData(lineDataSet);
+        mLineChart.setData(lineData);
     }
 
     @Override
@@ -84,4 +104,40 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mHistoricalWaterLevelNum_tv.setText(historicalWaterLevel);
         mPhotoByDate_tv.setText(photoByDate);
     }
+
+    //configure the line chart
+    private void configLineChart(){
+        Description description = mLineChart.getDescription();
+        description.setPosition(70,20);
+        description.setText("(m/s)");
+        description.setTextAlign(Paint.Align.RIGHT);
+
+        Legend legend = mLineChart.getLegend();
+        legend.setEnabled(false);
+
+        XAxis xaxis = mLineChart.getXAxis();
+        xaxis.setDrawAxisLine(true);
+        xaxis.setDrawGridLines(false);
+        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxis.setAvoidFirstLastClipping(true);
+        xaxis.setLabelCount(5);
+
+        YAxis yAxisLeft = mLineChart.getAxisLeft();
+        yAxisLeft.setDrawGridLines(true);
+        yAxisLeft.setDrawAxisLine(true);
+        yAxisLeft.setDrawLabels(true);
+        yAxisLeft.enableGridDashedLine(10f, 10f, 0f);
+        yAxisLeft.setLabelCount(5, false);
+        yAxisLeft.setSpaceTop(10);
+
+        YAxis yAxisRight = mLineChart.getAxisRight();
+        yAxisRight.setEnabled(false);
+
+        mLineChart.setTouchEnabled(true);
+        mLineChart.setDragEnabled(true);
+        mLineChart.setScaleYEnabled(false);
+        mLineChart.setScaleXEnabled(true);
+        mLineChart.setAutoScaleMinMaxEnabled(true);
+    }
+
 }
