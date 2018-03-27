@@ -116,7 +116,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         mMonth_tv.setTextColor(getResources().getColor(R.color.black));
 
         List<Entry> lineEntry = new ArrayList<>();
-        for(int i=0;i<30;i++){
+        for(int i=0;i<15;i++){
             lineEntry.add(new Entry(i, i));
         }
         LineDataSet lineDataSet = new LineDataSet(lineEntry, "line");

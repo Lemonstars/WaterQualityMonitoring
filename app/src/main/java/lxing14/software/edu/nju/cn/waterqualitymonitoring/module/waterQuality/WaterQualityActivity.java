@@ -25,6 +25,7 @@ public class WaterQualityActivity extends AppCompatActivity {
         TextView toolBarTV = findViewById(R.id.toolbar);
         toolBarTV.setText(R.string.waterQuality);
 
+        //pop the date picker
         ImageView date_iv = findViewById(R.id.date_iv);
         date_iv.setOnClickListener(e -> showCustomTimePicker());
 
