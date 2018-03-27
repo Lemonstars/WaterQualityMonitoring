@@ -18,6 +18,6 @@ public class UnMannedShipPresenter implements UnMannedShipContract.IPresenter {
 
     @Override
     public void start() {
-
+        mView.showWaterQualityChart();
     }
 }

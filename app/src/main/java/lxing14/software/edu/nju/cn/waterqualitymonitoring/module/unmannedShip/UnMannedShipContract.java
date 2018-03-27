@@ -14,6 +14,11 @@ public interface UnMannedShipContract {
 
     interface IView extends BaseView<UnMannedShipContract.IPresenter>{
 
+        /**
+         * 显示水质图表
+         */
+        void showWaterQualityChart();
+
     }
 
     interface IPresenter extends BasePresenter{
