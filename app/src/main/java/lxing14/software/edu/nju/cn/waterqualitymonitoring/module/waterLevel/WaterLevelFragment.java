@@ -1,5 +1,6 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
 
 public class WaterLevelFragment extends Fragment implements WaterLevelContract.View{
@@ -57,6 +59,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mMapView.onCreate(savedInstanceState);
 
         configLineChart();
+        configListener();
 
         return root;
     }
@@ -103,6 +106,11 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mCurrentWaterLevelNum_tv.setText(currentWaterLevel);
         mHistoricalWaterLevelNum_tv.setText(historicalWaterLevel);
         mPhotoByDate_tv.setText(photoByDate);
+    }
+
+    //configure the listener
+    private void configListener(){
+        mLineChart.setOnLongClickListener( e -> {startActivity(new Intent(getContext(), ChartActivity.class));return true;});
     }
 
     //configure the line chart
