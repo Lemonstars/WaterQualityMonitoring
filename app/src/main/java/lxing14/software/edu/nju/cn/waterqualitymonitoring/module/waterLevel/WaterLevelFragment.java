@@ -27,6 +27,7 @@ import java.util.List;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
 
 public class WaterLevelFragment extends Fragment implements WaterLevelContract.View{
 
@@ -97,6 +98,8 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         LineDataSet lineDataSet = new LineDataSet(lineEntry, "line");
         LineData lineData = new LineData(lineDataSet);
         mLineChart.setData(lineData);
+        mLineChart.notifyDataSetChanged();
+        mLineChart.invalidate();
     }
 
     @Override
@@ -111,6 +114,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     //configure the listener
     private void configListener(){
         mLineChart.setOnLongClickListener( e -> {startActivity(new Intent(getContext(), ChartActivity.class));return true;});
+        mCurrentWaterLevelImg_iv.setOnClickListener( e -> new ImageDialog(getContext()).show());
     }
 
     //configure the line chart
