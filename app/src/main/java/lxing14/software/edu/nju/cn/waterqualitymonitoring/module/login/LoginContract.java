@@ -36,8 +36,10 @@ public interface LoginContract {
 
         /**
          * 跳转至地图界面
+         *
+         * @param userName
          */
-        void jumpToMapActivity();
+        void jumpToMapActivity(String userName);
 
     }
 

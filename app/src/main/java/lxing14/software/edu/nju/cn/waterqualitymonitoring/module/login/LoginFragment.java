@@ -1,6 +1,5 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -92,8 +91,8 @@ public class LoginFragment extends Fragment implements LoginContract.ILoginView,
     }
 
     @Override
-    public void jumpToMapActivity() {
-        startActivity(new Intent(getActivity(), MapActivity.class));
+    public void jumpToMapActivity(String userName) {
+        startActivity(MapActivity.generateIntent(getContext(), userName));
         getActivity().finish();
     }
 

@@ -59,7 +59,7 @@ public class LoginPresenter implements LoginContract.ILoginPresenter {
                     public void onNext(String s) {
                         Log.d("LogPresenter", "onNext: ");
                         if("success".equals(s)){
-                            mView.jumpToMapActivity();
+                            mView.jumpToMapActivity(userName);
                         }else {
                             mView.onPasswordInputError();
                         }
