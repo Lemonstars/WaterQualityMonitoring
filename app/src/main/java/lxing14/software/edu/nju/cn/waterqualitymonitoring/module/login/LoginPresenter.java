@@ -31,12 +31,12 @@ public class LoginPresenter implements LoginContract.ILoginPresenter {
 
     @Override
     public void verifyPassword(String userName, String password) {
-        if(StringUtil.isEmtpy(userName)){
+        if(StringUtil.isEmpty(userName)){
             mView.onUserNameNotInput();
             return;
         }
 
-        if(StringUtil.isEmtpy(password)){
+        if(StringUtil.isEmpty(password)){
             mView.onPasswordNotInput();
             return;
         }

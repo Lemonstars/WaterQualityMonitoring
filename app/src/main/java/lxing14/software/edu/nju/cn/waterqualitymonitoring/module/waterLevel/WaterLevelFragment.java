@@ -91,11 +91,12 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
 
     @Override
     public void showWaterLevelInfo(List<String> waterLevelDate, List<Float> waterLevelData) {
+        int len = waterLevelDate.size();
         List<Entry> lineEntry = new ArrayList<>();
-        for(int i=0;i<15;i++){
-            lineEntry.add(new Entry(i, i));
+        for(int i=0;i<len;i++){
+            lineEntry.add(new Entry(i, waterLevelData.get(i)));
         }
-        LineDataSet lineDataSet = new LineDataSet(lineEntry, "line");
+        LineDataSet lineDataSet = new LineDataSet(lineEntry, "waterLevel");
         LineData lineData = new LineData(lineDataSet);
         mLineChart.setData(lineData);
         mLineChart.notifyDataSetChanged();

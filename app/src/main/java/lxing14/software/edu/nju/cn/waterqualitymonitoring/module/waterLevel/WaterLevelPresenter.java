@@ -6,6 +6,7 @@ import java.util.List;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterLevelVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -50,8 +51,8 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
 
                     @Override
                     public void onNext(List<WaterLevelVO> waterLevelVOs) {
-                        List<String> waterLevelDateList = new ArrayList<String>();
-                        List<Float> waterLevelDataList = new ArrayList<Float>();
+                        List<String> waterLevelDateList = new ArrayList<>();
+                        List<Float> waterLevelDataList = new ArrayList<>();
                         WaterLevelVO waterLevelVO;
                         for(int i=0;i<waterLevelVOs.size();i+=5){
                             waterLevelVO = waterLevelVOs.get(i);

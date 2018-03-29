@@ -9,7 +9,7 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.util;
 
 public class StringUtil {
 
-    public static boolean isEmtpy(String s){
+    public static boolean isEmpty(String s){
         return s==null || "".equals(s);
     }
 

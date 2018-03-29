@@ -38,7 +38,7 @@ public class MapActivity extends AppCompatActivity
         //initialize the navigation view
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View head = navigationView.getHeaderView(0);
+        View head = navigationView.inflateHeaderView(R.layout.nav_header_map);
         mUserName_tv = head.findViewById(R.id.username_tv);
 
         getIntentData();
