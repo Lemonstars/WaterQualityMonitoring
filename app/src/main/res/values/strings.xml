@@ -35,6 +35,7 @@
     <string name="pleaseInputCorrectPassword">请输入正确的密码</string>
 
     <string name="login">登  录</string>
+    <string name="exitCurrentAccount">退出当前账号</string>
     <string name="intellgenceWater">INTELLGENCE WATER</string>
 
 </resources>

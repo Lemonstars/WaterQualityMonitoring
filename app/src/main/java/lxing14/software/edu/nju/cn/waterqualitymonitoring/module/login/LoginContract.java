@@ -1,5 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.login;
 
+import android.content.Context;
+
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BasePresenter;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BaseView;
 
@@ -13,6 +15,12 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.BaseView;
 public interface LoginContract {
 
     interface ILoginView extends BaseView<ILoginPresenter>{
+
+        /**
+         * 获取上下文
+         * @return
+         */
+        Context getViewContext();
 
         /**
          * 提示输入用户名
@@ -52,6 +60,13 @@ public interface LoginContract {
          * @return
          */
         void verifyPassword(String userName, String password);
+
+        /**
+         * 检查是否已经登录过
+         * 若登录过，则跳转至首页；
+         * 否则，等待用户输入
+         */
+        void checkUserInfoExisted();
 
     }
 

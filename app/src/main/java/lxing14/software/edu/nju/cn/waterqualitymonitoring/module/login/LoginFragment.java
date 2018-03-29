@@ -1,6 +1,9 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.login;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 import java.util.concurrent.TimeUnit;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map.MapActivity;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -33,6 +37,12 @@ public class LoginFragment extends Fragment implements LoginContract.ILoginView,
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mPresenter.checkUserInfoExisted();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_login, container, false);
@@ -52,6 +62,11 @@ public class LoginFragment extends Fragment implements LoginContract.ILoginView,
     @Override
     public void setPresenter(LoginContract.ILoginPresenter presenter) {
         this.mPresenter = presenter;
+    }
+
+    @Override
+    public Context getViewContext() {
+        return getContext();
     }
 
     @Override
