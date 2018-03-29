@@ -15,5 +15,6 @@
     <color name="ph_color">#ff2aacdf</color>
     <color name="temperature_color">#ff5c7cbd</color>
     <color name="transparency_color">#ff2990c7</color>
+    <color name="skyBlue">#2a98ef</color>
 
 </resources>

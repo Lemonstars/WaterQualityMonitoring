@@ -4,24 +4,25 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_waterLevel"
-            android:icon="@drawable/ic_location"
+            android:icon="@drawable/ic_water_level"
             android:title="@string/waterLevel" />
+        <item
+            android:id="@+id/nav_waterQuality"
+            android:icon="@drawable/ic_water_quality"
+            android:title="@string/waterQuality" />
+        <item
+            android:id="@+id/nav_floatingMaterial"
+            android:icon="@drawable/ic_floating"
+            android:title="@string/floatingMaterial" />
+
         <item
             android:id="@+id/nav_waterForce"
             android:icon="@drawable/ic_location"
             android:title="@string/waterForce" />
-        <item
-            android:id="@+id/nav_waterQuality"
-            android:icon="@drawable/ic_location"
-            android:title="@string/waterQuality" />
-        <item
-            android:id="@+id/nav_floatingMaterial"
-            android:icon="@drawable/ic_location"
-            android:title="@string/floatingMaterial" />
 
         <item
             android:id="@+id/nav_unmannedShip"
-            android:icon="@drawable/ic_location"
+            android:icon="@drawable/ic_boat"
             android:title="@string/unmannedShip" />
     </group>
 
