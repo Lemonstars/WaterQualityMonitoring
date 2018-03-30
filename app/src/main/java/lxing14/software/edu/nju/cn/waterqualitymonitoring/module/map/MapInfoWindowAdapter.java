@@ -38,8 +38,9 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
         if (infoWindow == null) {
             infoWindow = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bg_info_window, null);
 
+            //TODO 如何传递真实值
             WaterInfoView view1 = new WaterInfoView(context, context.getString(R.string.waterLevel), "1.0mm");
-            view1.setOnClickListener(v -> context.startActivity(new Intent(context, WaterLevelActivity.class)));
+            view1.setOnClickListener(v -> context.startActivity(WaterLevelActivity.generateIntent(context, 30,100)));
             WaterInfoView view2 = new WaterInfoView(context, context.getString(R.string.waterQuality), "1.0mm");
             view2.setOnClickListener(v -> context.startActivity(new Intent(context, WaterQualityActivity.class)));
             WaterInfoView view3 = new WaterInfoView(context, context.getString(R.string.waterFlow), "10 m/s");

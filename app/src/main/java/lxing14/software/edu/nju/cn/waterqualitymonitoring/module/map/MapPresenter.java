@@ -15,6 +15,7 @@ import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterMapInfoVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterTypeEnum;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -80,8 +81,8 @@ public class MapPresenter implements MapContract.Presenter {
         mLocationListener = new AMapLocationListener() {
             @Override
             public void onLocationChanged(AMapLocation aMapLocation) {
-                double latitude = 39.904989;
-                double longitude = 116.405285;
+                double latitude = CommonConstant.LATITUDE_OF_BJ;
+                double longitude = CommonConstant.LONGITUDE_OF_BJ;
                 if(aMapLocation.getErrorCode() == 0){
                     latitude = aMapLocation.getLatitude();
                     longitude = aMapLocation.getLongitude();

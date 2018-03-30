@@ -1,5 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 
+import android.os.Bundle;
+
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BasePresenter;
@@ -32,6 +34,11 @@ public interface WaterLevelContract {
          */
         void showCurrentWaterLevelDetailInfo(String picUrl, String currentWaterLevel,
                                              String historicalWaterLevel, String photoByDate);
+
+        /**
+         * 地图定位当前位置
+         */
+        void showCurrentLocation(double latitude, double longitude);
     }
 
     interface Presenter extends BasePresenter{
@@ -39,6 +46,11 @@ public interface WaterLevelContract {
         void getDefaultWaterLevelInfo();
 
         void getCurrentWaterLevelInfo();
+
+        /**
+         * 获取定位信息
+         */
+        void getLocationData(Bundle bundle);
     }
 
 }

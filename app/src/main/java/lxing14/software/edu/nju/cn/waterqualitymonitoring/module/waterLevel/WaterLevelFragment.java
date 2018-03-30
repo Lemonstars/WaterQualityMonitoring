@@ -11,7 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.LatLng;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -26,8 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.StringUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
 
 public class WaterLevelFragment extends Fragment implements WaterLevelContract.View{
@@ -36,13 +41,20 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
 
     private LineChart mLineChart;
     private MapView mMapView;
+    private AMap mAMap;
     private ImageView mCurrentWaterLevelImg_iv;
     private TextView mCurrentWaterLevelNum_tv;
     private TextView mHistoricalWaterLevelNum_tv;
     private TextView mPhotoByDate_tv;
 
-    public static WaterLevelFragment generateFragment(){
-        return new WaterLevelFragment();
+    public static WaterLevelFragment generateFragment(double latitude, double longitude){
+        WaterLevelFragment waterLevelFragment = new WaterLevelFragment();
+        Bundle bundle = new Bundle();
+        bundle.putDouble(CommonConstant.LATITUDE, latitude);
+        bundle.putDouble(CommonConstant.LONGITUDE, longitude);
+        waterLevelFragment.setArguments(bundle);
+
+        return waterLevelFragment;
     }
 
     @Nullable
@@ -51,6 +63,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         View root = inflater.inflate(R.layout.fragment_water_level, container, false);
 
         mMapView = root.findViewById(R.id.map);
+        mAMap = mMapView.getMap();
 
         mCurrentWaterLevelImg_iv = root.findViewById(R.id.currentWaterLevelImg_iv);
         mCurrentWaterLevelNum_tv = root.findViewById(R.id.currentWaterLevelNum_tv);
@@ -60,6 +73,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
 
         mMapView.onCreate(savedInstanceState);
 
+        mPresenter.getLocationData(getArguments());
         configLineChart();
         configListener();
 
@@ -113,6 +127,11 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mCurrentWaterLevelNum_tv.setText(currentWaterLevel);
         mHistoricalWaterLevelNum_tv.setText(historicalWaterLevel);
         mPhotoByDate_tv.setText(photoByDate);
+    }
+
+    @Override
+    public void showCurrentLocation(double latitude, double longitude) {
+        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 10f));
     }
 
     //configure the listener
