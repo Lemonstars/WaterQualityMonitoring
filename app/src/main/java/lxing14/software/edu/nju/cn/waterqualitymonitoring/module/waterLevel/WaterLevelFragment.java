@@ -20,6 +20,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,6 +93,8 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     @Override
     public void showWaterLevelInfo(List<String> waterLevelDate, List<Float> waterLevelData) {
         int len = waterLevelDate.size();
+        mLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(waterLevelDate));
+
         List<Entry> lineEntry = new ArrayList<>();
         for(int i=0;i<len;i++){
             lineEntry.add(new Entry(i, waterLevelData.get(i)));
@@ -122,7 +125,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     private void configLineChart(){
         Description description = mLineChart.getDescription();
         description.setPosition(70,20);
-        description.setText("(m/s)");
+        description.setText("(/m)");
         description.setTextAlign(Paint.Align.RIGHT);
 
         Legend legend = mLineChart.getLegend();
@@ -133,7 +136,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         xaxis.setDrawGridLines(false);
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxis.setAvoidFirstLastClipping(true);
-        xaxis.setLabelCount(5);
+        xaxis.setLabelCount(2);
 
         YAxis yAxisLeft = mLineChart.getAxisLeft();
         yAxisLeft.setDrawGridLines(true);
