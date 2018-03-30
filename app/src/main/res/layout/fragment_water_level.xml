@@ -1,176 +1,220 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:background="@drawable/bg_white_radius_corner"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/lineChart"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-    </FrameLayout>
-
     <LinearLayout
-        android:layout_height="0dp"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_weight="1"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="10dp"
-        android:background="@drawable/bg_white_radius_corner">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/currentWaterLevelImg_iv"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="2"
-            android:src="@drawable/ic_default_pic" />
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="3">
-
-            <TextView
-                android:id="@+id/stationName_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@color/lightBlue"
-                android:text="站点名称：南京市"/>
-
-            <TextView
-                android:id="@+id/currentWaterLevel_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/stationName_tv"
-                android:layout_marginTop="10dp"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:text="@string/currentWaterLevel" />
-
-            <TextView
-                android:id="@+id/historicalWaterLevel_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/currentWaterLevel_tv"
-                android:layout_marginTop="5dp"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:text="@string/historicalWaterLevel" />
-
-            <TextView
-                android:id="@+id/photoBy_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/historicalWaterLevel_tv"
-                android:layout_marginTop="5dp"
-                android:textSize="12sp"
-                android:textColor="@color/black"
-                android:text="@string/photoBy" />
-
-
-            <TextView
-                android:id="@+id/currentWaterLevelNum_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/currentWaterLevel_tv"
-                android:layout_alignTop="@id/currentWaterLevel_tv"
-                android:layout_marginLeft="5dp"
-                android:textSize="10sp"
-                android:textColor="@color/lightRed"  />
-
-            <TextView
-                android:id="@+id/historicalWaterLevelNum_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/currentWaterLevelNum_tv"
-                android:layout_alignTop="@id/historicalWaterLevel_tv"
-                android:textSize="10sp"
-                android:textColor="@color/lightRed" />
-
-            <TextView
-                android:id="@+id/photoByDate_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/currentWaterLevelNum_tv"
-                android:layout_alignTop="@id/photoBy_tv"
-                android:textSize="10sp"
-                android:textColor="@color/lightRed" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_white_radius_corner"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp" >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_below="@id/photoBy_tv"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp" >
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-                <ImageView
+                <TextView
+                    android:id="@+id/realTime_tv"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/ic_default_pic"/>
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:text="@string/realTime"/>
 
-                <ImageView
+                <TextView
+                    android:id="@+id/day_tv"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/ic_default_pic"/>
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:text="@string/dayDecided"/>
 
-                <ImageView
+                <TextView
+                    android:id="@+id/month_tv"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/ic_default_pic"/>
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:text="@string/monthDecided"/>
 
             </LinearLayout>
 
 
-        </RelativeLayout>
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lineChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:background="@drawable/bg_white_radius_corner">
+
+            <ImageView
+                android:id="@+id/currentWaterLevelImg_iv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="2"
+                android:src="@drawable/ic_default_pic" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="3">
+
+                <TextView
+                    android:id="@+id/stationName_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/lightBlue"
+                    android:text="站点名称：南京市"/>
+
+                <TextView
+                    android:id="@+id/currentWaterLevel_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/stationName_tv"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:text="@string/currentWaterLevel" />
+
+                <TextView
+                    android:id="@+id/historicalWaterLevel_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/currentWaterLevel_tv"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:text="@string/historicalWaterLevel" />
+
+                <TextView
+                    android:id="@+id/photoBy_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/historicalWaterLevel_tv"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:text="@string/photoBy" />
+
+
+                <TextView
+                    android:id="@+id/currentWaterLevelNum_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/currentWaterLevel_tv"
+                    android:layout_alignTop="@id/currentWaterLevel_tv"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="10sp"
+                    android:textColor="@color/lightRed"  />
+
+                <TextView
+                    android:id="@+id/historicalWaterLevelNum_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/currentWaterLevelNum_tv"
+                    android:layout_alignTop="@id/historicalWaterLevel_tv"
+                    android:textSize="10sp"
+                    android:textColor="@color/lightRed" />
+
+                <TextView
+                    android:id="@+id/photoByDate_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/currentWaterLevelNum_tv"
+                    android:layout_alignTop="@id/photoBy_tv"
+                    android:textSize="10sp"
+                    android:textColor="@color/lightRed" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/photoBy_tv"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp" >
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_default_pic"/>
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_default_pic"/>
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/ic_default_pic"/>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"  >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:text="@string/map"
+                android:textSize="14sp"
+                android:textColor="@color/black"/>
+
+            <com.amap.api.maps.MapView
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:text="@string/map"
-            android:textSize="14sp"
-            android:textColor="@color/black"/>
-
-        <com.amap.api.maps.MapView
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-    </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
