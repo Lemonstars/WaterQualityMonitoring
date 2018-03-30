@@ -29,8 +29,7 @@
             android:value="e00ae4dd70e29c60e51a8e0d4c124535" />
 
         <activity
-            android:name=".module.login.LoginActivity"
-            android:launchMode="singleTask">
+            android:name=".module.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

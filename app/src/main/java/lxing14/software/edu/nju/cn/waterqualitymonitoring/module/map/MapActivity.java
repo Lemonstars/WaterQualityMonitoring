@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.login.LoginActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ActivityUtil;
 
 public class MapActivity extends AppCompatActivity implements View.OnClickListener{
@@ -94,14 +95,15 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
     private void configListener(){
         mExit_layout.setOnClickListener(
                 e -> {
-                    SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getSharedPreferences(SharePreferencesConstant.APP_NAME, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.remove(SharePreferencesConstant.USER_NAME);
                     editor.remove(SharePreferencesConstant.PASSWORD);
+                    editor.clear();
                     editor.apply();
-                    Intent intent = new Intent(Intent.ACTION_MAIN);
-                    intent.addCategory(Intent.CATEGORY_HOME);
-                    startActivity(intent);
+
+                    startActivity(new Intent(this, LoginActivity.class));
+                    finish();
                 });
 
         mWaterLevelLayout.setOnClickListener(this);

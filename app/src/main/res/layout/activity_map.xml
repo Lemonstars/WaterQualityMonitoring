@@ -55,15 +55,15 @@
                 android:paddingBottom="10dp">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_water_level"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_gravity="center"
                     android:textSize="14sp"
                     android:textColor="@color/black"
@@ -80,15 +80,15 @@
                 android:paddingBottom="10dp">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_water_quality"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_gravity="center"
                     android:textSize="14sp"
                     android:textColor="@color/black"
@@ -105,15 +105,15 @@
                 android:paddingBottom="10dp">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_floating"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_gravity="center"
                     android:textSize="14sp"
                     android:textColor="@color/black"
@@ -130,15 +130,15 @@
                 android:paddingBottom="10dp">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_boat"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_gravity="center"
                     android:textSize="14sp"
                     android:textColor="@color/black"
@@ -155,15 +155,15 @@
                 android:paddingBottom="10dp">
 
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="20dp"
                     android:src="@drawable/ic_location"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_gravity="center"
                     android:textSize="14sp"
                     android:textColor="@color/black"
