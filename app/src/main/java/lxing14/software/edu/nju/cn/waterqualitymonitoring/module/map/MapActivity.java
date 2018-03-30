@@ -24,6 +24,11 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
 
     private TextView mUserName_tv;
     private ViewGroup mExit_layout;
+    private ViewGroup mWaterLevelLayout;
+    private ViewGroup mWaterQualityLayout;
+    private ViewGroup mFloatingLayout;
+    private ViewGroup mBoatLayout;
+    private ViewGroup mWaterForceLayout;
 
     public static Intent generateIntent(Context context, String userName){
         Intent intent = new Intent(context, MapActivity.class);
@@ -38,6 +43,11 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
 
         mUserName_tv = findViewById(R.id.username_tv);
         mExit_layout = findViewById(R.id.exit_layout);
+        mWaterLevelLayout = findViewById(R.id.waterLevel_layout);
+        mWaterQualityLayout = findViewById(R.id.waterQuality_layout);
+        mFloatingLayout = findViewById(R.id.floating_layout);
+        mBoatLayout = findViewById(R.id.boat_layout);
+        mWaterForceLayout = findViewById(R.id.waterForce_layout);
 
         getIntentData();
 
@@ -93,6 +103,12 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
                     intent.addCategory(Intent.CATEGORY_HOME);
                     startActivity(intent);
                 });
+
+        mWaterLevelLayout.setOnClickListener(this);
+        mWaterQualityLayout.setOnClickListener(this);
+        mFloatingLayout.setOnClickListener(this);
+        mBoatLayout.setOnClickListener(this);
+        mWaterForceLayout.setOnClickListener(this);
     }
 
     //get the data of the intent
