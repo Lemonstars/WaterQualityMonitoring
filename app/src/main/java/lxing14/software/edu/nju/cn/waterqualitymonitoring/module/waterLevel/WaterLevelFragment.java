@@ -118,7 +118,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     //configure the listener
     private void configListener(){
         mLineChart.setOnLongClickListener( e -> {startActivity(new Intent(getContext(), ChartActivity.class));return true;});
-        mCurrentWaterLevelImg_iv.setOnClickListener( e -> new ImageDialog(getContext()).show());
+        mCurrentWaterLevelImg_iv.setOnClickListener( e -> new ImageDialog(getContext(), mCurrentWaterLevelImg_iv.getDrawable()).show());
     }
 
     //configure the line chart
