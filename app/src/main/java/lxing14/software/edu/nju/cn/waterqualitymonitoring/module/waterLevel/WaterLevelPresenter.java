@@ -85,9 +85,9 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
                     public void onNext(WaterLevelVO waterLevelVO) {
                         String picUrl = WebSite.PIC_Prefix + waterLevelVO.getPicPath();
                         String picUrlEncode = picUrl.replace(" ", "%20");
-                        String currentWaterLevel = waterLevelVO.getWaterLevel() + " mm";
+                        String currentWaterLevel = waterLevelVO.getWaterLevel() + " m";
                         //TODO 历史数据如何获取
-                        String historicalWaterLevel = "1-2 mm";
+                        String historicalWaterLevel = "1-2 m";
                         String photoBy = waterLevelVO.getC_time();
 
                         mView.showCurrentWaterLevelDetailInfo(picUrlEncode, currentWaterLevel, historicalWaterLevel, photoBy);
