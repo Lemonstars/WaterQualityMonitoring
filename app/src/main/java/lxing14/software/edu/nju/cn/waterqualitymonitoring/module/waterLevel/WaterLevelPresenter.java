@@ -22,6 +22,10 @@ import rx.schedulers.Schedulers;
 
 public class WaterLevelPresenter implements WaterLevelContract.Presenter{
 
+    public static final int REAL_TIME = 0;
+    public static final int DAY = 1;
+    public static final int MONTH = 2;
+
     private WaterLevelContract.View mView;
 
     public WaterLevelPresenter(WaterLevelContract.View view) {
@@ -56,8 +60,9 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
                         List<String> waterLevelDateList = new ArrayList<>();
                         List<Float> waterLevelDataList = new ArrayList<>();
                         WaterLevelVO waterLevelVO;
-                        for(int i=0;i<waterLevelVOs.size();i+=5){
-                            waterLevelVO = waterLevelVOs.get(i);
+                        int len = waterLevelVOs.size();
+                        for(int i=0;i<len;i++){
+                            waterLevelVO = waterLevelVOs.get(len-i-1);
                             waterLevelDateList.add(waterLevelVO.getC_time());
                             waterLevelDataList.add(waterLevelVO.getWaterLevel());
                         }

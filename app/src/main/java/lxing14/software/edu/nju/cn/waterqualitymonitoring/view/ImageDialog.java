@@ -22,11 +22,13 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 
 public class ImageDialog extends Dialog{
 
+    private ImageView imageView;
+
     public ImageDialog(@NonNull Context context, Drawable drawable) {
         super(context, R.style.imageDialog_style);
         setContentView(R.layout.dialog_image);
 
-        ImageView imageView = findViewById(R.id.imageView);
+        imageView = findViewById(R.id.imageView);
         if(drawable == null){
             imageView.setImageResource(R.drawable.ic_default_pic);
         }else {
@@ -47,9 +49,11 @@ public class ImageDialog extends Dialog{
                 dismiss();
             }
         });
-
     }
 
+    public void setImage(Drawable drawable){
+        imageView.setImageDrawable(drawable);
+    }
 
 
 }

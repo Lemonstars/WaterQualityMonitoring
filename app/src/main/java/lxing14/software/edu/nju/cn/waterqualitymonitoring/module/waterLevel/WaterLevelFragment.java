@@ -43,10 +43,12 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     private TextView mCurrentWaterLevelNum_tv;
     private TextView mHistoricalWaterLevelNum_tv;
     private TextView mPhotoByDate_tv;
+    private ImageDialog mImageDialog;
 
     private TextView mRealTime_tv;
     private TextView mDay_tv;
     private TextView mMonth_tv;
+    private TextView[] mTab_tv;
 
     public static WaterLevelFragment generateFragment(double latitude, double longitude){
         WaterLevelFragment waterLevelFragment = new WaterLevelFragment();
@@ -135,16 +137,32 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.realTime_tv:
+                clickTab(WaterLevelPresenter.REAL_TIME);
                 break;
             case R.id.day_tv:
+                clickTab(WaterLevelPresenter.DAY);
                 break;
             case R.id.month_tv:
+                clickTab(WaterLevelPresenter.MONTH);
                 break;
             case R.id.currentWaterLevelImg_iv:
-                new ImageDialog(getContext(), mCurrentWaterLevelImg_iv.getDrawable()).show();
+                if(mImageDialog == null){
+                    mImageDialog = new ImageDialog(getContext(), mCurrentWaterLevelImg_iv.getDrawable());
+                }else {
+                    mImageDialog.setImage(mCurrentWaterLevelImg_iv.getDrawable());
+                }
+                mImageDialog.show();
                 break;
         }
     }
+
+    //the change of the color of the tab
+    private void clickTab(int index){
+        for(int i=0;i<3;i++){
+            mTab_tv[i].setTextColor(getResources().getColor(i==index ? R.color.colorPrimary:R.color.black));
+        }
+    }
+
 
     //find the view by the id
     private void findView(View root){
@@ -160,6 +178,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mRealTime_tv = root.findViewById(R.id.realTime_tv);
         mDay_tv = root.findViewById(R.id.day_tv);
         mMonth_tv = root.findViewById(R.id.month_tv);
+        mTab_tv = new TextView[]{mRealTime_tv, mDay_tv, mMonth_tv};
     }
 
     //configure the listener
@@ -186,6 +205,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxis.setAvoidFirstLastClipping(true);
         xaxis.setLabelCount(2);
+        xaxis.setAxisMaximum(15);
 
         YAxis yAxisLeft = mLineChart.getAxisLeft();
         yAxisLeft.setDrawGridLines(true);
