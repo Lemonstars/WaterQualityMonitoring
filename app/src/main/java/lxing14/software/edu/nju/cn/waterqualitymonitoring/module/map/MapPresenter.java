@@ -1,7 +1,12 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
 
@@ -10,6 +15,7 @@ import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterMapInfoVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterTypeEnum;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -24,7 +30,11 @@ import rx.schedulers.Schedulers;
 
 public class MapPresenter implements MapContract.Presenter {
 
-    private final MapContract.View mMapView;
+    private MapContract.View mMapView;
+
+    private AMapLocationClient mLocationClient;
+    private AMapLocationListener mLocationListener;
+    private AMapLocationClientOption mLocationOption;
 
     public MapPresenter(@NonNull MapContract.View view){
         mMapView = view;
@@ -34,6 +44,7 @@ public class MapPresenter implements MapContract.Presenter {
     @Override
     public void start() {
         loadAllWaterTypeInfo();
+        initLocation();
     }
 
     @Override
@@ -64,6 +75,33 @@ public class MapPresenter implements MapContract.Presenter {
     @Override
     public void loadUnmannedShipInfo() {
 
+    }
+
+    private void initLocation() {
+        mLocationListener = new AMapLocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation aMapLocation) {
+                double latitude = CommonConstant.LATITUDE_OF_BJ;
+                double longitude = CommonConstant.LONGITUDE_OF_BJ;
+                if(aMapLocation.getErrorCode() == 0){
+                    latitude = aMapLocation.getLatitude();
+                    longitude = aMapLocation.getLongitude();
+                }
+                mMapView.showCurrentLocation(latitude, longitude);
+            }
+        };
+
+        mLocationClient = new AMapLocationClient(mMapView.getViewContext());
+        mLocationClient.setLocationListener(mLocationListener);
+
+        mLocationOption = new AMapLocationClientOption();
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        mLocationOption.setNeedAddress(true);
+        mLocationOption.setOnceLocation(true);
+        mLocationOption.setMockEnable(false);
+
+        mLocationClient.setLocationOption(mLocationOption);
+        mLocationClient.startLocation();
     }
 
     private void loadPointInfo(int waterType){

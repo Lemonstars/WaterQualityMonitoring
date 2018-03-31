@@ -1,5 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map;
 
+import android.content.Context;
+
 import com.amap.api.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -19,6 +21,19 @@ public interface MapContract {
     interface View extends BaseView<Presenter>{
 
         void showInitPoint(ArrayList<MarkerOptions> markerOptionsList);
+
+        /**
+         * 获取上下文
+         */
+        Context getViewContext();
+
+        /**
+         * 显示当前定位
+         *
+         * @param latitude
+         * @param longitude
+         */
+        void showCurrentLocation(double latitude, double longitude);
 
     }
 
@@ -50,6 +65,7 @@ public interface MapContract {
          * 加载无人船信息
          */
         void loadUnmannedShipInfo();
+
 
     }
 

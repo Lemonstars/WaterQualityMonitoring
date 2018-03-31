@@ -1,5 +1,6 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,7 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapOptions;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.CameraPosition;
+import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -20,6 +25,7 @@ public class MapFragment extends Fragment implements MapContract.View{
     private MapContract.Presenter mPresenter;
 
     private MapView mMapView;
+    private AMap mAMap;
 
     public static MapFragment generateFragment(){
         return new MapFragment();
@@ -28,11 +34,11 @@ public class MapFragment extends Fragment implements MapContract.View{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_map, container, false);
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_map, container, false);
         mMapView = root.findViewById(R.id.map);
 
-        AMap aMap = mMapView.getMap();
-        aMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getContext()));
+        mAMap = mMapView.getMap();
+        mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getContext()));
 
         mMapView.onCreate(savedInstanceState);
         return root;
@@ -72,7 +78,17 @@ public class MapFragment extends Fragment implements MapContract.View{
     }
 
     @Override
+    public Context getViewContext() {
+        return getContext();
+    }
+
+    @Override
     public void setPresenter(MapContract.Presenter presenter) {
         this.mPresenter = presenter;
+    }
+
+    @Override
+    public void showCurrentLocation(double latitude, double longitude) {
+        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 10f));
     }
 }

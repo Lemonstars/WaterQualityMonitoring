@@ -1,6 +1,5 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 
-import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.LatLng;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -20,28 +22,42 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
 
-public class WaterLevelFragment extends Fragment implements WaterLevelContract.View{
+public class WaterLevelFragment extends Fragment implements WaterLevelContract.View, View.OnClickListener{
 
     private WaterLevelContract.Presenter mPresenter;
 
     private LineChart mLineChart;
     private MapView mMapView;
+    private AMap mAMap;
     private ImageView mCurrentWaterLevelImg_iv;
     private TextView mCurrentWaterLevelNum_tv;
     private TextView mHistoricalWaterLevelNum_tv;
     private TextView mPhotoByDate_tv;
+    private ImageDialog mImageDialog;
 
-    public static WaterLevelFragment generateFragment(){
-        return new WaterLevelFragment();
+    private TextView mRealTime_tv;
+    private TextView mDay_tv;
+    private TextView mMonth_tv;
+    private TextView[] mTab_tv;
+
+    public static WaterLevelFragment generateFragment(double latitude, double longitude){
+        WaterLevelFragment waterLevelFragment = new WaterLevelFragment();
+        Bundle bundle = new Bundle();
+        bundle.putDouble(CommonConstant.LATITUDE, latitude);
+        bundle.putDouble(CommonConstant.LONGITUDE, longitude);
+        waterLevelFragment.setArguments(bundle);
+
+        return waterLevelFragment;
     }
 
     @Nullable
@@ -49,19 +65,13 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_water_level, container, false);
 
-        mMapView = root.findViewById(R.id.map);
-
-        mCurrentWaterLevelImg_iv = root.findViewById(R.id.currentWaterLevelImg_iv);
-        mCurrentWaterLevelNum_tv = root.findViewById(R.id.currentWaterLevelNum_tv);
-        mHistoricalWaterLevelNum_tv = root.findViewById(R.id.historicalWaterLevelNum_tv);
-        mPhotoByDate_tv = root.findViewById(R.id.photoByDate_tv);
-        mLineChart = root.findViewById(R.id.lineChart);
-
-        mMapView.onCreate(savedInstanceState);
-
+        findView(root);
         configLineChart();
         configListener();
 
+        mPresenter.getLocationData(getArguments());
+
+        mMapView.onCreate(savedInstanceState);
         return root;
     }
 
@@ -91,7 +101,13 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
 
     @Override
     public void showWaterLevelInfo(List<String> waterLevelDate, List<Float> waterLevelData) {
+        mRealTime_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
+        mDay_tv.setTextColor(getResources().getColor(R.color.black));
+        mMonth_tv.setTextColor(getResources().getColor(R.color.black));
+
         int len = waterLevelDate.size();
+        mLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(waterLevelDate));
+
         List<Entry> lineEntry = new ArrayList<>();
         for(int i=0;i<len;i++){
             lineEntry.add(new Entry(i, waterLevelData.get(i)));
@@ -112,17 +128,72 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mPhotoByDate_tv.setText(photoByDate);
     }
 
+    @Override
+    public void showCurrentLocation(double latitude, double longitude) {
+        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 10f));
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.realTime_tv:
+                clickTab(WaterLevelPresenter.REAL_TIME);
+                break;
+            case R.id.day_tv:
+                clickTab(WaterLevelPresenter.DAY);
+                break;
+            case R.id.month_tv:
+                clickTab(WaterLevelPresenter.MONTH);
+                break;
+            case R.id.currentWaterLevelImg_iv:
+                if(mImageDialog == null){
+                    mImageDialog = new ImageDialog(getContext(), mCurrentWaterLevelImg_iv.getDrawable());
+                }else {
+                    mImageDialog.setImage(mCurrentWaterLevelImg_iv.getDrawable());
+                }
+                mImageDialog.show();
+                break;
+        }
+    }
+
+    //the change of the color of the tab
+    private void clickTab(int index){
+        for(int i=0;i<3;i++){
+            mTab_tv[i].setTextColor(getResources().getColor(i==index ? R.color.colorPrimary:R.color.black));
+        }
+    }
+
+
+    //find the view by the id
+    private void findView(View root){
+        mMapView = root.findViewById(R.id.map);
+        mAMap = mMapView.getMap();
+
+        mCurrentWaterLevelImg_iv = root.findViewById(R.id.currentWaterLevelImg_iv);
+        mCurrentWaterLevelNum_tv = root.findViewById(R.id.currentWaterLevelNum_tv);
+        mHistoricalWaterLevelNum_tv = root.findViewById(R.id.historicalWaterLevelNum_tv);
+        mPhotoByDate_tv = root.findViewById(R.id.photoByDate_tv);
+        mLineChart = root.findViewById(R.id.lineChart);
+
+        mRealTime_tv = root.findViewById(R.id.realTime_tv);
+        mDay_tv = root.findViewById(R.id.day_tv);
+        mMonth_tv = root.findViewById(R.id.month_tv);
+        mTab_tv = new TextView[]{mRealTime_tv, mDay_tv, mMonth_tv};
+    }
+
     //configure the listener
     private void configListener(){
-        mLineChart.setOnLongClickListener( e -> {startActivity(new Intent(getContext(), ChartActivity.class));return true;});
-        mCurrentWaterLevelImg_iv.setOnClickListener( e -> new ImageDialog(getContext()).show());
+        mRealTime_tv.setOnClickListener(this);
+        mDay_tv.setOnClickListener(this);
+        mMonth_tv.setOnClickListener(this);
+        mCurrentWaterLevelImg_iv.setOnClickListener(this);
     }
 
     //configure the line chart
     private void configLineChart(){
         Description description = mLineChart.getDescription();
         description.setPosition(70,20);
-        description.setText("(m/s)");
+        description.setText("(/m)");
         description.setTextAlign(Paint.Align.RIGHT);
 
         Legend legend = mLineChart.getLegend();
@@ -133,7 +204,8 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         xaxis.setDrawGridLines(false);
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxis.setAvoidFirstLastClipping(true);
-        xaxis.setLabelCount(5);
+        xaxis.setLabelCount(2);
+        xaxis.setAxisMaximum(15);
 
         YAxis yAxisLeft = mLineChart.getAxisLeft();
         yAxisLeft.setDrawGridLines(true);

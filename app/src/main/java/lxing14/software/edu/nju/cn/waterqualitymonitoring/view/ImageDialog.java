@@ -2,6 +2,7 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.view;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.view.Display;
 import android.view.View;
@@ -21,12 +22,18 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 
 public class ImageDialog extends Dialog{
 
-    public ImageDialog(@NonNull Context context) {
+    private ImageView imageView;
+
+    public ImageDialog(@NonNull Context context, Drawable drawable) {
         super(context, R.style.imageDialog_style);
         setContentView(R.layout.dialog_image);
 
-        ImageView imageView = findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.ic_default_pic);
+        imageView = findViewById(R.id.imageView);
+        if(drawable == null){
+            imageView.setImageResource(R.drawable.ic_default_pic);
+        }else {
+            imageView.setImageDrawable(drawable);
+        }
 
         Window window = getWindow();
         WindowManager windowManager = window.getWindowManager();
@@ -42,9 +49,11 @@ public class ImageDialog extends Dialog{
                 dismiss();
             }
         });
-
     }
 
+    public void setImage(Drawable drawable){
+        imageView.setImageDrawable(drawable);
+    }
 
 
 }

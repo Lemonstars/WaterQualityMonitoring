@@ -31,6 +31,7 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
     private LineChart mLineChart;
     private RecyclerView mType_rv;
     private MapView mMapView;
+    private WaterQualityRVAdapter mAdapter;
 
     public static WaterQualityFragment generateFragment(){
         return new WaterQualityFragment();
@@ -89,22 +90,37 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         mLineChart.setData(lineData);
     }
 
+    @Override
+    public void showCurrentWaterQualityInfo(String temperature, double ph, double dissolvedOxygen, double redox,
+                                            double transparency, double conductivity, double turbidity, double nh3) {
+        WaterQualityTypeVO temperatureVO = new WaterQualityTypeVO(WaterQualityTypeVO.TEMPERATURE, temperature);
+        WaterQualityTypeVO phVO = new WaterQualityTypeVO(WaterQualityTypeVO.PH, String.valueOf(ph));
+        WaterQualityTypeVO dissolvedOxygenVO = new WaterQualityTypeVO(WaterQualityTypeVO.OXYGEN, String.valueOf(dissolvedOxygen));
+        WaterQualityTypeVO redoxVO = new WaterQualityTypeVO(WaterQualityTypeVO.OXIDATION, String.valueOf(redox));
+        WaterQualityTypeVO transparencyVO = new WaterQualityTypeVO(WaterQualityTypeVO.TRANSPANENCY, String.valueOf(transparency));
+        WaterQualityTypeVO conductivityVO = new WaterQualityTypeVO(WaterQualityTypeVO.ELECTRIC, String.valueOf(conductivity));
+        WaterQualityTypeVO turbidityVO = new WaterQualityTypeVO(WaterQualityTypeVO.DIRTY, String.valueOf(turbidity));
+        WaterQualityTypeVO nh3VO = new WaterQualityTypeVO(WaterQualityTypeVO.AMMONIA, String.valueOf(nh3));
+
+        List<WaterQualityTypeVO> data = new ArrayList<>();
+        data.add(temperatureVO);
+        data.add(phVO);
+        data.add(dissolvedOxygenVO);
+        data.add(redoxVO);
+        data.add(transparencyVO);
+        data.add(conductivityVO);
+        data.add(turbidityVO);
+        data.add(nh3VO);
+        mAdapter.setData(data);
+    }
+
     //initialize the recyclerView
     private void initRecyclerView(){
-        WaterQualityRVAdapter adapter = new WaterQualityRVAdapter(getContext());
+        mAdapter = new WaterQualityRVAdapter(getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        mType_rv.setAdapter(adapter);
+        mType_rv.setAdapter(mAdapter);
         mType_rv.setLayoutManager(linearLayoutManager);
-
-        WaterQualityTypeVO vo1 = new WaterQualityTypeVO(WaterQualityTypeVO.PH, 7);
-        WaterQualityTypeVO vo2 = new WaterQualityTypeVO(WaterQualityTypeVO.TEMPERATURE, 10);
-        WaterQualityTypeVO vo3 = new WaterQualityTypeVO(WaterQualityTypeVO.OXYGEN, 1.33);
-        List<WaterQualityTypeVO> data = new ArrayList<>();
-        data.add(vo1);
-        data.add(vo2);
-        data.add(vo3);
-        adapter.setData(data);
     }
 
     //configure the line chart

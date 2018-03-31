@@ -1,12 +1,14 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 
+import android.os.Bundle;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterLevelVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -19,6 +21,10 @@ import rx.schedulers.Schedulers;
  */
 
 public class WaterLevelPresenter implements WaterLevelContract.Presenter{
+
+    public static final int REAL_TIME = 0;
+    public static final int DAY = 1;
+    public static final int MONTH = 2;
 
     private WaterLevelContract.View mView;
 
@@ -54,8 +60,9 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
                         List<String> waterLevelDateList = new ArrayList<>();
                         List<Float> waterLevelDataList = new ArrayList<>();
                         WaterLevelVO waterLevelVO;
-                        for(int i=0;i<waterLevelVOs.size();i+=5){
-                            waterLevelVO = waterLevelVOs.get(i);
+                        int len = waterLevelVOs.size();
+                        for(int i=0;i<len;i++){
+                            waterLevelVO = waterLevelVOs.get(len-i-1);
                             waterLevelDateList.add(waterLevelVO.getC_time());
                             waterLevelDataList.add(waterLevelVO.getWaterLevel());
                         }
@@ -85,13 +92,20 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
                     public void onNext(WaterLevelVO waterLevelVO) {
                         String picUrl = WebSite.PIC_Prefix + waterLevelVO.getPicPath();
                         String picUrlEncode = picUrl.replace(" ", "%20");
-                        String currentWaterLevel = waterLevelVO.getWaterLevel() + " mm";
+                        String currentWaterLevel = waterLevelVO.getWaterLevel() + " m";
                         //TODO 历史数据如何获取
-                        String historicalWaterLevel = "1-2 mm";
+                        String historicalWaterLevel = "1-2 m";
                         String photoBy = waterLevelVO.getC_time();
 
                         mView.showCurrentWaterLevelDetailInfo(picUrlEncode, currentWaterLevel, historicalWaterLevel, photoBy);
                     }
                 });
+    }
+
+    @Override
+    public void getLocationData(Bundle bundle) {
+        double latitude = bundle.getDouble(CommonConstant.LATITUDE);
+        double longitude = bundle.getDouble(CommonConstant.LONGITUDE);
+        mView.showCurrentLocation(latitude, longitude);
     }
 }
