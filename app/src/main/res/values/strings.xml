@@ -16,18 +16,21 @@
     <string name="historicalWaterLevel">历史水位：</string>
     <string name="photoBy">拍摄于：</string>
 
-    <string name="warningNum">预警值</string>
-    <string name="argumentSetting">参数设置</string>
-    <string name="changeVideo">切换视频</string>
-    <string name="remoteSwitch">远程开关</string>
-    <string name="chartOfCurrentWaterLevel">当前水位折线图</string>
-
     <string name="MORE">MORE</string>
     <string name="title_activity_water_level">WaterLevelActivity</string>
 
     <string name="realTime">实时</string>
     <string name="monthDecided">按月</string>
     <string name="dayDecided">按天</string>
+
+    <string name="temperature">温度</string>
+    <string name="conductivity">电导率</string>
+    <string name="ph">PH值</string>
+    <string name="dissolvedOxygen">溶解氧</string>
+    <string name="redox">氧化还原</string>
+    <string name="turbidity">浊度</string>
+    <string name="transparency">透明度</string>
+    <string name="NH3">氨氮</string>
 
     <string name="pleaseInputUserName">请输入用户名</string>
     <string name="pleaseInputPassword">请输入密码</string>

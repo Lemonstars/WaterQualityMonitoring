@@ -158,7 +158,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
 
     //the change of the color of the tab
     private void clickTab(int index){
-        for(int i=0;i<3;i++){
+        for(int i=0;i<mTab_tv.length;i++){
             mTab_tv[i].setTextColor(getResources().getColor(i==index ? R.color.colorPrimary:R.color.black));
         }
     }

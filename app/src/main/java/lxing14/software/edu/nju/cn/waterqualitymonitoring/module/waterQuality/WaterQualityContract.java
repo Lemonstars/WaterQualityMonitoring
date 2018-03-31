@@ -15,6 +15,12 @@ public interface WaterQualityContract {
     interface View extends BaseView<WaterQualityContract.Presenter>{
 
         /**
+         * 显示被选中的tab
+         * @param index
+         */
+        void showTabSelected(int index);
+
+        /**
          * 显示水质图表
          */
         void showWaterQualityChart();
@@ -35,6 +41,12 @@ public interface WaterQualityContract {
     }
 
     interface Presenter extends BasePresenter{
+
+        /**
+         * 获取当前图表数据
+         * @param type
+         */
+        void loadChartDataByType(int type);
 
         /**
          * 获取当前水质数据
