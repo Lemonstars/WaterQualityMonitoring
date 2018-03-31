@@ -11,10 +11,19 @@
     <color name="lightBlue">#2a799b</color>
     <color name="lightRed">#fced2b09</color>
     <color name="lightGray">#495b64</color>
-    
-    <color name="ph_color">#ff2aacdf</color>
-    <color name="temperature_color">#ff5c7cbd</color>
-    <color name="transparency_color">#ff2990c7</color>
+
+
+    <!-- 水质相关参数颜色值：温度 电导率 PH 溶解氧 氧化还原 浊度 透明度 氨氮 -->
+    <color name="temperature_color">#5c7cbd</color>
+    <color name="electric_color">#5d7bbd</color>
+    <color name="ph_color">#3d758a</color>
+    <color name="oxygen_color">#7a5858</color>
+    <color name="oxidation_color">#f9cc8d</color>
+    <color name="dirty_color">#6de5b7</color>
+    <color name="transparency_color">#fce8b5</color>
+    <color name="ammonia_color">#8c98c9</color>
+
+
     <color name="skyBlue">#2a98ef</color>
 
 </resources>

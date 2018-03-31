@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.UserInterface;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.WaterInterface;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.WaterQualityInterface;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -22,6 +23,7 @@ public class RetrofitHelper {
 
     private static UserInterface userInterface;
     private static WaterInterface waterInterface;
+    private static WaterQualityInterface waterQualityInterface;
 
     private static void initRetrofit(){
         OkHttpClient okHttpClient= new OkHttpClient.Builder()
@@ -57,6 +59,17 @@ public class RetrofitHelper {
             waterInterface = retrofit.create(WaterInterface.class);
         }
         return waterInterface;
+    }
+
+    public static WaterQualityInterface getWaterQualityInterface(){
+        if(waterQualityInterface == null){
+            if(retrofit == null){
+                initRetrofit();
+            }
+            waterQualityInterface = retrofit.create(WaterQualityInterface.class);
+        }
+
+        return waterQualityInterface;
     }
 
 }
