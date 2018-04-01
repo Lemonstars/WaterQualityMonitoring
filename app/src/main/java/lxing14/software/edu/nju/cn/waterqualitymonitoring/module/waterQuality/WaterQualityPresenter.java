@@ -8,6 +8,7 @@ import java.util.List;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.*;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityTypeNumVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterQualityData;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -21,8 +22,6 @@ import rx.schedulers.Schedulers;
  */
 
 public class WaterQualityPresenter implements WaterQualityContract.Presenter {
-
-    public static final int DEFAULT_DAY = 15;
 
     private WaterQualityContract.View mView;
     private int mState = WaterQualityData.TEMPERATURE;
@@ -43,7 +42,7 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
     public void loadChartDataByType(int type) {
         mState = type;
 
-        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(1, WaterQualityData.getName(mState), DEFAULT_DAY)
+        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(1, WaterQualityData.getName(mState), CommonConstant.DEFAULT_DAY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<WaterQualityTypeNumVO>>() {

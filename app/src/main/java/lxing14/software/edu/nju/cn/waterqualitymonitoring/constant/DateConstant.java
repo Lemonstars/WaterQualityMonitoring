@@ -9,7 +9,6 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.constant;
 
 public class DateConstant {
 
-
     public static final String ALLOWED_SMALLEST_TIME = "2016-1-1";
     public static final String ALLOWED_BIGGEST_TIME= "20230-12-31";
 

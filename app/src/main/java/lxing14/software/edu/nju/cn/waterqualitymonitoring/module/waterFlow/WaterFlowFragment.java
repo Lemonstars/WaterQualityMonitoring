@@ -24,6 +24,7 @@ import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +108,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     }
 
     @Override
-    public void showRealTimeChart() {
+    public void showRealTimeChart(List<String> dateList, List<Float> dataList) {
         mCandleStickChart.setVisibility(View.GONE);
         mLineChart.setVisibility(View.VISIBLE);
 
@@ -115,13 +116,18 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         mDay_tv.setTextColor(getResources().getColor(R.color.black));
         mMonth_tv.setTextColor(getResources().getColor(R.color.black));
 
+        int len = dateList.size();
+        mLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dateList));
+
         List<Entry> lineEntry = new ArrayList<>();
-        for(int i=0;i<15;i++){
-            lineEntry.add(new Entry(i, i));
+        for(int i=0;i<len;i++){
+            lineEntry.add(new Entry(i, dataList.get(i)));
         }
-        LineDataSet lineDataSet = new LineDataSet(lineEntry, "line");
+        LineDataSet lineDataSet = new LineDataSet(lineEntry, "waterFlowRealTime");
         LineData lineData = new LineData(lineDataSet);
         mLineChart.setData(lineData);
+        mLineChart.notifyDataSetChanged();
+        mLineChart.invalidate();
     }
 
     @Override
@@ -177,8 +183,8 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         xAxis.setDrawGridLines(false);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setAvoidFirstLastClipping(true);
-        xAxis.setLabelCount(5);
-        xAxis.setGranularity(1f);
+        xAxis.setLabelCount(2);
+        xAxis.setAxisMaximum(15);
 
         YAxis yAxisLeft = mCandleStickChart.getAxisLeft();
         yAxisLeft.setDrawGridLines(true);
@@ -214,7 +220,8 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         xaxis.setDrawGridLines(false);
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxis.setAvoidFirstLastClipping(true);
-        xaxis.setLabelCount(5);
+        xaxis.setLabelCount(2);
+        xaxis.setAxisMaximum(15);
 
         YAxis yAxisLeft = mLineChart.getAxisLeft();
         yAxisLeft.setDrawGridLines(true);
@@ -252,7 +259,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.realTime_tv:
-                showRealTimeChart();
+                mPresenter.loadChartData();
                 break;
             case R.id.day_tv:
                 showDayChart();
