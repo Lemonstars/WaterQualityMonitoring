@@ -2,10 +2,12 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterQuality;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.*;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityTypeNumVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterQualityData;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -44,22 +46,43 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
         RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(1, WaterQualityData.getName(mState), DEFAULT_DAY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<WaterQualityVO>>() {
+                .subscribe(new Subscriber<List<WaterQualityTypeNumVO>>() {
                     @Override
                     public void onCompleted() {
-
+                        Log.d("WaterQualityPresenter", "onCompleted: ");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.d("WaterQualityPresenter", "onError: ");
                     }
 
                     @Override
-                    public void onNext(List<WaterQualityVO> waterQualityVOS) {
-                        //TODO 看看改不改接口
+                    public void onNext(List<WaterQualityTypeNumVO> waterQualityTypeVOS) {
+
+                        int len = waterQualityTypeVOS.size();
+                        List<Float> dataList = new ArrayList<>(len);
+                        List<String> dateList = new ArrayList<>(len);
+
+                        WaterQualityTypeNumVO waterQualityTypeNumVO;
+                        String numStr;
+                        float num;
+                        for(int i=0;i<len;i++){
+                            waterQualityTypeNumVO = waterQualityTypeVOS.get(len-i-1);
+                            numStr = waterQualityTypeNumVO.getReturnDateValue();
+                            if(mState == WaterQualityData.TEMPERATURE){
+                                num = Float.parseFloat(numStr.substring(0, numStr.length()-2));
+                            }else {
+                                num = Float.parseFloat(numStr);
+                            }
+//                            num = Float.parseFloat(mState == WaterQualityData.TEMPERATURE? numStr:numStr.substring(0, numStr.length()-2));
+                            dataList.add(num);
+
+                            dateList.add(waterQualityTypeNumVO.getCollectionTime());
+                        }
+
                         mView.showTabSelected(mState);
-                        mView.showWaterQualityChart();
+                        mView.showWaterQualityChart(dateList, dataList);
                     }
                 });
     }

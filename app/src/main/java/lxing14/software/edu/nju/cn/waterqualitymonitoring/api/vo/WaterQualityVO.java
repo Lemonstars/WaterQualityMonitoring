@@ -36,6 +36,7 @@ public class WaterQualityVO {
     private Double hatchOpen;       //舱盖开
     private Double waterPenetration;       //仓体进水
     private Double voltage ;       //电压
+    private String returnDateValue;//注意，本参数是专门给前端返回固定字段名称使用，方便前端，数据库中不存在此字段
 
     public int getId() {
         return id;
@@ -235,5 +236,13 @@ public class WaterQualityVO {
 
     public void setVoltage(Double voltage) {
         this.voltage = voltage;
+    }
+
+    public String getReturnDateValue() {
+        return returnDateValue;
+    }
+
+    public void setReturnDateValue(String returnDateValue) {
+        this.returnDateValue = returnDateValue;
     }
 }

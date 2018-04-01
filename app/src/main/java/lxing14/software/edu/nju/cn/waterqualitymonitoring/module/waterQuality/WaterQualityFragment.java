@@ -19,6 +19,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,14 +99,19 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
     }
 
     @Override
-    public void showWaterQualityChart() {
+    public void showWaterQualityChart(List<String> dateList, List<Float> dataList ) {
+        mLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dateList));
+
         List<Entry> lineEntry = new ArrayList<>();
-        for(int i=0;i<16;i++){
-            lineEntry.add(new Entry(i, i));
+        int len = dateList.size();
+        for(int i=0;i<len;i++){
+            lineEntry.add(new Entry(i, dataList.get(i)));
         }
-        LineDataSet lineDataSet = new LineDataSet(lineEntry, "line");
+        LineDataSet lineDataSet = new LineDataSet(lineEntry, "waterQuality");
         LineData lineData = new LineData(lineDataSet);
         mLineChart.setData(lineData);
+        mLineChart.notifyDataSetChanged();
+        mLineChart.invalidate();
     }
 
     @Override
@@ -204,6 +210,7 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
     private void configLineChart(){
         Description description = mLineChart.getDescription();
         description.setPosition(70,20);
+        //TODO
         description.setText("(m/s)");
         description.setTextAlign(Paint.Align.RIGHT);
 
@@ -215,7 +222,7 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         xaxis.setDrawGridLines(false);
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxis.setAvoidFirstLastClipping(true);
-        xaxis.setLabelCount(5);
+        xaxis.setLabelCount(2);
 
         YAxis yAxisLeft = mLineChart.getAxisLeft();
         yAxisLeft.setDrawGridLines(true);

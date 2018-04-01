@@ -1,5 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterQuality;
 
+import java.util.List;
+
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BasePresenter;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BaseView;
 
@@ -22,8 +24,10 @@ public interface WaterQualityContract {
 
         /**
          * 显示水质图表
+         * @param dataList
+         * @param dateList
          */
-        void showWaterQualityChart();
+        void showWaterQualityChart(List<String> dateList, List<Float> dataList);
 
         /**
          * 显示当前水质数据
