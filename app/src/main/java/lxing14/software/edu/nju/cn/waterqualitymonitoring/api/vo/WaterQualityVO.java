@@ -24,7 +24,7 @@ public class WaterQualityVO {
     private String state;               //状态编号（1为绿色，代表正常；2为灰色，代表机器问题或设备维护中没数据；3为红色，代表设备损坏）
     private String picOrVideo;         //文件是图片还是视频（p为图片；v为视频)
     private String FilePath;           //文件地址
-    //private WaterStation waterStation; //站点对象
+    //private WaterStationInterface waterStation; //站点对象
     //2018-03-14 增加竺山湾站点，所以增加以下字段
     private Double salinity;       //盐度
     private Double tds;       //矿化度

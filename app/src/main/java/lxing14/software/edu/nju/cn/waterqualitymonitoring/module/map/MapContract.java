@@ -2,6 +2,7 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map;
 
 import android.content.Context;
 
+import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -65,7 +66,6 @@ public interface MapContract {
          * 加载无人船信息
          */
         void loadUnmannedShipInfo();
-
 
     }
 

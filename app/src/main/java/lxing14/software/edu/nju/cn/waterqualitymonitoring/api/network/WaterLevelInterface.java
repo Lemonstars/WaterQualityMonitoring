@@ -16,7 +16,7 @@ import rx.Observable;
  * @time : 下午2:01
  */
 
-public interface WaterInterface {
+public interface WaterLevelInterface {
 
     @GET("water/queryAllWaterStation/{type}")
     Observable<List<WaterMapInfoVO>> getMapInfo(@Path("type")int type);

@@ -8,6 +8,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -15,9 +16,11 @@ import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterMapInfoVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterTypeEnum;
 import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -122,15 +125,14 @@ public class MapPresenter implements MapContract.Presenter {
                     @Override
                     public void onNext(List<WaterMapInfoVO> waterMapInfoVOs) {
                         LatLng latLng;
-                        ArrayList<MarkerOptions> markerOptionsArrayList =
-                                new ArrayList<MarkerOptions>(waterMapInfoVOs.size());
+                        ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>(waterMapInfoVOs.size());
                         for(WaterMapInfoVO vo: waterMapInfoVOs){
                             double x = Double.parseDouble(vo.getX());
                             double y = Double.parseDouble(vo.getY());
 
                             latLng = new LatLng(y, x);
                             MarkerOptions markerOptions = new MarkerOptions();
-                            markerOptions.position(latLng).title(vo.getStnName());
+                            markerOptions.position(latLng).title(vo.getStnName()).snippet(String.valueOf(vo.getId()));
                             markerOptionsArrayList.add(markerOptions);
                         }
 
@@ -138,5 +140,4 @@ public class MapPresenter implements MapContract.Presenter {
                     }
                 });
     }
-
 }

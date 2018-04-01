@@ -8,14 +8,20 @@ import android.widget.LinearLayout;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.unmannedShip.UnMannedShipActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating.WaterFloatingActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFlow.WaterFlowActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel.WaterLevelActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterQuality.WaterQualityActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.WaterInfoView;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * @version : 1.0
@@ -35,27 +41,65 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
 
     @Override
     public View getInfoWindow(Marker marker) {
+        MarkerOptions markerOptions = marker.getOptions();
+        String stnCode = markerOptions.getSnippet();
+
+        int stn = Integer.parseInt(stnCode);
+
         if (infoWindow == null) {
             infoWindow = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bg_info_window, null);
 
-            //TODO 如何传递真实值
-            WaterInfoView view1 = new WaterInfoView(context, context.getString(R.string.waterLevel), "1.0mm");
-            view1.setOnClickListener(v -> context.startActivity(WaterLevelActivity.generateIntent(context, 30,100)));
-            WaterInfoView view2 = new WaterInfoView(context, context.getString(R.string.waterQuality), "1.0mm");
-            view2.setOnClickListener(v -> context.startActivity(new Intent(context, WaterQualityActivity.class)));
-            WaterInfoView view3 = new WaterInfoView(context, context.getString(R.string.waterFlow), "10 m/s");
-            view3.setOnClickListener(v -> context.startActivity(new Intent(context, WaterFlowActivity.class)));
-            WaterInfoView view4 = new WaterInfoView(context, context.getString(R.string.floatingMaterial), "floating");
-            view4.setOnClickListener(v -> context.startActivity(new Intent(context, WaterFloatingActivity.class)));
-            WaterInfoView view5 = new WaterInfoView(context, context.getString(R.string.unmannedShip), "unmannedShip");
-            view5.setOnClickListener(v -> context.startActivity(new Intent(context, UnMannedShipActivity.class)));
+            RetrofitHelper.getWaterStationInterface().getStationInfo(stn)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<WaterStationInfoVO>() {
+                        @Override
+                        public void onCompleted() {
 
-            infoWindow.addView(view1);
-            infoWindow.addView(view2);
-            infoWindow.addView(view3);
-            infoWindow.addView(view4);
-            infoWindow.addView(view5);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(WaterStationInfoVO waterStationInfoVO) {
+                            WaterInfoView waterInfoView;
+                            if(true){
+                                waterInfoView = new WaterInfoView(context, context.getString(R.string.waterLevel), "1.0mm");
+                                waterInfoView.setOnClickListener(v -> context.startActivity(WaterLevelActivity.generateIntent(context, 30,100)));
+                                infoWindow.addView(waterInfoView);
+                            }
+
+                            if(true){
+                                waterInfoView = new WaterInfoView(context, context.getString(R.string.waterQuality), "1.0mm");
+                                waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, WaterQualityActivity.class)));
+                                infoWindow.addView(waterInfoView);
+                            }
+
+                            if(true){
+                                waterInfoView = new WaterInfoView(context, context.getString(R.string.waterFlow), "10 m/s");
+                                waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, WaterFlowActivity.class)));
+                                infoWindow.addView(waterInfoView);
+                            }
+
+                            if(true){
+                                waterInfoView = new WaterInfoView(context, context.getString(R.string.floatingMaterial), "floating");
+                                waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, WaterFloatingActivity.class)));
+                                infoWindow.addView(waterInfoView);
+                            }
+
+                            if(true){
+                                waterInfoView = new WaterInfoView(context, context.getString(R.string.unmannedShip), "unmannedShip");
+                                waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, UnMannedShipActivity.class)));
+                                infoWindow.addView(waterInfoView);
+                            }
+
+                        }
+                    });
         }
+
         return infoWindow;
     }
 

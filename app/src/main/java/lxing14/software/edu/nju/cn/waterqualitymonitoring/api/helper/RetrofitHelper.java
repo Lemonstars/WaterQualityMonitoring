@@ -4,8 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.UserInterface;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.WaterInterface;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.WaterLevelInterface;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.WaterQualityInterface;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.WaterStationInterface;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -22,7 +23,8 @@ public class RetrofitHelper {
     private static Retrofit retrofit;
 
     private static UserInterface userInterface;
-    private static WaterInterface waterInterface;
+    private static WaterLevelInterface waterInterface;
+    private static WaterStationInterface waterStationInterface;
     private static WaterQualityInterface waterQualityInterface;
 
     private static void initRetrofit(){
@@ -51,14 +53,25 @@ public class RetrofitHelper {
         return userInterface;
     }
 
-    public static WaterInterface getWaterInterface(){
+    public static WaterLevelInterface getWaterInterface(){
         if(waterInterface == null){
             if(retrofit == null){
                 initRetrofit();
             }
-            waterInterface = retrofit.create(WaterInterface.class);
+            waterInterface = retrofit.create(WaterLevelInterface.class);
         }
         return waterInterface;
+    }
+
+    public static WaterStationInterface getWaterStationInterface(){
+        if(waterStationInterface == null){
+            if(retrofit == null){
+                initRetrofit();
+            }
+            waterStationInterface = retrofit.create(WaterStationInterface.class);
+        }
+
+        return waterStationInterface;
     }
 
     public static WaterQualityInterface getWaterQualityInterface(){
