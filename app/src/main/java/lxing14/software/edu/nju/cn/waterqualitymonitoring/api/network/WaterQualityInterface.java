@@ -35,7 +35,7 @@ public interface WaterQualityInterface {
      * @return
      */
     @GET("waterquality/lastWaterQualityByType/{siteId}/{param}/{startTime}/{endTime}")
-    Observable<List<WaterQualityVO>> getWaterQualityInfo(@Path("siteId")int siteId, @Path("param")String type,
+    Observable<List<WaterQualityTypeNumVO>> getWaterQualityInfo(@Path("siteId")int siteId, @Path("param")String type,
                                                          @Path("startTime")String startTime, @Path("endTime")String endTime);
 
     /**

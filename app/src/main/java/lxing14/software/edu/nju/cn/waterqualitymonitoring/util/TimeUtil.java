@@ -1,5 +1,6 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.util;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -21,6 +22,13 @@ public class TimeUtil {
             e.printStackTrace();
         }
         return targetDate==null? 0:targetDate.getTime();
+    }
+
+    public static String getTodayDate(){
+        SimpleDateFormat.getDateInstance();
+        Date date = new Date();
+        DateFormat dateFormat= SimpleDateFormat.getDateInstance();
+        return dateFormat.format(date);
     }
 
 }

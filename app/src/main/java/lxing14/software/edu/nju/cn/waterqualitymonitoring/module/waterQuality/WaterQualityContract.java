@@ -47,10 +47,17 @@ public interface WaterQualityContract {
     interface Presenter extends BasePresenter{
 
         /**
-         * 获取当前图表数据
+         * 根据类型获取当前图表数据
          * @param type
          */
         void loadChartDataByType(int type);
+
+        /**
+         * 根据类型和起止时间获取房前图表数据
+         * @param startTime
+         * @param endTime
+         */
+        void loadChartDataByDateAndType(String startTime, String endTime);
 
         /**
          * 获取当前水质数据

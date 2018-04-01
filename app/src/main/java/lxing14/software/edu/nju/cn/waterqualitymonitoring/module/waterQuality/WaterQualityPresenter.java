@@ -59,30 +59,30 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
 
                     @Override
                     public void onNext(List<WaterQualityTypeNumVO> waterQualityTypeVOS) {
+                        onNetworkRequest(waterQualityTypeVOS);
+                    }
+                });
+    }
 
-                        int len = waterQualityTypeVOS.size();
-                        List<Float> dataList = new ArrayList<>(len);
-                        List<String> dateList = new ArrayList<>(len);
+    @Override
+    public void loadChartDataByDateAndType(String startTime, String endTime) {
+        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(1, WaterQualityData.getName(mState), startTime, endTime)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<WaterQualityTypeNumVO>>() {
+                    @Override
+                    public void onCompleted() {
 
-                        WaterQualityTypeNumVO waterQualityTypeNumVO;
-                        String numStr;
-                        float num;
-                        for(int i=0;i<len;i++){
-                            waterQualityTypeNumVO = waterQualityTypeVOS.get(len-i-1);
-                            numStr = waterQualityTypeNumVO.getReturnDateValue();
-                            if(mState == WaterQualityData.TEMPERATURE){
-                                num = Float.parseFloat(numStr.substring(0, numStr.length()-2));
-                            }else {
-                                num = Float.parseFloat(numStr);
-                            }
-//                            num = Float.parseFloat(mState == WaterQualityData.TEMPERATURE? numStr:numStr.substring(0, numStr.length()-2));
-                            dataList.add(num);
+                    }
 
-                            dateList.add(waterQualityTypeNumVO.getCollectionTime());
-                        }
+                    @Override
+                    public void onError(Throwable e) {
 
-                        mView.showTabSelected(mState);
-                        mView.showWaterQualityChart(dateList, dataList);
+                    }
+
+                    @Override
+                    public void onNext(List<WaterQualityTypeNumVO> waterQualityTypeNumVOS) {
+                        onNetworkRequest(waterQualityTypeNumVOS);
                     }
                 });
     }
@@ -119,4 +119,30 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
                     }
                 });
     }
+
+    private void onNetworkRequest(List<WaterQualityTypeNumVO> waterQualityTypeVOS){
+        int len = waterQualityTypeVOS.size();
+        List<Float> dataList = new ArrayList<>(len);
+        List<String> dateList = new ArrayList<>(len);
+
+        WaterQualityTypeNumVO waterQualityTypeNumVO;
+        String numStr;
+        float num;
+        for(int i=0;i<len;i++){
+            waterQualityTypeNumVO = waterQualityTypeVOS.get(len-i-1);
+            numStr = waterQualityTypeNumVO.getReturnDateValue();
+            if(mState == WaterQualityData.TEMPERATURE){
+                num = Float.parseFloat(numStr.substring(0, numStr.length()-2));
+            }else {
+                num = Float.parseFloat(numStr);
+            }
+            dataList.add(num);
+
+            dateList.add(waterQualityTypeNumVO.getCollectionTime());
+        }
+
+        mView.showTabSelected(mState);
+        mView.showWaterQualityChart(dateList, dataList);
+    }
+
 }
