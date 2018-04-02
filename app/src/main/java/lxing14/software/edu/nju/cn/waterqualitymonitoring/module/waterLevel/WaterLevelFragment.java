@@ -1,6 +1,5 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,10 +14,6 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -29,6 +24,7 @@ import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
 
@@ -66,7 +62,9 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         View root = inflater.inflate(R.layout.fragment_water_level, container, false);
 
         findView(root);
-        configLineChart();
+
+        ChartUtil.configLineChart(mLineChart);
+
         configListener();
 
         mPresenter.getLocationData(getArguments());
@@ -187,42 +185,6 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mDay_tv.setOnClickListener(this);
         mMonth_tv.setOnClickListener(this);
         mCurrentWaterLevelImg_iv.setOnClickListener(this);
-    }
-
-    //configure the line chart
-    private void configLineChart(){
-        Description description = mLineChart.getDescription();
-        description.setPosition(70,20);
-        description.setText("(/m)");
-        description.setTextAlign(Paint.Align.RIGHT);
-
-        Legend legend = mLineChart.getLegend();
-        legend.setEnabled(false);
-
-        XAxis xaxis = mLineChart.getXAxis();
-        xaxis.setDrawAxisLine(true);
-        xaxis.setDrawGridLines(false);
-        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xaxis.setAvoidFirstLastClipping(true);
-        xaxis.setLabelCount(2);
-        xaxis.setAxisMaximum(15);
-
-        YAxis yAxisLeft = mLineChart.getAxisLeft();
-        yAxisLeft.setDrawGridLines(true);
-        yAxisLeft.setDrawAxisLine(true);
-        yAxisLeft.setDrawLabels(true);
-        yAxisLeft.enableGridDashedLine(10f, 10f, 0f);
-        yAxisLeft.setLabelCount(5, false);
-        yAxisLeft.setSpaceTop(10);
-
-        YAxis yAxisRight = mLineChart.getAxisRight();
-        yAxisRight.setEnabled(false);
-
-        mLineChart.setTouchEnabled(true);
-        mLineChart.setDragEnabled(true);
-        mLineChart.setScaleYEnabled(false);
-        mLineChart.setScaleXEnabled(true);
-        mLineChart.setAutoScaleMinMaxEnabled(true);
     }
 
 }

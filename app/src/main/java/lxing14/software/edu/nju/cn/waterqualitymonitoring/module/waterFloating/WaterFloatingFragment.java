@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 
 
 public class WaterFloatingFragment extends Fragment implements WaterFloatingContract.IView{
@@ -49,6 +50,7 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         mImage3 = root.findViewById(R.id.image3);
 
         configBarChart();
+
         loadWebFile();
 
         return root;

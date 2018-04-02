@@ -10,8 +10,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:textSize="12sp"
-            android:text="@string/waterLevel"/>
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/infoNum_tv"
@@ -19,8 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textColor="@color/white"
-            android:textSize="14sp"
-            android:text="1.0mm"/>
+            android:textSize="14sp" />
 
 
         <TextView

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.CameraChoiceView;
 
 public class WaterFlowFragment extends Fragment implements WaterFlowContract.View, View.OnClickListener{
@@ -63,7 +64,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         mMonth_tv = root.findViewById(R.id.month_tv);
         mWebView = root.findViewById(R.id.webView);
 
-        configLineChart();
+        ChartUtil.configLineChart(mLineChart);
         configCandleStickChart();
         initTabListener();
         loadWebFile();
@@ -203,42 +204,6 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         mCandleStickChart.setScaleYEnabled(false);
         mCandleStickChart.setScaleXEnabled(true);
         mCandleStickChart.setAutoScaleMinMaxEnabled(true);
-    }
-
-    //configure the line chart
-    private void configLineChart(){
-        Description description = mLineChart.getDescription();
-        description.setPosition(70,20);
-        description.setText("(m/s)");
-        description.setTextAlign(Paint.Align.RIGHT);
-
-        Legend legend = mLineChart.getLegend();
-        legend.setEnabled(false);
-
-        XAxis xaxis = mLineChart.getXAxis();
-        xaxis.setDrawAxisLine(true);
-        xaxis.setDrawGridLines(false);
-        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xaxis.setAvoidFirstLastClipping(true);
-        xaxis.setLabelCount(2);
-        xaxis.setAxisMaximum(15);
-
-        YAxis yAxisLeft = mLineChart.getAxisLeft();
-        yAxisLeft.setDrawGridLines(true);
-        yAxisLeft.setDrawAxisLine(true);
-        yAxisLeft.setDrawLabels(true);
-        yAxisLeft.enableGridDashedLine(10f, 10f, 0f);
-        yAxisLeft.setLabelCount(5, false);
-        yAxisLeft.setSpaceTop(10);
-
-        YAxis yAxisRight = mLineChart.getAxisRight();
-        yAxisRight.setEnabled(false);
-
-        mLineChart.setTouchEnabled(true);
-        mLineChart.setDragEnabled(true);
-        mLineChart.setScaleYEnabled(false);
-        mLineChart.setScaleXEnabled(true);
-        mLineChart.setAutoScaleMinMaxEnabled(true);
     }
 
     //initialize the listener

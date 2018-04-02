@@ -132,7 +132,11 @@ public class MapPresenter implements MapContract.Presenter {
 
                             latLng = new LatLng(y, x);
                             MarkerOptions markerOptions = new MarkerOptions();
-                            markerOptions.position(latLng).title(vo.getStnName()).snippet(String.valueOf(vo.getId()));
+                            StringBuilder sb = new StringBuilder();
+                            sb.append(String.valueOf(vo.getId()));
+                            sb.append(' ');
+                            sb.append(vo.getStnName());
+                            markerOptions.position(latLng).title(vo.getStnName()).snippet(sb.toString());
                             markerOptionsArrayList.add(markerOptions);
                         }
 

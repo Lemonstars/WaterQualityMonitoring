@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 
 public class UnMannedShipFragment extends Fragment implements UnMannedShipContract.IView{
 
@@ -38,7 +39,7 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
 
         mLineChart = root.findViewById(R.id.lineChart);
 
-        configLineChart();
+        ChartUtil.configLineChart(mLineChart);
 
         return root;
     }
@@ -63,41 +64,6 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
         LineDataSet lineDataSet = new LineDataSet(lineEntry, "line");
         LineData lineData = new LineData(lineDataSet);
         mLineChart.setData(lineData);
-    }
-
-    //configure the line chart
-    private void configLineChart(){
-        Description description = mLineChart.getDescription();
-        description.setPosition(70,20);
-        description.setText("(m/s)");
-        description.setTextAlign(Paint.Align.RIGHT);
-
-        Legend legend = mLineChart.getLegend();
-        legend.setEnabled(false);
-
-        XAxis xaxis = mLineChart.getXAxis();
-        xaxis.setDrawAxisLine(true);
-        xaxis.setDrawGridLines(false);
-        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xaxis.setAvoidFirstLastClipping(true);
-        xaxis.setLabelCount(5);
-
-        YAxis yAxisLeft = mLineChart.getAxisLeft();
-        yAxisLeft.setDrawGridLines(true);
-        yAxisLeft.setDrawAxisLine(true);
-        yAxisLeft.setDrawLabels(true);
-        yAxisLeft.enableGridDashedLine(10f, 10f, 0f);
-        yAxisLeft.setLabelCount(5, false);
-        yAxisLeft.setSpaceTop(10);
-
-        YAxis yAxisRight = mLineChart.getAxisRight();
-        yAxisRight.setEnabled(false);
-
-        mLineChart.setTouchEnabled(true);
-        mLineChart.setDragEnabled(true);
-        mLineChart.setScaleYEnabled(false);
-        mLineChart.setScaleXEnabled(true);
-        mLineChart.setAutoScaleMinMaxEnabled(true);
     }
 
 }

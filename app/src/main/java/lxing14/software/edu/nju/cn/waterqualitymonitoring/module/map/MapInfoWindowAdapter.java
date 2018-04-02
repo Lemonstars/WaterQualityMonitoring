@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.model.Marker;
@@ -42,12 +43,16 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
     @Override
     public View getInfoWindow(Marker marker) {
         MarkerOptions markerOptions = marker.getOptions();
-        String stnCode = markerOptions.getSnippet();
+        String extra = markerOptions.getSnippet();
+        String[] data = extra.split("\\s+");
 
-        int stn = Integer.parseInt(stnCode);
+        int stn = Integer.parseInt(data[0]);
+        String name = data[1];
 
         if (infoWindow == null) {
             infoWindow = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bg_info_window, null);
+//            TextView name_tv = infoWindow.findViewById(R.id.name_tv);
+//            name_tv.setText(name);
 
             RetrofitHelper.getWaterStationInterface().getStationInfo(stn)
                     .subscribeOn(Schedulers.io())
