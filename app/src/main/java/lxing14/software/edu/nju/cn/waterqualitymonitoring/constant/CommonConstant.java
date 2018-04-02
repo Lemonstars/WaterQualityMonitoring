@@ -9,6 +9,7 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.constant;
 
 public class CommonConstant {
 
+    public static final String STN_ID = "stnId";
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
     public static final double LATITUDE_OF_BJ = 39.904989;

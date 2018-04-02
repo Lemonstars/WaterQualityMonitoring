@@ -1,13 +1,10 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 
-import android.os.Bundle;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterLevelVO;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -27,9 +24,11 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
     public static final int MONTH = 2;
 
     private WaterLevelContract.View mView;
+    private int mStnId;
 
-    public WaterLevelPresenter(WaterLevelContract.View view) {
+    public WaterLevelPresenter(WaterLevelContract.View view, int stnId) {
         this.mView = view;
+        this.mStnId = stnId;
         mView.setPresenter(this);
     }
 
@@ -103,9 +102,8 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
     }
 
     @Override
-    public void getLocationData(Bundle bundle) {
-        double latitude = bundle.getDouble(CommonConstant.LATITUDE);
-        double longitude = bundle.getDouble(CommonConstant.LONGITUDE);
-        mView.showCurrentLocation(latitude, longitude);
+    public void loadLocationInfo() {
+        //TODO 请求接口
+        mView.showCurrentLocation(20, 120);
     }
 }

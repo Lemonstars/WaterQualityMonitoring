@@ -48,9 +48,9 @@ public interface WaterLevelContract {
         void getCurrentWaterLevelInfo();
 
         /**
-         * 获取定位信息
+         * 获取当前坐标信息
          */
-        void getLocationData(Bundle bundle);
+        void loadLocationInfo();
     }
 
 }

@@ -12,18 +12,17 @@ import com.fantasy.doubledatepicker.DoubleDateSelectDialog;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.DateConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ActivityUtil;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 
 public class WaterLevelActivity extends AppCompatActivity {
 
     private DoubleDateSelectDialog mDoubleTimeSelectDialog;
-    private double mLatitude;
-    private double mLongtide;
 
-    public static Intent generateIntent(Context context, double latitude, double longitude ){
+    public static Intent generateIntent(Context context, int stnId){
         Intent intent = new Intent(context, WaterLevelActivity.class);
-        intent.putExtra(CommonConstant.LATITUDE, latitude);
-        intent.putExtra(CommonConstant.LONGITUDE, longitude);
+        intent.putExtra(CommonConstant.STN_ID, stnId);
         return intent;
     }
 
@@ -33,7 +32,8 @@ public class WaterLevelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_water_level);
 
         //get the data of the intent
-        getIntentData();
+        Intent intent = getIntent();
+        int stnId = intent.getIntExtra(CommonConstant.STN_ID, -1);
 
         //set the text of the toolbar
         TextView toolBarTV = findViewById(R.id.toolbar);
@@ -47,27 +47,17 @@ public class WaterLevelActivity extends AppCompatActivity {
         WaterLevelFragment waterLevelFragment = (WaterLevelFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.contentFrame);
         if(waterLevelFragment == null){
-            waterLevelFragment = WaterLevelFragment.generateFragment(mLatitude, mLongtide);
+            waterLevelFragment = WaterLevelFragment.generateFragment();
             ActivityUtil.addFragmentToActivity(getSupportFragmentManager(),
                     waterLevelFragment, R.id.contentFrame);
         }
 
-        new WaterLevelPresenter(waterLevelFragment);
-    }
-
-    private void getIntentData(){
-        Intent intent = getIntent();
-        mLatitude = intent.getDoubleExtra(CommonConstant.LATITUDE, CommonConstant.LATITUDE_OF_BJ);
-        mLongtide = intent.getDoubleExtra(CommonConstant.LONGITUDE, CommonConstant.LONGITUDE_OF_BJ);
+        new WaterLevelPresenter(waterLevelFragment, stnId);
     }
 
     public void showCustomTimePicker() {
-        String allowedSmallestTime = "2017-1-1";
-        String allowedBiggestTime = "2020-12-31";
-        String defaultChooseDate = "2018-01-18";
-
         if (mDoubleTimeSelectDialog == null) {
-            mDoubleTimeSelectDialog = new DoubleDateSelectDialog(this, allowedSmallestTime, allowedBiggestTime, defaultChooseDate);
+            mDoubleTimeSelectDialog = new DoubleDateSelectDialog(this, DateConstant.ALLOWED_SMALLEST_TIME, DateConstant.ALLOWED_BIGGEST_TIME, TimeUtil.getTodayDate());
             mDoubleTimeSelectDialog.setOnDateSelectFinished(new DoubleDateSelectDialog.OnDateSelectFinished() {
                 @Override
                 public void onSelectFinished(String startTime, String endTime) {

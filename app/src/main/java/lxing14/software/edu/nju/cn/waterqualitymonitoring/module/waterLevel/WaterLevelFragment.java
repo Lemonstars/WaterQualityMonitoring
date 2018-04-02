@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
@@ -46,11 +45,9 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     private TextView mMonth_tv;
     private TextView[] mTab_tv;
 
-    public static WaterLevelFragment generateFragment(double latitude, double longitude){
+    public static WaterLevelFragment generateFragment(){
         WaterLevelFragment waterLevelFragment = new WaterLevelFragment();
         Bundle bundle = new Bundle();
-        bundle.putDouble(CommonConstant.LATITUDE, latitude);
-        bundle.putDouble(CommonConstant.LONGITUDE, longitude);
         waterLevelFragment.setArguments(bundle);
 
         return waterLevelFragment;
@@ -62,12 +59,10 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         View root = inflater.inflate(R.layout.fragment_water_level, container, false);
 
         findView(root);
-
+        configListener();
         ChartUtil.configLineChart(mLineChart);
 
-        configListener();
-
-        mPresenter.getLocationData(getArguments());
+        mPresenter.loadLocationInfo();
 
         mMapView.onCreate(savedInstanceState);
         return root;

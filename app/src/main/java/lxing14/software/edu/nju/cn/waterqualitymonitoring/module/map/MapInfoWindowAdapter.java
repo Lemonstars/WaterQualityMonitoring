@@ -64,7 +64,7 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
                 infoWindow.addView(waterInfoView);
                 switch (i){
                     case 0:
-                        waterInfoView.setOnClickListener(v -> context.startActivity(WaterLevelActivity.generateIntent(context, 30,100)));
+                        waterInfoView.setOnClickListener(v -> context.startActivity(WaterLevelActivity.generateIntent(context, stn)));
                         break;
                     case 1:
                         waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, WaterQualityActivity.class)));
