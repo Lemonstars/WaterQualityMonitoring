@@ -32,14 +32,6 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
     private MapView mMapView;
     private WaterQualityRVAdapter mAdapter;
 
-    private TextView mtemperature_tv;
-    private TextView mPh_tv;
-    private TextView mDissolvedOxygen_tv;
-    private TextView mRedox_tv;
-    private TextView mTransparency_tv;
-    private TextView mConductivity_tv;
-    private TextView mTurbidity_tv;
-    private TextView mNh3_tv;
     private TextView[] mTab_tv;
 
     public static WaterQualityFragment generateFragment(){
@@ -107,6 +99,8 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         LineData lineData = new LineData(lineDataSet);
         mLineChart.setData(lineData);
         mLineChart.notifyDataSetChanged();
+        mLineChart.setVisibleXRangeMaximum(15f);
+        mLineChart.moveViewToX(0);
         mLineChart.invalidate();
     }
 
@@ -174,16 +168,16 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         mMapView = root.findViewById(R.id.map);
         mLineChart = root.findViewById(R.id.lineChart);
 
-        mtemperature_tv = root.findViewById(R.id.temperature_tv);
-        mPh_tv = root.findViewById(R.id.ph_tv);
-        mDissolvedOxygen_tv = root.findViewById(R.id.dissolvedOxygen_tv);
-        mRedox_tv = root.findViewById(R.id.redox_tv);
-        mTransparency_tv = root.findViewById(R.id.transparency_tv);
-        mConductivity_tv = root.findViewById(R.id.conductivity_tv);
-        mTurbidity_tv = root.findViewById(R.id.turbidity_tv);
-        mNh3_tv = root.findViewById(R.id.nh3_tv);
-        mTab_tv = new TextView[]{mtemperature_tv, mConductivity_tv, mPh_tv,
-                mDissolvedOxygen_tv, mRedox_tv,mTurbidity_tv, mTransparency_tv, mNh3_tv};
+        TextView temperature_tv = root.findViewById(R.id.temperature_tv);
+        TextView conductivity_tv = root.findViewById(R.id.conductivity_tv);
+        TextView ph_tv = root.findViewById(R.id.ph_tv);
+        TextView dissolvedOxygen_tv = root.findViewById(R.id.dissolvedOxygen_tv);
+        TextView redox_tv = root.findViewById(R.id.redox_tv);
+        TextView turbidity_tv = root.findViewById(R.id.turbidity_tv);
+        TextView transparency_tv = root.findViewById(R.id.transparency_tv);
+        TextView nh3_tv = root.findViewById(R.id.nh3_tv);
+        mTab_tv = new TextView[]{temperature_tv, conductivity_tv, ph_tv,
+                dissolvedOxygen_tv, redox_tv, turbidity_tv, transparency_tv, nh3_tv};
     }
 
     //initialize the recyclerView
@@ -197,8 +191,8 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
 
     //configure the listener
     private void configListener(){
-        for(int i=0;i<mTab_tv.length;i++){
-            mTab_tv[i].setOnClickListener(this);
+        for(TextView textView: mTab_tv){
+            textView.setOnClickListener(this);
         }
     }
 

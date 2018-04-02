@@ -8,6 +8,8 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+
 /**
  * @version : 1.0
  * @auther : starrylemon
@@ -18,6 +20,9 @@ import com.github.mikephil.charting.components.YAxis;
 public class ChartUtil {
 
     public static void configLineChart(LineChart lineChart){
+        lineChart.setNoDataText("正在加载数据");
+        lineChart.setNoDataTextColor(R.color.black);
+
         Description description = lineChart.getDescription();
         description.setPosition(70,20);
         description.setTextAlign(Paint.Align.RIGHT);
@@ -31,7 +36,8 @@ public class ChartUtil {
         xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xaxis.setAvoidFirstLastClipping(true);
         xaxis.setLabelCount(2);
-        xaxis.setAxisMaximum(15);
+        xaxis.setGranularityEnabled(true);
+        xaxis.setGranularity(10f);
 
         YAxis yAxisLeft = lineChart.getAxisLeft();
         yAxisLeft.setDrawGridLines(true);
