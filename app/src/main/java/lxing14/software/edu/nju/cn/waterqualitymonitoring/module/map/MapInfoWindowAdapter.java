@@ -12,17 +12,12 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.unmannedShip.UnMannedShipActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating.WaterFloatingActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFlow.WaterFlowActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel.WaterLevelActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterQuality.WaterQualityActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.WaterInfoView;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * @version : 1.0
@@ -34,10 +29,13 @@ import rx.schedulers.Schedulers;
 public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
 
     private Context context;
-    private LinearLayout infoWindow = null;
+    private int[] type;
 
     public MapInfoWindowAdapter(Context context) {
         this.context = context;
+
+        type = new int[]{R.string.waterLevel, R.string.waterQuality,
+                R.string.waterFlow, R.string.floatingMaterial, R.string.unmannedShip};
     }
 
     @Override
@@ -48,62 +46,44 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
 
         int stn = Integer.parseInt(data[0]);
         String name = data[1];
+        boolean hasWaterLevel = Integer.parseInt(data[2])==1;
+        boolean hasWaterQuality = Integer.parseInt(data[3])==1;
+        boolean hasWaterFlow = Integer.parseInt(data[4])==1;
+        boolean hasFloating = Integer.parseInt(data[5])==1;
+        boolean hasBoat = Integer.parseInt(data[6])==1;
+        boolean[] typeExisted = new boolean[]{hasWaterLevel, hasWaterQuality, hasWaterFlow, hasFloating, hasBoat};
 
-        if (infoWindow == null) {
-            infoWindow = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bg_info_window, null);
-//            TextView name_tv = infoWindow.findViewById(R.id.name_tv);
-//            name_tv.setText(name);
+        LinearLayout infoWindow = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bg_info_window, null);
+        TextView name_tv = infoWindow.findViewById(R.id.name_tv);
+        name_tv.setText(name);
 
-            RetrofitHelper.getWaterStationInterface().getStationInfo(stn)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<WaterStationInfoVO>() {
-                        @Override
-                        public void onCompleted() {
+        WaterInfoView waterInfoView;
+        for(int i=0;i<typeExisted.length;i++){
+            if(typeExisted[i]){
+                waterInfoView = new WaterInfoView(context, context.getString(type[i]));
+                infoWindow.addView(waterInfoView);
+                switch (i){
+                    case 0:
+                        waterInfoView.setOnClickListener(v -> context.startActivity(WaterLevelActivity.generateIntent(context, 30,100)));
+                        break;
+                    case 1:
+                        waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, WaterQualityActivity.class)));
+                        break;
+                    case 2:
+                        waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, WaterFlowActivity.class)));
+                        break;
+                    case 3:
+                        waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, WaterFloatingActivity.class)));
+                        break;
+                    case 4:
+                        waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, UnMannedShipActivity.class)));
+                        break;
+                }
 
-                        }
+            }
 
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onNext(WaterStationInfoVO waterStationInfoVO) {
-                            WaterInfoView waterInfoView;
-                            if(true){
-                                waterInfoView = new WaterInfoView(context, context.getString(R.string.waterLevel), "1.0mm");
-                                waterInfoView.setOnClickListener(v -> context.startActivity(WaterLevelActivity.generateIntent(context, 30,100)));
-                                infoWindow.addView(waterInfoView);
-                            }
-
-                            if(true){
-                                waterInfoView = new WaterInfoView(context, context.getString(R.string.waterQuality), "1.0mm");
-                                waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, WaterQualityActivity.class)));
-                                infoWindow.addView(waterInfoView);
-                            }
-
-                            if(true){
-                                waterInfoView = new WaterInfoView(context, context.getString(R.string.waterFlow), "10 m/s");
-                                waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, WaterFlowActivity.class)));
-                                infoWindow.addView(waterInfoView);
-                            }
-
-                            if(true){
-                                waterInfoView = new WaterInfoView(context, context.getString(R.string.floatingMaterial), "floating");
-                                waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, WaterFloatingActivity.class)));
-                                infoWindow.addView(waterInfoView);
-                            }
-
-                            if(true){
-                                waterInfoView = new WaterInfoView(context, context.getString(R.string.unmannedShip), "unmannedShip");
-                                waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, UnMannedShipActivity.class)));
-                                infoWindow.addView(waterInfoView);
-                            }
-
-                        }
-                    });
         }
+
 
         return infoWindow;
     }

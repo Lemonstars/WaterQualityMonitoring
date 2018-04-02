@@ -1,26 +1,21 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterMapInfoVO;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterTypeEnum;
 import rx.Observer;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -33,15 +28,18 @@ import rx.schedulers.Schedulers;
 
 public class MapPresenter implements MapContract.Presenter {
 
+    private Random random;
+
     private MapContract.View mMapView;
 
     private AMapLocationClient mLocationClient;
-    private AMapLocationListener mLocationListener;
     private AMapLocationClientOption mLocationOption;
 
     public MapPresenter(@NonNull MapContract.View view){
         mMapView = view;
         mMapView.setPresenter(this);
+
+        random = new Random();
     }
 
     @Override
@@ -81,21 +79,16 @@ public class MapPresenter implements MapContract.Presenter {
     }
 
     private void initLocation() {
-        mLocationListener = new AMapLocationListener() {
-            @Override
-            public void onLocationChanged(AMapLocation aMapLocation) {
-                double latitude = CommonConstant.LATITUDE_OF_BJ;
-                double longitude = CommonConstant.LONGITUDE_OF_BJ;
-                if(aMapLocation.getErrorCode() == 0){
-                    latitude = aMapLocation.getLatitude();
-                    longitude = aMapLocation.getLongitude();
-                }
-                mMapView.showCurrentLocation(latitude, longitude);
-            }
-        };
-
         mLocationClient = new AMapLocationClient(mMapView.getViewContext());
-        mLocationClient.setLocationListener(mLocationListener);
+        mLocationClient.setLocationListener(aMapLocation -> {
+            double latitude = CommonConstant.LATITUDE_OF_BJ;
+            double longitude = CommonConstant.LONGITUDE_OF_BJ;
+            if(aMapLocation.getErrorCode() == 0){
+                latitude = aMapLocation.getLatitude();
+                longitude = aMapLocation.getLongitude();
+            }
+            mMapView.showCurrentLocation(latitude, longitude);
+        });
 
         mLocationOption = new AMapLocationClientOption();
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
@@ -136,7 +129,18 @@ public class MapPresenter implements MapContract.Presenter {
                             sb.append(String.valueOf(vo.getId()));
                             sb.append(' ');
                             sb.append(vo.getStnName());
-                            markerOptions.position(latLng).title(vo.getStnName()).snippet(sb.toString());
+                            sb.append(' ');
+                            sb.append(random.nextBoolean()? 1:0); // water level
+                            sb.append(' ');
+                            sb.append(random.nextBoolean()? 1:0); // water quality
+                            sb.append(' ');
+                            sb.append(random.nextBoolean()? 1:0); // water flow
+                            sb.append(' ');
+                            sb.append(random.nextBoolean()? 1:0); // floating
+                            sb.append(' ');
+                            sb.append(random.nextBoolean()? 1:0); // boat
+
+                            markerOptions.position(latLng).snippet(sb.toString());
                             markerOptionsArrayList.add(markerOptions);
                         }
 
