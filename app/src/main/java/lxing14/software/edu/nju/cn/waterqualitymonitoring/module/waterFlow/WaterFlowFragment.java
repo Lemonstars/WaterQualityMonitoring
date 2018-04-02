@@ -128,6 +128,8 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         LineData lineData = new LineData(lineDataSet);
         mLineChart.setData(lineData);
         mLineChart.notifyDataSetChanged();
+        mLineChart.setVisibleXRangeMaximum(15f);
+        mLineChart.moveViewToX(0);
         mLineChart.invalidate();
     }
 

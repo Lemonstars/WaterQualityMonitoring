@@ -1,6 +1,5 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.unmannedShip;
 
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,10 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -64,6 +59,10 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
         LineDataSet lineDataSet = new LineDataSet(lineEntry, "line");
         LineData lineData = new LineData(lineDataSet);
         mLineChart.setData(lineData);
+        mLineChart.notifyDataSetChanged();
+        mLineChart.setVisibleXRangeMaximum(15f);
+        mLineChart.moveViewToX(0);
+        mLineChart.invalidate();
     }
 
 }

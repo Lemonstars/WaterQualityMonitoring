@@ -9,6 +9,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHel
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.*;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityTypeNumVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.OrderConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterQualityData;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -58,7 +59,7 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
 
                     @Override
                     public void onNext(List<WaterQualityTypeNumVO> waterQualityTypeVOS) {
-                        onNetworkRequest(waterQualityTypeVOS);
+                        onNetworkRequest(waterQualityTypeVOS, OrderConstant.DESC);
                     }
                 });
     }
@@ -81,7 +82,7 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
 
                     @Override
                     public void onNext(List<WaterQualityTypeNumVO> waterQualityTypeNumVOS) {
-                        onNetworkRequest(waterQualityTypeNumVOS);
+                        onNetworkRequest(waterQualityTypeNumVOS, OrderConstant.ASC);
                     }
                 });
     }
@@ -119,7 +120,7 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
                 });
     }
 
-    private void onNetworkRequest(List<WaterQualityTypeNumVO> waterQualityTypeVOS){
+    private void onNetworkRequest(List<WaterQualityTypeNumVO> waterQualityTypeVOS, OrderConstant orderConstant){
         int len = waterQualityTypeVOS.size();
         List<Float> dataList = new ArrayList<>(len);
         List<String> dateList = new ArrayList<>(len);
@@ -128,7 +129,12 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
         String numStr;
         float num;
         for(int i=0;i<len;i++){
-            waterQualityTypeNumVO = waterQualityTypeVOS.get(len-i-1);
+            if(orderConstant == OrderConstant.ASC){
+                waterQualityTypeNumVO = waterQualityTypeVOS.get(i);
+            }else {
+                waterQualityTypeNumVO = waterQualityTypeVOS.get(len-i-1);
+            }
+
             numStr = waterQualityTypeNumVO.getReturnDateValue();
             if(mState == WaterQualityData.TEMPERATURE){
                 num = Float.parseFloat(numStr.substring(0, numStr.length()-2));
