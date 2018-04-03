@@ -1,5 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ChartMarkerView;
@@ -71,9 +75,9 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         showInitTabSelected();
         showChartUnit();
 
-        mPresenter.loadLocationInfo();
-
         mMapView.onCreate(savedInstanceState);
+
+
         return root;
     }
 
@@ -81,6 +85,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     public void onResume() {
         super.onResume();
 
+        showCurrentLocation();
         mPresenter.start();
     }
 
@@ -134,11 +139,6 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     }
 
     @Override
-    public void showCurrentLocation(double latitude, double longitude) {
-        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 10f));
-    }
-
-    @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.realTime_tv:
@@ -165,7 +165,16 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         }
     }
 
-    //
+    //show the current location
+    private void showCurrentLocation(){
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SharePreferencesConstant.APP_NAME, Context.MODE_PRIVATE);
+        float latitude = sharedPreferences.getFloat(SharePreferencesConstant.LATITUDE, CommonConstant.LATITUDE_OF_NJ);
+        float longitude = sharedPreferences.getFloat(SharePreferencesConstant.LONGITUDE, CommonConstant.LONGITUDE_OF_NJ);
+
+        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 10f));
+    }
+
+    //show the selected picture
     private void showSelectedPic(ImageView imageView){
         if(mImageDialog == null){
             mImageDialog = new ImageDialog(getContext(), imageView.getDrawable());

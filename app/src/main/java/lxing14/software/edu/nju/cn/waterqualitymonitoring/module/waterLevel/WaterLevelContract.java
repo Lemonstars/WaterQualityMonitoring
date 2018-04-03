@@ -34,10 +34,6 @@ public interface WaterLevelContract {
         void showCurrentWaterLevelDetailInfo(String stationName, String currentWaterLevel, String historicalWaterLevel,
                                              String[] pic, String[] date);
 
-        /**
-         * 地图定位当前位置
-         */
-        void showCurrentLocation(double latitude, double longitude);
     }
 
     interface Presenter extends BasePresenter{
@@ -68,10 +64,6 @@ public interface WaterLevelContract {
          */
         void loadCurrentWaterLevelInfo(String startTime, String endTime);
 
-        /**
-         * 获取当前坐标信息
-         */
-        void loadLocationInfo();
     }
 
 }

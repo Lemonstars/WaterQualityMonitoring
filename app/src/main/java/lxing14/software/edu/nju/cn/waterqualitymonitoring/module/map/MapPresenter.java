@@ -9,14 +9,11 @@ import com.amap.api.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterMapInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterTypeEnum;
-import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -137,6 +134,10 @@ public class MapPresenter implements MapContract.Presenter {
                             sb.append(vo.isHasFloatingMaterial()? 1:0); // floating
                             sb.append(' ');
                             sb.append(vo.isHasUnmannedShip()? 1:0); // boat
+                            sb.append(' ');
+                            sb.append(y);
+                            sb.append(' ');
+                            sb.append(x);
 
                             markerOptions.position(latLng).snippet(sb.toString());
                             markerOptionsArrayList.add(markerOptions);

@@ -173,10 +173,4 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
                 });
 
     }
-
-    @Override
-    public void loadLocationInfo() {
-        //TODO 请求接口
-        mView.showCurrentLocation(20, 120);
-    }
 }

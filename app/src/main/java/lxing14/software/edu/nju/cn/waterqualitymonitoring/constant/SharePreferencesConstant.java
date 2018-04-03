@@ -12,5 +12,7 @@ public class SharePreferencesConstant {
     public static final String APP_NAME ="intelligentWater";
     public static final String USER_NAME ="userName";
     public static final String PASSWORD ="password";
+    public static final String LATITUDE = "latitude";
+    public static final String LONGITUDE = "longitude";
 
 }

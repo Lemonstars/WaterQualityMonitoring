@@ -1,5 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterQuality;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.LatLng;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
@@ -22,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterQualityData;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 
@@ -62,6 +69,7 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+        showCurrentLocation();
 
         mPresenter.start();
     }
@@ -171,6 +179,15 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         mPresenter.loadChartDataByType(index);
     }
 
+    //show the current location
+    private void showCurrentLocation(){
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SharePreferencesConstant.APP_NAME, Context.MODE_PRIVATE);
+        float latitude = sharedPreferences.getFloat(SharePreferencesConstant.LATITUDE, CommonConstant.LATITUDE_OF_NJ);
+        float longitude = sharedPreferences.getFloat(SharePreferencesConstant.LONGITUDE, CommonConstant.LONGITUDE_OF_NJ);
+
+        AMap aMap = mMapView.getMap();
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 10f));
+    }
 
     //find the view
     private void findView(View root){

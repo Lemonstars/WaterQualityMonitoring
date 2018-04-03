@@ -2,6 +2,7 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -12,6 +13,7 @@ import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.unmannedShip.UnMannedShipActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating.WaterFloatingActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFlow.WaterFlowActivity;
@@ -51,6 +53,8 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
         boolean hasFloating = Integer.parseInt(data[5])==1;
         boolean hasBoat = Integer.parseInt(data[6])==1;
         boolean[] typeExisted = new boolean[]{hasWaterLevel, hasWaterQuality, hasWaterFlow, hasFloating, hasBoat};
+        float latitude = Float.parseFloat(data[7]);
+        float longitude = Float.parseFloat(data[8]);
 
         LinearLayout infoWindow = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bg_info_window, null);
         TextView name_tv = infoWindow.findViewById(R.id.name_tv);
@@ -61,26 +65,17 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
             if(typeExisted[i]){
                 waterInfoView = new WaterInfoView(context, context.getString(type[i]));
                 infoWindow.addView(waterInfoView);
-                switch (i){
-                    case 0:
-                        waterInfoView.setOnClickListener(v -> context.startActivity(WaterLevelActivity.generateIntent(context, stn)));
-                        break;
-                    case 1:
-                        waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, WaterQualityActivity.class)));
-                        break;
-                    case 2:
-                        waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, WaterFlowActivity.class)));
-                        break;
-                    case 3:
-                        waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, WaterFloatingActivity.class)));
-                        break;
-                    case 4:
-                        waterInfoView.setOnClickListener(v -> context.startActivity(new Intent(context, UnMannedShipActivity.class)));
-                        break;
-                }
-
+                Intent intent = generateIntent(i, stn);
+                waterInfoView.setOnClickListener(v -> {
+                    context.startActivity(intent);
+                    SharedPreferences sharedPreferences =
+                            context.getSharedPreferences(SharePreferencesConstant.APP_NAME, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putFloat(SharePreferencesConstant.LATITUDE, latitude);
+                    editor.putFloat(SharePreferencesConstant.LONGITUDE, longitude);
+                    editor.apply();
+                });
             }
-
         }
 
 
@@ -90,6 +85,30 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
     @Override
     public View getInfoContents(Marker marker) {
         return null;
+    }
+
+    private Intent generateIntent(int index, int stnId){
+        Intent intent;
+        switch (index){
+            case 0:
+                intent = WaterLevelActivity.generateIntent(context, stnId);
+                break;
+            case 1:
+                intent = new Intent(context, WaterQualityActivity.class);
+                break;
+            case 2:
+                intent = new Intent(context, WaterFlowActivity.class);
+                break;
+            case 3:
+                intent = new Intent(context, WaterFloatingActivity.class);
+                break;
+            case 4:
+                intent= new Intent(context, UnMannedShipActivity.class);
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+        return intent;
     }
 
 }
