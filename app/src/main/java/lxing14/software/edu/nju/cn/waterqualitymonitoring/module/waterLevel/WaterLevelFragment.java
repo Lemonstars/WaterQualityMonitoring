@@ -26,6 +26,7 @@ import java.util.List;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ChartMarkerView;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
 
 public class WaterLevelFragment extends Fragment implements WaterLevelContract.View, View.OnClickListener{
@@ -62,6 +63,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         findView(root);
         configListener();
         ChartUtil.configLineChart(mLineChart);
+        mLineChart.setMarker(new ChartMarkerView(getContext(), R.layout.bg_chart_marker_view,  "水位: "));
         showInitTabSelected();
         showChartUnit();
 
