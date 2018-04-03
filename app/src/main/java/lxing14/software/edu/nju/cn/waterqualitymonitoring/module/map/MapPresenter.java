@@ -79,8 +79,8 @@ public class MapPresenter implements MapContract.Presenter {
     private void initLocation() {
         mLocationClient = new AMapLocationClient(mMapView.getViewContext());
         mLocationClient.setLocationListener(aMapLocation -> {
-            double latitude = CommonConstant.LATITUDE_OF_BJ;
-            double longitude = CommonConstant.LONGITUDE_OF_BJ;
+            double latitude = CommonConstant.LATITUDE_OF_NJ;
+            double longitude = CommonConstant.LONGITUDE_OF_NJ;
             if(aMapLocation.getErrorCode() == 0){
                 latitude = aMapLocation.getLatitude();
                 longitude = aMapLocation.getLongitude();

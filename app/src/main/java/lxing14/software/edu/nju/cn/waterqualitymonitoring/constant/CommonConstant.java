@@ -14,6 +14,8 @@ public class CommonConstant {
     public static final String LONGITUDE = "longitude";
     public static final double LATITUDE_OF_BJ = 39.904989;
     public static final double LONGITUDE_OF_BJ = 116.405285;
+    public static final double LATITUDE_OF_NJ = 31.864978;
+    public static final double LONGITUDE_OF_NJ = 118.87056;
     public static final int DEFAULT_DAY = 15;
 
 }
