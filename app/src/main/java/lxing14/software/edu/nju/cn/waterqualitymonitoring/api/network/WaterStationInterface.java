@@ -1,8 +1,9 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network;
 
+import java.util.List;
+
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -14,7 +15,7 @@ import rx.Observable;
 
 public interface WaterStationInterface {
 
-    @GET("waterStation/stationInfo/{stnId}")
-    Observable<WaterStationInfoVO> getStationInfo(@Path("stnId")int stnId);
+    @GET("waterStation/allStationInfo")
+    Observable<List<WaterStationInfoVO>> getAllStationInfo();
 
 }

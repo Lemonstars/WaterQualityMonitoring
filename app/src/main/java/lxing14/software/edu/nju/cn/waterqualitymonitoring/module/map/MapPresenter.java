@@ -13,9 +13,11 @@ import java.util.Random;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterMapInfoVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterTypeEnum;
 import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -28,8 +30,6 @@ import rx.schedulers.Schedulers;
 
 public class MapPresenter implements MapContract.Presenter {
 
-    private Random random;
-
     private MapContract.View mMapView;
 
     private AMapLocationClient mLocationClient;
@@ -38,8 +38,6 @@ public class MapPresenter implements MapContract.Presenter {
     public MapPresenter(@NonNull MapContract.View view){
         mMapView = view;
         mMapView.setPresenter(this);
-
-        random = new Random();
     }
 
     @Override
@@ -101,10 +99,10 @@ public class MapPresenter implements MapContract.Presenter {
     }
 
     private void loadPointInfo(int waterType){
-        RetrofitHelper.getWaterInterface().getMapInfo(waterType)
+        RetrofitHelper.getWaterStationInterface().getAllStationInfo()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<WaterMapInfoVO>>() {
+                .subscribe(new Subscriber<List<WaterStationInfoVO>>() {
                     @Override
                     public void onCompleted() {
 
@@ -116,10 +114,10 @@ public class MapPresenter implements MapContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(List<WaterMapInfoVO> waterMapInfoVOs) {
+                    public void onNext(List<WaterStationInfoVO> waterStationInfoVOList) {
                         LatLng latLng;
-                        ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>(waterMapInfoVOs.size());
-                        for(WaterMapInfoVO vo: waterMapInfoVOs){
+                        ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>(waterStationInfoVOList.size());
+                        for(WaterStationInfoVO vo: waterStationInfoVOList){
                             double x = Double.parseDouble(vo.getX());
                             double y = Double.parseDouble(vo.getY());
 
@@ -128,17 +126,17 @@ public class MapPresenter implements MapContract.Presenter {
                             StringBuilder sb = new StringBuilder();
                             sb.append(String.valueOf(vo.getId()));
                             sb.append(' ');
-                            sb.append(vo.getStnName());
+                            sb.append(vo.getName());
                             sb.append(' ');
-                            sb.append(random.nextBoolean()? 1:0); // water level
+                            sb.append(vo.isHasWaterLevel()? 1:0); // water level
                             sb.append(' ');
-                            sb.append(random.nextBoolean()? 1:0); // water quality
+                            sb.append(vo.isHasWaterQuality()? 1:0); // water quality
                             sb.append(' ');
-                            sb.append(random.nextBoolean()? 1:0); // water flow
+                            sb.append(vo.isHasWaterFlow()? 1:0); // water flow
                             sb.append(' ');
-                            sb.append(random.nextBoolean()? 1:0); // floating
+                            sb.append(vo.isHasFloatingMaterial()? 1:0); // floating
                             sb.append(' ');
-                            sb.append(random.nextBoolean()? 1:0); // boat
+                            sb.append(vo.isHasUnmannedShip()? 1:0); // boat
 
                             markerOptions.position(latLng).snippet(sb.toString());
                             markerOptionsArrayList.add(markerOptions);

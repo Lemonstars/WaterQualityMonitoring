@@ -136,11 +136,7 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
             }
 
             numStr = waterQualityTypeNumVO.getReturnDateValue();
-            if(mState == WaterQualityData.TEMPERATURE){
-                num = Float.parseFloat(numStr.substring(0, numStr.length()-2));
-            }else {
-                num = Float.parseFloat(numStr);
-            }
+            num = Float.parseFloat(numStr);
             dataList.add(num);
 
             dateList.add(waterQualityTypeNumVO.getCollectionTime());
