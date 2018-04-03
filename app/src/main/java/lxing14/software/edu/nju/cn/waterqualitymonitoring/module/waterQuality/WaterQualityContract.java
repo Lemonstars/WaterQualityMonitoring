@@ -23,6 +23,12 @@ public interface WaterQualityContract {
         void showTabSelected(int index);
 
         /**
+         * 显示图表的单位
+         * @param index
+         */
+        void showChartUnit(int index);
+
+        /**
          * 显示水质图表
          * @param dataList
          * @param dateList
@@ -32,12 +38,12 @@ public interface WaterQualityContract {
         /**
          * 显示当前水质数据
          * @param temperature 温度
+         * @param conductivity 电导率
          * @param ph ph值
          * @param dissolvedOxygen 溶解氧
          * @param redox 氧化还原
-         * @param transparency 透明度
-         * @param conductivity 电导率
          * @param turbidity 浊度
+         * @param transparency 透明度
          * @param nh3 氨氮
          */
         void showCurrentWaterQualityInfo(String temperature, double ph, double dissolvedOxygen, double redox,

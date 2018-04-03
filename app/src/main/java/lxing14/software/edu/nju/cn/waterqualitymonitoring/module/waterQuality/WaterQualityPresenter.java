@@ -143,6 +143,7 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
         }
 
         mView.showTabSelected(mState);
+        mView.showChartUnit(mState);
         mView.showWaterQualityChart(dateList, dataList);
     }
 

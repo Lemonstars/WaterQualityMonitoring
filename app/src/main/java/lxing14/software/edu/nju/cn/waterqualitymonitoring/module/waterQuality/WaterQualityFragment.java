@@ -1,5 +1,6 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterQuality;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.amap.api.maps.MapView;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -33,6 +35,8 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
     private WaterQualityRVAdapter mAdapter;
 
     private TextView[] mTab_tv;
+    //TODO 等待确认
+    private String[] mChartUnit = new String[]{"°C", "S/m", "", "mg/L", "mV", "NTU", "%", "mg/L"};
 
     public static WaterQualityFragment generateFragment(){
         return new WaterQualityFragment();
@@ -84,6 +88,12 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         for(int i=0;i<mTab_tv.length;i++){
             mTab_tv[i].setTextColor(getResources().getColor(index==i?R.color.colorPrimary:R.color.black));
         }
+    }
+
+    @Override
+    public void showChartUnit(int index) {
+        Description description = mLineChart.getDescription();
+        description.setText(mChartUnit[index]);
     }
 
     @Override
