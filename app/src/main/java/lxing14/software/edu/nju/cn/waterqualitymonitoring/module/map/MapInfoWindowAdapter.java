@@ -34,8 +34,7 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
     public MapInfoWindowAdapter(Context context) {
         this.context = context;
 
-        type = new int[]{R.string.waterLevel, R.string.waterQuality,
-                R.string.waterFlow, R.string.floatingMaterial, R.string.unmannedShip};
+        type = new int[]{R.string.waterLevel, R.string.waterQuality, R.string.waterFlow, R.string.floatingMaterial, R.string.unmannedShip};
     }
 
     @Override

@@ -19,6 +19,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 public class WaterLevelActivity extends AppCompatActivity {
 
     private DoubleDateSelectDialog mDoubleTimeSelectDialog;
+    private WaterLevelContract.Presenter mPresenter;
 
     public static Intent generateIntent(Context context, int stnId){
         Intent intent = new Intent(context, WaterLevelActivity.class);
@@ -52,26 +53,16 @@ public class WaterLevelActivity extends AppCompatActivity {
                     waterLevelFragment, R.id.contentFrame);
         }
 
-        new WaterLevelPresenter(waterLevelFragment, stnId);
+        mPresenter = new WaterLevelPresenter(waterLevelFragment, stnId);
     }
 
     public void showCustomTimePicker() {
         if (mDoubleTimeSelectDialog == null) {
             mDoubleTimeSelectDialog = new DoubleDateSelectDialog(this, DateConstant.ALLOWED_SMALLEST_TIME, DateConstant.ALLOWED_BIGGEST_TIME, TimeUtil.getTodayDate());
-            mDoubleTimeSelectDialog.setOnDateSelectFinished(new DoubleDateSelectDialog.OnDateSelectFinished() {
-                @Override
-                public void onSelectFinished(String startTime, String endTime) {
-
-                }
-            });
-
-            mDoubleTimeSelectDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-
-                }
-            });
+            mDoubleTimeSelectDialog.setOnDateSelectFinished((startTime, endTime) -> mPresenter.loadWaterLevelDataByDate(startTime, endTime));
+            mDoubleTimeSelectDialog.setOnDismissListener(dialog -> dialog.dismiss());
         }
+
         if (!mDoubleTimeSelectDialog.isShowing()) {
             mDoubleTimeSelectDialog.show();
         }

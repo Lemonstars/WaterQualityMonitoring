@@ -1,7 +1,5 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 
-import android.os.Bundle;
-
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BasePresenter;
@@ -43,7 +41,24 @@ public interface WaterLevelContract {
 
     interface Presenter extends BasePresenter{
 
-        void getDefaultWaterLevelInfo();
+        /**
+         * 处理tab点击
+         * @param index
+         */
+        void processTab(int index);
+
+        /**
+         * 获取默认的水位数据
+         */
+        void loadDefaultWaterLevelData();
+
+        /**
+         * 获取指定范围内的水位数据
+         * @param startTime
+         * @param endTime
+         */
+        void loadWaterLevelDataByDate(String startTime, String endTime);
+
 
         void getCurrentWaterLevelInfo();
 

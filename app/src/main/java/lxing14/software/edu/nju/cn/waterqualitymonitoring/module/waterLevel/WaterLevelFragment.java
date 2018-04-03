@@ -14,6 +14,7 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -61,6 +62,8 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         findView(root);
         configListener();
         ChartUtil.configLineChart(mLineChart);
+        showInitTabSelected();
+        showChartUnit();
 
         mPresenter.loadLocationInfo();
 
@@ -94,10 +97,6 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
 
     @Override
     public void showWaterLevelInfo(List<String> waterLevelDate, List<Float> waterLevelData) {
-        mRealTime_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
-        mDay_tv.setTextColor(getResources().getColor(R.color.black));
-        mMonth_tv.setTextColor(getResources().getColor(R.color.black));
-
         int len = waterLevelDate.size();
         mLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(waterLevelDate));
 
@@ -151,11 +150,23 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         }
     }
 
+    private void showInitTabSelected(){
+        mRealTime_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
+        mDay_tv.setTextColor(getResources().getColor(R.color.black));
+        mMonth_tv.setTextColor(getResources().getColor(R.color.black));
+    }
+
+    private void showChartUnit(){
+        Description description = mLineChart.getDescription();
+        description.setText("m");
+    }
+
     //the change of the color of the tab
     private void clickTab(int index){
         for(int i=0;i<mTab_tv.length;i++){
             mTab_tv[i].setTextColor(getResources().getColor(i==index ? R.color.colorPrimary:R.color.black));
         }
+        mPresenter.processTab(index);
     }
 
 
