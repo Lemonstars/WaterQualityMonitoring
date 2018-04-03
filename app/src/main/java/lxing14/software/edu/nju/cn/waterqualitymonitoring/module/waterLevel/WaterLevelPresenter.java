@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterLevelHistoricalVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterLevelVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.OrderConstant;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -26,7 +26,12 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
     public static final int MONTH = 2;
 
     private WaterLevelContract.View mView;
+
     private int mStnId;
+    private String[] picUrl = new String[4];
+    private String[] picDate = new String[4];
+    private String startTime = TimeUtil.getDateBeforeNum(7);
+    private String endTime = TimeUtil.getTodayDate();
 
     public WaterLevelPresenter(WaterLevelContract.View view, int stnId) {
         this.mView = view;
@@ -37,7 +42,7 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
     @Override
     public void start() {
         loadDefaultWaterLevelData();
-        getCurrentWaterLevelInfo();
+        loadCurrentWaterLevelInfo(startTime, endTime);
     }
 
     @Override
@@ -131,11 +136,11 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
     }
 
     @Override
-    public void getCurrentWaterLevelInfo() {
-        RetrofitHelper.getWaterInterface().getCurrentWaterLevelInfo(mStnId)
+    public void loadCurrentWaterLevelInfo(String startTime, String endTime) {
+        RetrofitHelper.getWaterInterface().getCurrentWaterLevelInfo(mStnId, startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<WaterLevelVO>() {
+                .subscribe(new Subscriber<WaterLevelHistoricalVO>() {
                     @Override
                     public void onCompleted() {
 
@@ -147,17 +152,26 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
                     }
 
                     @Override
-                    public void onNext(WaterLevelVO waterLevelVO) {
-                        String picUrl = WebSite.PIC_Prefix + waterLevelVO.getPicPath();
-                        String picUrlEncode = picUrl.replace(" ", "%20");
-                        String currentWaterLevel = waterLevelVO.getWaterLevel() + " m";
-                        //TODO 历史数据如何获取
-                        String historicalWaterLevel = "1-2 m";
-                        String photoBy = waterLevelVO.getC_time();
+                    public void onNext(WaterLevelHistoricalVO waterLevelHistoricalVO) {
+                        String stnName = waterLevelHistoricalVO.getStnName();
+                        double lastLevel = waterLevelHistoricalVO.getLastWaterLevel();
+                        String lastLevelStr = lastLevel + "m";
+                        double minLevel = waterLevelHistoricalVO.getMinLevel();
+                        double maxLevel = waterLevelHistoricalVO.getMaxLevel();
+                        String rangStr = minLevel+" - "+maxLevel+"m";
 
-                        mView.showCurrentWaterLevelDetailInfo(picUrlEncode, currentWaterLevel, historicalWaterLevel, photoBy);
+                        List<WaterLevelHistoricalVO.PicListBean> picListBeanList = waterLevelHistoricalVO.getPicList();
+                        WaterLevelHistoricalVO.PicListBean picListBean;
+                        for(int i=0;i<picDate.length;i++){
+                            picListBean = picListBeanList.get(i);
+                            picDate[i] = picListBean.getDate();
+                            picUrl[i] = picListBean.getUrl().replace(" ", "%20");
+                        }
+
+                        mView.showCurrentWaterLevelDetailInfo(stnName, lastLevelStr, rangStr, picUrl, picDate);
                     }
                 });
+
     }
 
     @Override

@@ -5,6 +5,8 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
+
 /**
  * @version : 1.0
  * @auther : starrylemon
@@ -16,7 +18,7 @@ public class PicassoUtil {
 
     public static void loadUrl(Context context, String url, ImageView imageView){
         Picasso.with(context)
-                .load(url)
+                .load(WebSite.PIC_Prefix+url)
                 .fit()
                 .into(imageView);
     }

@@ -12,6 +12,7 @@
     <string name="unmannedShip">无人船</string>
 
     <string name="map">地图</string>
+    <string name="stationName">站点名称：</string>
     <string name="currentWaterLevel">当前水位：</string>
     <string name="historicalWaterLevel">历史水位：</string>
     <string name="photoBy">拍摄于：</string>

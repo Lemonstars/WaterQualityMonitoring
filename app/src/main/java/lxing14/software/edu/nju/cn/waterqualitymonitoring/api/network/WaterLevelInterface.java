@@ -3,6 +3,7 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network;
 
 import java.util.List;
 
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterLevelHistoricalVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterLevelVO;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -37,7 +38,10 @@ public interface WaterLevelInterface {
     Observable<List<WaterLevelVO>> getWaterLevelByDate(@Path("stnId")int stnId,
                                                        @Path("startTime")String startTime, @Path("endTime")String endTime);
 
-    @GET("water/lastWater/{siteId}")
-    Observable<WaterLevelVO> getCurrentWaterLevelInfo(@Path("siteId")int siteId);
+    //http://172.19.149.86:9080/water/historicalWaterLevel/1/2018-03-04/2018-04-03
+
+    @GET("water/historicalWaterLevel/{siteId}/{startTime}/{endTime}")
+    Observable<WaterLevelHistoricalVO> getCurrentWaterLevelInfo(@Path("siteId")int siteId, @Path("startTime")String startTime,
+                                                                @Path("endTime")String endTime);
 
 }

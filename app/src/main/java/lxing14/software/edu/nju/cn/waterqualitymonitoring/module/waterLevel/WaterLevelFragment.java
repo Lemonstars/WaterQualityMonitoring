@@ -37,6 +37,10 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     private MapView mMapView;
     private AMap mAMap;
     private ImageView mCurrentWaterLevelImg_iv;
+    private ImageView mImage1;
+    private ImageView mImage2;
+    private ImageView mImage3;
+    private TextView mStation_tv;
     private TextView mCurrentWaterLevelNum_tv;
     private TextView mHistoricalWaterLevelNum_tv;
     private TextView mPhotoByDate_tv;
@@ -116,12 +120,17 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     }
 
     @Override
-    public void showCurrentWaterLevelDetailInfo(String picUrl, String currentWaterLevel,
-                                                String historicalWaterLevel, String photoByDate) {
-        PicassoUtil.loadUrl(getContext(), picUrl, mCurrentWaterLevelImg_iv);
+    public void showCurrentWaterLevelDetailInfo(String stationName, String currentWaterLevel, String historicalWaterLevel,
+                                                String[] picUrl, String[] date) {
+        mStation_tv.setText(stationName);
         mCurrentWaterLevelNum_tv.setText(currentWaterLevel);
         mHistoricalWaterLevelNum_tv.setText(historicalWaterLevel);
-        mPhotoByDate_tv.setText(photoByDate);
+        mPhotoByDate_tv.setText(date[0]);
+
+        PicassoUtil.loadUrl(getContext(), picUrl[0], mCurrentWaterLevelImg_iv);
+        PicassoUtil.loadUrl(getContext(), picUrl[1], mImage1);
+        PicassoUtil.loadUrl(getContext(), picUrl[2], mImage2);
+        PicassoUtil.loadUrl(getContext(), picUrl[3], mImage3);
     }
 
     @Override
@@ -142,22 +151,38 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
                 clickTab(WaterLevelPresenter.MONTH);
                 break;
             case R.id.currentWaterLevelImg_iv:
-                if(mImageDialog == null){
-                    mImageDialog = new ImageDialog(getContext(), mCurrentWaterLevelImg_iv.getDrawable());
-                }else {
-                    mImageDialog.setImage(mCurrentWaterLevelImg_iv.getDrawable());
-                }
-                mImageDialog.show();
+                showSelectedPic(mCurrentWaterLevelImg_iv);
+                break;
+            case R.id.image1:
+                showSelectedPic(mImage1);
+                break;
+            case R.id.image2:
+                showSelectedPic(mImage2);
+                break;
+            case R.id.image3:
+                showSelectedPic(mImage3);
                 break;
         }
     }
 
+    //
+    private void showSelectedPic(ImageView imageView){
+        if(mImageDialog == null){
+            mImageDialog = new ImageDialog(getContext(), imageView.getDrawable());
+        }else {
+            mImageDialog.setImage(imageView.getDrawable());
+        }
+        mImageDialog.show();
+    }
+
+    //show the selected tab at first
     private void showInitTabSelected(){
         mRealTime_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
         mDay_tv.setTextColor(getResources().getColor(R.color.black));
         mMonth_tv.setTextColor(getResources().getColor(R.color.black));
     }
 
+    //show the unit of the chart
     private void showChartUnit(){
         Description description = mLineChart.getDescription();
         description.setText("m");
@@ -177,7 +202,11 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mMapView = root.findViewById(R.id.map);
         mAMap = mMapView.getMap();
 
+        mStation_tv = root.findViewById(R.id.station_tv);
         mCurrentWaterLevelImg_iv = root.findViewById(R.id.currentWaterLevelImg_iv);
+        mImage1 = root.findViewById(R.id.image1);
+        mImage2 = root.findViewById(R.id.image2);
+        mImage3 = root.findViewById(R.id.image3);
         mCurrentWaterLevelNum_tv = root.findViewById(R.id.currentWaterLevelNum_tv);
         mHistoricalWaterLevelNum_tv = root.findViewById(R.id.historicalWaterLevelNum_tv);
         mPhotoByDate_tv = root.findViewById(R.id.photoByDate_tv);
@@ -195,6 +224,9 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mDay_tv.setOnClickListener(this);
         mMonth_tv.setOnClickListener(this);
         mCurrentWaterLevelImg_iv.setOnClickListener(this);
+        mImage1.setOnClickListener(this);
+        mImage2.setOnClickListener(this);
+        mImage3.setOnClickListener(this);
     }
 
 }
