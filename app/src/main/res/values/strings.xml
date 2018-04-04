@@ -10,6 +10,9 @@
     <string name="waterForce">水动力</string>
     <string name="floatingMaterial">漂浮物</string>
     <string name="unmannedShip">无人船</string>
+    
+    <string name="standardMap">标准图</string>
+    <string name="satelliteMap">卫星图</string>
 
     <string name="map">地图</string>
     <string name="stationName">站点名称：</string>

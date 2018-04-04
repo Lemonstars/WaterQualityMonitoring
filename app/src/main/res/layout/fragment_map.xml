@@ -4,10 +4,47 @@
     android:layout_height="match_parent"
     tools:context="lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map.MapFragment">
 
+
     <com.amap.api.maps.MapView
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </com.amap.api.maps.MapView>
+
+
+    <LinearLayout
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_gravity="right"
+        android:background="@drawable/bg_white_radius_corner">
+
+        <TextView
+            android:id="@+id/standard_tv"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="0.25dp"
+            android:gravity="center"
+            android:textColor="@color/skyBlue"
+            android:textSize="12sp"
+            android:text="@string/standardMap"/>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"/>
+
+        <TextView
+            android:id="@+id/satellite_tv"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0.25dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:text="@string/satelliteMap"/>
+
+    </LinearLayout>
 
 </FrameLayout>
