@@ -1,5 +1,6 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -108,6 +109,11 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
                 showSelectedPic(mImage3);
                 break;
         }
+    }
+
+    @Override
+    public Context getContextView() {
+        return getContext();
     }
 
     //configure the bar chart

@@ -165,6 +165,11 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         }
     }
 
+    @Override
+    public Context getContextView() {
+        return getContext();
+    }
+
     //show the current location
     private void showCurrentLocation(){
         SharedPreferences sharedPreferences = getContext().getSharedPreferences(SharePreferencesConstant.APP_NAME, Context.MODE_PRIVATE);

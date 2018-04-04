@@ -179,6 +179,11 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         super.onDestroy();
     }
 
+    @Override
+    public Context getContextView() {
+        return getContext();
+    }
+
     //the change of the color of the tab
     private void clickTab(int index){
         for(int i=0;i<mTab_tv.length;i++){

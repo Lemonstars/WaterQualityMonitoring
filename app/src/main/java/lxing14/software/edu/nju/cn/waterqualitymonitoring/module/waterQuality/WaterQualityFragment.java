@@ -179,6 +179,11 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         mPresenter.loadChartDataByType(index);
     }
 
+    @Override
+    public Context getContextView() {
+        return getContext();
+    }
+
     //show the current location
     private void showCurrentLocation(){
         SharedPreferences sharedPreferences = getContext().getSharedPreferences(SharePreferencesConstant.APP_NAME, Context.MODE_PRIVATE);

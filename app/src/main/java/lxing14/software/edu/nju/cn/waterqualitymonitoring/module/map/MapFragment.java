@@ -42,6 +42,8 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
         configListener();
         mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getContext()));
 
+        mPresenter.loadAllWaterTypeInfo();
+
         mMapView.onCreate(savedInstanceState);
         return root;
     }
@@ -80,11 +82,6 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
     }
 
     @Override
-    public Context getViewContext() {
-        return getContext();
-    }
-
-    @Override
     public void setPresenter(MapContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
@@ -104,6 +101,11 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
                 showMapType(false);
                 break;
         }
+    }
+
+    @Override
+    public Context getContextView() {
+        return getActivity();
     }
 
     //show the selected type of the map

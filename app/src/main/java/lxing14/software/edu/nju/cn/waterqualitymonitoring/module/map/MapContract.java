@@ -24,11 +24,6 @@ public interface MapContract {
         void showInitPoint(ArrayList<MarkerOptions> markerOptionsList);
 
         /**
-         * 获取上下文
-         */
-        Context getViewContext();
-
-        /**
          * 显示当前定位
          *
          * @param latitude

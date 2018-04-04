@@ -1,5 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring;
 
+import android.content.Context;
+
 /**
  * @version : 1.0
  * @auther : starrylemon
@@ -10,5 +12,7 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring;
 public interface BaseView<T> {
 
     void setPresenter(T presenter);
+
+    Context getContextView();
 
 }

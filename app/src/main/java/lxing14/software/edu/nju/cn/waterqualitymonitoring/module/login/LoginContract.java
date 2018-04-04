@@ -17,12 +17,6 @@ public interface LoginContract {
     interface ILoginView extends BaseView<ILoginPresenter>{
 
         /**
-         * 获取上下文
-         * @return
-         */
-        Context getViewContext();
-
-        /**
          * 提示输入用户名
          */
         void onUserNameNotInput();

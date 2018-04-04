@@ -3,11 +3,11 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating;
 import java.util.ArrayList;
 import java.util.List;
 
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscriber;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFloatingByDateVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFloatingPicVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFloatingVO;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -35,20 +35,10 @@ public class WaterFloatingPresenter implements WaterFloatingContract.IPresenter 
 
     @Override
     public void loadWaterFloatingChartInfo() {
-        RetrofitHelper.getWaterFloatingInterface().getRecentFloatingInfo(1, 30)
+        RetrofitHelper.getWaterFloatingInterface().getRecentFloatingInfo(mStnId, 30)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<WaterFloatingVO>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
+                .subscribe(new BaseSubscriber<List<WaterFloatingVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterFloatingVO> waterFloatingVOS) {
                         int len = waterFloatingVOS.size();
@@ -69,23 +59,13 @@ public class WaterFloatingPresenter implements WaterFloatingContract.IPresenter 
         RetrofitHelper.getWaterFloatingInterface().getFloatingInfoByDate(mStnId, startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<WaterFloatingByDateVO>>() {
+                .subscribe(new BaseSubscriber<List<WaterFloatingByDateVO>>(mView.getContextView()) {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<WaterFloatingByDateVO> waterFloatingVOS) {
-                        int len = waterFloatingVOS.size();
+                    public void onNext(List<WaterFloatingByDateVO> waterFloatingByDateVOS) {
+                        int len = waterFloatingByDateVOS.size();
                         List<String> dateList = new ArrayList<>(len);
                         List<Integer> dataList = new ArrayList<>(len);
-                        for(WaterFloatingByDateVO vo: waterFloatingVOS){
+                        for(WaterFloatingByDateVO vo: waterFloatingByDateVOS){
                             dateList.add(vo.getDays());
                             dataList.add(vo.getNums());
                         }
@@ -99,17 +79,7 @@ public class WaterFloatingPresenter implements WaterFloatingContract.IPresenter 
         RetrofitHelper.getWaterFloatingInterface().getFloatingInfoPic(mStnId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<WaterFloatingPicVO>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
+                .subscribe(new BaseSubscriber<List<WaterFloatingPicVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterFloatingPicVO> waterFloatingPicVOS) {
                         String url1 = waterFloatingPicVOS.get(0).getFilePathResult();

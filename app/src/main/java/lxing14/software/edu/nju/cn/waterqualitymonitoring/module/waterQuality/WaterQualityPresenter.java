@@ -1,10 +1,12 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterQuality;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscriber;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.*;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityTypeNumVO;
@@ -48,20 +50,10 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
         RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.getName(mState), CommonConstant.DEFAULT_DAY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<WaterQualityTypeNumVO>>() {
+                .subscribe(new BaseSubscriber<List<WaterQualityTypeNumVO>>(mView.getContextView()) {
                     @Override
-                    public void onCompleted() {
-                        Log.d("WaterQualityPresenter", "onCompleted: ");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d("WaterQualityPresenter", "onError: ");
-                    }
-
-                    @Override
-                    public void onNext(List<WaterQualityTypeNumVO> waterQualityTypeVOS) {
-                        onNetworkRequest(waterQualityTypeVOS, OrderConstant.DESC);
+                    public void onNext(List<WaterQualityTypeNumVO> waterQualityTypeNumVOS) {
+                        onNetworkRequest(waterQualityTypeNumVOS, OrderConstant.DESC);
                     }
                 });
     }
@@ -71,17 +63,7 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
         RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.getName(mState), startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<WaterQualityTypeNumVO>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
+                .subscribe(new BaseSubscriber<List<WaterQualityTypeNumVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterQualityTypeNumVO> waterQualityTypeNumVOS) {
                         onNetworkRequest(waterQualityTypeNumVOS, OrderConstant.ASC);
@@ -94,17 +76,7 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
         RetrofitHelper.getWaterQualityInterface().getCurrentWaterQualityInfo(1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<WaterQualityVO>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.d("WaterQualityPresenter", "onCompleted: ");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d("WaterQualityPresenter", "onError: ");
-                    }
-
+                .subscribe(new BaseSubscriber<WaterQualityVO>(mView.getContextView()) {
                     @Override
                     public void onNext(WaterQualityVO waterQualityVO) {
                         String temperature = waterQualityVO.getTemperature();

@@ -1,8 +1,11 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFlow;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscriber;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFlowCameraInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFlowVO;
@@ -51,20 +54,10 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
         RetrofitHelper.getWaterFlowInterface().getLatestWaterFlow(mStnId, 30)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<WaterFlowVO>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
+                .subscribe(new BaseSubscriber<List<WaterFlowVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterFlowVO> waterFlowVOList) {
-                         onNetworkRequest(OrderConstant.DESC, waterFlowVOList);
+                        onNetworkRequest(OrderConstant.DESC, waterFlowVOList);
                     }
                 });
     }
@@ -74,17 +67,7 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
         RetrofitHelper.getWaterFlowInterface().getWaterFlowByDate(mStnId, startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<WaterFlowVO>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
+                .subscribe(new BaseSubscriber<List<WaterFlowVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterFlowVO> waterFlowVOList) {
                         onNetworkRequest(OrderConstant.ASC, waterFlowVOList);
@@ -97,17 +80,7 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
         RetrofitHelper.getWaterFlowInterface().getCameraInfo(mStnId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<WaterFlowCameraInfoVO>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
+                .subscribe(new BaseSubscriber<List<WaterFlowCameraInfoVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterFlowCameraInfoVO> waterFlowCameraInfoVOS) {
                         WaterFlowCameraInfoVO vo = waterFlowCameraInfoVOS.get(0);
@@ -145,17 +118,7 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
     public void loadWaterFlowVideoUrl() {
         RetrofitHelper.getWaterFlowInterface().getVideoUrl(mStnId)
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<WaterFlowVideoUrlVO>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
+                .subscribe(new BaseSubscriber<List<WaterFlowVideoUrlVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterFlowVideoUrlVO> waterFlowVideoUrlVOList) {
                         int size = waterFlowVideoUrlVOList.size();

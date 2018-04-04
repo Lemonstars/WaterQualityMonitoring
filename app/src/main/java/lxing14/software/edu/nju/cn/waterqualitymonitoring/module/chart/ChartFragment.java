@@ -1,5 +1,6 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -65,6 +66,11 @@ public class ChartFragment extends Fragment implements ChartContract.View{
         super.onResume();
 
         mPresenter.start();
+    }
+
+    @Override
+    public Context getContextView() {
+        return getContext();
     }
 
     //configure the line chart

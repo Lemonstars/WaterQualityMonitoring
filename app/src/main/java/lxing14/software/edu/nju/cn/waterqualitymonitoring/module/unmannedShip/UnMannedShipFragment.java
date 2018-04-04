@@ -1,5 +1,6 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.unmannedShip;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -65,4 +66,8 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
         mLineChart.invalidate();
     }
 
+    @Override
+    public Context getContextView() {
+        return getContext();
+    }
 }

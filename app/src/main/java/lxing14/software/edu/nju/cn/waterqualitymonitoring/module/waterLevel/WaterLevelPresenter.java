@@ -1,8 +1,11 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscriber;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterLevelHistoricalVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterLevelVO;
@@ -63,20 +66,10 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
         RetrofitHelper.getWaterInterface().getWaterLevelByNum(mStnId, 30)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<WaterLevelVO>>() {
+                .subscribe(new BaseSubscriber<List<WaterLevelVO>>(mView.getContextView()) {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<WaterLevelVO> waterLevelVOs) {
-                        onNetworkRequest(OrderConstant.DESC, waterLevelVOs);
+                    public void onNext(List<WaterLevelVO> waterLevelVOS) {
+                        onNetworkRequest(OrderConstant.DESC, waterLevelVOS);
                     }
                 });
 
@@ -87,17 +80,7 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
         RetrofitHelper.getWaterInterface().getWaterLevelByDate(mStnId, startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<WaterLevelVO>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
+                .subscribe(new BaseSubscriber<List<WaterLevelVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterLevelVO> waterLevelVOS) {
                         onNetworkRequest(OrderConstant.ASC, waterLevelVOS);
@@ -110,17 +93,7 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
         RetrofitHelper.getWaterInterface().getCurrentWaterLevelInfo(mStnId, startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<WaterLevelHistoricalVO>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
+                .subscribe(new BaseSubscriber<WaterLevelHistoricalVO>(mView.getContextView()) {
                     @Override
                     public void onNext(WaterLevelHistoricalVO waterLevelHistoricalVO) {
                         String stnName = waterLevelHistoricalVO.getStnName();

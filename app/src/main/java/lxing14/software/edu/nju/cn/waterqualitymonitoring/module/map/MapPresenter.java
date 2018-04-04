@@ -10,11 +10,11 @@ import com.amap.api.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscriber;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterTypeEnum;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -39,7 +39,6 @@ public class MapPresenter implements MapContract.Presenter {
 
     @Override
     public void start() {
-        loadAllWaterTypeInfo();
         initLocation();
     }
 
@@ -74,7 +73,7 @@ public class MapPresenter implements MapContract.Presenter {
     }
 
     private void initLocation() {
-        mLocationClient = new AMapLocationClient(mMapView.getViewContext());
+        mLocationClient = new AMapLocationClient(mMapView.getContextView());
         mLocationClient.setLocationListener(aMapLocation -> {
             double latitude = CommonConstant.LATITUDE_OF_NJ;
             double longitude = CommonConstant.LONGITUDE_OF_NJ;
@@ -99,22 +98,12 @@ public class MapPresenter implements MapContract.Presenter {
         RetrofitHelper.getWaterStationInterface().getAllStationInfo()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<WaterStationInfoVO>>() {
+                .subscribe(new BaseSubscriber<List<WaterStationInfoVO>>(mMapView.getContextView()) {
                     @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<WaterStationInfoVO> waterStationInfoVOList) {
+                    public void onNext(List<WaterStationInfoVO> waterStationInfoVOS) {
                         LatLng latLng;
-                        ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>(waterStationInfoVOList.size());
-                        for(WaterStationInfoVO vo: waterStationInfoVOList){
+                        ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>(waterStationInfoVOS.size());
+                        for(WaterStationInfoVO vo: waterStationInfoVOS){
                             double x = Double.parseDouble(vo.getX());
                             double y = Double.parseDouble(vo.getY());
 

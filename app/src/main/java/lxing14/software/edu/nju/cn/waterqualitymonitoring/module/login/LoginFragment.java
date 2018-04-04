@@ -1,7 +1,6 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.login;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import java.util.concurrent.TimeUnit;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map.MapActivity;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -65,11 +63,6 @@ public class LoginFragment extends Fragment implements LoginContract.ILoginView,
     }
 
     @Override
-    public Context getViewContext() {
-        return getContext();
-    }
-
-    @Override
     public void onUserNameNotInput() {
         mUserNameHint_layout.setVisibility(View.VISIBLE);
         mUserNameHint_tv.setText(R.string.pleaseInputUserName);
@@ -117,11 +110,6 @@ public class LoginFragment extends Fragment implements LoginContract.ILoginView,
         super.onDestroy();
     }
 
-    //initialize the listener
-    private void initListener(){
-        mLogin_tv.setOnClickListener(this);
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -131,5 +119,15 @@ public class LoginFragment extends Fragment implements LoginContract.ILoginView,
                 mPresenter.verifyPassword(userName, password);
                 break;
         }
+    }
+
+    @Override
+    public Context getContextView() {
+        return getContext();
+    }
+
+    //initialize the listener
+    private void initListener(){
+        mLogin_tv.setOnClickListener(this);
     }
 }
