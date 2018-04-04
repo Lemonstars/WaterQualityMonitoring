@@ -36,7 +36,6 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
 
     private WaterFlowContract.Presenter mPresenter;
 
-
     private TextView mRealTime_tv;
     private TextView mDay_tv;
     private TextView mMonth_tv;

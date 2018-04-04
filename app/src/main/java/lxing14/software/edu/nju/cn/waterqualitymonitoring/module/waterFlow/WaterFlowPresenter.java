@@ -22,9 +22,11 @@ import rx.schedulers.Schedulers;
 public class WaterFlowPresenter implements WaterFlowContract.Presenter {
 
     private WaterFlowContract.View mView;
+    private int mStnId;
 
-    public WaterFlowPresenter(WaterFlowContract.View mView) {
+    public WaterFlowPresenter(WaterFlowContract.View mView, int stnId) {
         this.mView = mView;
+        this.mStnId = stnId;
         mView.setPresenter(this);
     }
 
@@ -36,7 +38,7 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
 
     @Override
     public void loadDefaultWaterFlowData() {
-        RetrofitHelper.getWaterFlowInterface().getLatestWaterFlow(1, 30)
+        RetrofitHelper.getWaterFlowInterface().getLatestWaterFlow(mStnId, 30)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<WaterFlowVO>>() {
@@ -59,7 +61,7 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
 
     @Override
     public void loadWaterLevelDataByDate(String startTime, String endTime) {
-        RetrofitHelper.getWaterFlowInterface().getWaterFlowByDate(1, startTime, endTime)
+        RetrofitHelper.getWaterFlowInterface().getWaterFlowByDate(mStnId, startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<WaterFlowVO>>() {

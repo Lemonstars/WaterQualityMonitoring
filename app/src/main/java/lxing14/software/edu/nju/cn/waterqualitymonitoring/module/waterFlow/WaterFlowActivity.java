@@ -1,5 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFlow;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 import com.fantasy.doubledatepicker.DoubleDateSelectDialog;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.DateConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ActivityUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
@@ -17,10 +20,20 @@ public class WaterFlowActivity extends AppCompatActivity {
     private DoubleDateSelectDialog mDoubleTimeSelectDialog;
     private WaterFlowContract.Presenter mPresenter;
 
+    public static Intent generateIntent(Context context, int stnId){
+        Intent intent = new Intent(context, WaterFlowActivity.class);
+        intent.putExtra(CommonConstant.STN_ID, stnId);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water_flow);
+
+        //get the data of the intent
+        Intent intent = getIntent();
+        int stnId = intent.getIntExtra(CommonConstant.STN_ID, -1);
 
         //set the text of the toolbar
         TextView toolBarTV = findViewById(R.id.toolbar);
@@ -39,7 +52,7 @@ public class WaterFlowActivity extends AppCompatActivity {
                     waterFlowFragment, R.id.contentFrame);
         }
 
-        mPresenter = new WaterFlowPresenter(waterFlowFragment);
+        mPresenter = new WaterFlowPresenter(waterFlowFragment, stnId);
     }
 
     public void showCustomTimePicker() {

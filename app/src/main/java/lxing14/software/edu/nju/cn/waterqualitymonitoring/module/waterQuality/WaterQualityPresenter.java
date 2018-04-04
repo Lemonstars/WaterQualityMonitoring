@@ -26,9 +26,11 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
 
     private WaterQualityContract.View mView;
     private int mState = WaterQualityData.TEMPERATURE;
+    private int mStnId;
 
-    public WaterQualityPresenter(WaterQualityContract.View mView) {
+    public WaterQualityPresenter(WaterQualityContract.View mView, int stnId) {
         this.mView = mView;
+        this.mStnId = stnId;
         mView.setPresenter(this);
     }
 
@@ -43,7 +45,7 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
     public void loadChartDataByType(int type) {
         mState = type;
 
-        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(1, WaterQualityData.getName(mState), CommonConstant.DEFAULT_DAY)
+        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.getName(mState), CommonConstant.DEFAULT_DAY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<WaterQualityTypeNumVO>>() {
@@ -66,7 +68,7 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
 
     @Override
     public void loadChartDataByDateAndType(String startTime, String endTime) {
-        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(1, WaterQualityData.getName(mState), startTime, endTime)
+        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.getName(mState), startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<WaterQualityTypeNumVO>>() {

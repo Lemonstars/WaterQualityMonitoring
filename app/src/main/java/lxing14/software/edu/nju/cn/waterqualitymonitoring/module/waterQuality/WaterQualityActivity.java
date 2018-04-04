@@ -1,5 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterQuality;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -8,7 +10,9 @@ import android.widget.TextView;
 import com.fantasy.doubledatepicker.DoubleDateSelectDialog;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.DateConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel.WaterLevelActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ActivityUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 
@@ -17,10 +21,20 @@ public class WaterQualityActivity extends AppCompatActivity {
     private DoubleDateSelectDialog mDoubleTimeSelectDialog;
     private WaterQualityPresenter mPresenter;
 
+    public static Intent generateIntent(Context context, int stnId){
+        Intent intent = new Intent(context, WaterQualityActivity.class);
+        intent.putExtra(CommonConstant.STN_ID, stnId);
+        return intent;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water_quality);
+
+        //get the data of the intent
+        Intent intent = getIntent();
+        int stnId = intent.getIntExtra(CommonConstant.STN_ID, -1);
 
         //set the text of the toolbar
         TextView toolBarTV = findViewById(R.id.toolbar);
@@ -39,7 +53,7 @@ public class WaterQualityActivity extends AppCompatActivity {
                     waterQualityFragment, R.id.contentFrame);
         }
 
-        mPresenter = new WaterQualityPresenter(waterQualityFragment);
+        mPresenter = new WaterQualityPresenter(waterQualityFragment, stnId);
     }
 
     public void showCustomTimePicker() {
