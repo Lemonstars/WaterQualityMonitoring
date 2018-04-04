@@ -59,7 +59,7 @@ public class WaterFlowActivity extends AppCompatActivity {
 
         if (mDoubleTimeSelectDialog == null) {
             mDoubleTimeSelectDialog = new DoubleDateSelectDialog(this, DateConstant.ALLOWED_SMALLEST_TIME, DateConstant.ALLOWED_BIGGEST_TIME, TimeUtil.getTodayDate());
-            mDoubleTimeSelectDialog.setOnDateSelectFinished( (startTime, endTime) -> mPresenter.loadWaterLevelDataByDate(startTime, endTime));
+            mDoubleTimeSelectDialog.setOnDateSelectFinished( (startTime, endTime) -> mPresenter.loadWaterFlowDataByDate(startTime, endTime));
 
             mDoubleTimeSelectDialog.setOnDismissListener(dialog -> dialog.dismiss());
         }

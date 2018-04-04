@@ -17,6 +17,11 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
 public class PicassoUtil {
 
     public static void loadUrl(Context context, String url, ImageView imageView){
+
+        if(StringUtil.isEmpty(url)){
+            return;
+        }
+
         Picasso.with(context)
                 .load(WebSite.PIC_Prefix+url)
                 .fit()

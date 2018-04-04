@@ -97,18 +97,48 @@
                     android:id="@+id/camera_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"/>
+                    android:orientation="horizontal">
+
+                    <lxing14.software.edu.nju.cn.waterqualitymonitoring.view.CameraChoiceView
+                        android:id="@+id/camera1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <lxing14.software.edu.nju.cn.waterqualitymonitoring.view.CameraChoiceView
+                        android:id="@+id/camera2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <lxing14.software.edu.nju.cn.waterqualitymonitoring.view.CameraChoiceView
+                        android:id="@+id/camera3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <lxing14.software.edu.nju.cn.waterqualitymonitoring.view.CameraChoiceView
+                        android:id="@+id/camera4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <lxing14.software.edu.nju.cn.waterqualitymonitoring.view.CameraChoiceView
+                        android:id="@+id/camera5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
 
             </HorizontalScrollView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
+                android:layout_height="130dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
                 <ImageView
                     android:id="@+id/flow_iv"
                     android:layout_width="100dp"
-                    android:layout_height="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
                     android:layout_centerVertical="true"
                     android:src="@drawable/ic_default_pic"/>
 
@@ -119,8 +149,7 @@
                     android:layout_alignTop="@id/flow_iv"
                     android:layout_toRightOf="@id/flow_iv"
                     android:textSize="14sp"
-                    android:textColor="@color/black"
-                    android:text="相机A表面流速"/>
+                    android:textColor="@color/black" />
 
                 <View
                     android:id="@+id/split_view"
@@ -136,10 +165,10 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/flow_iv"
                     android:layout_below="@id/split_view"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:textSize="12sp"
                     android:textColor="@color/black"
-                    android:text="流速："/>
+                    android:text="流量："/>
 
                 <TextView
                     android:id="@+id/averageFlowSpeed_tv"
@@ -147,32 +176,52 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/flow_iv"
                     android:layout_below="@id/flowSpeed_tv"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="5dp"
                     android:textSize="12sp"
                     android:textColor="@color/black"
                     android:text="平均流速："/>
 
                 <TextView
-                    android:id="@+id/flowSpeedNum_tv"
+                    android:id="@+id/photoByDate_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/flow_iv"
+                    android:layout_below="@id/averageFlowSpeed_tv"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:text="拍摄于："/>
+
+
+                <TextView
+                    android:id="@+id/flowNum_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/flowSpeed_tv"
                     android:layout_below="@id/split_view"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:textSize="12sp"
-                    android:textColor="@color/lightRed"
-                    android:text="8m/s"/>
+                    android:textColor="@color/lightRed" />
 
                 <TextView
                     android:id="@+id/averageFlowSpeedNum_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/averageFlowSpeed_tv"
-                    android:layout_below="@id/flowSpeedNum_tv"
-                    android:layout_marginTop="2dp"
+                    android:layout_below="@id/flowNum_tv"
+                    android:layout_marginTop="5dp"
                     android:textSize="12sp"
-                    android:textColor="@color/lightRed"
-                    android:text="5m/s"/>
+                    android:textColor="@color/lightRed" />
+
+                <TextView
+                    android:id="@+id/dateNum_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/photoByDate_tv"
+                    android:layout_below="@id/averageFlowSpeedNum_tv"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/lightRed" />
 
             </RelativeLayout>
 
