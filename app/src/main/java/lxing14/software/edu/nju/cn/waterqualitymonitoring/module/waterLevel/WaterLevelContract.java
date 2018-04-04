@@ -21,7 +21,7 @@ public interface WaterLevelContract {
          * @param waterLevelDate
          * @param waterLevelData
          */
-        void showWaterLevelInfo(List<String> waterLevelDate, List<Float> waterLevelData);
+        void showWaterLevelChartData(List<String> waterLevelDate, List<Float> waterLevelData);
 
         /**
          * 显示当前水位信息
@@ -50,7 +50,7 @@ public interface WaterLevelContract {
         void loadDefaultWaterLevelData();
 
         /**
-         * 获取指定范围内的水位数据
+         * 获取指定时间范围内的水位数据
          * @param startTime
          * @param endTime
          */

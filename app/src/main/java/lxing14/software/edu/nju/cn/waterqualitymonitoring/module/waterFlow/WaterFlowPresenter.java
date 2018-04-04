@@ -6,6 +6,8 @@ import java.util.List;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFlowVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.OrderConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -19,13 +21,7 @@ import rx.schedulers.Schedulers;
 
 public class WaterFlowPresenter implements WaterFlowContract.Presenter {
 
-    public static final int REAL_TIME = 0;
-    public static final int DAY = 1;
-    public static final int MONTH = 2;
-
     private WaterFlowContract.View mView;
-    private int mState = REAL_TIME;
-
 
     public WaterFlowPresenter(WaterFlowContract.View mView) {
         this.mView = mView;
@@ -34,14 +30,13 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
 
     @Override
     public void start() {
-        //TODO 根据state获取何种类型数据
-        loadChartData();
+        loadDefaultWaterFlowData();
         mView.showCameraChoiceView(5);
     }
 
     @Override
-    public void loadChartData() {
-        RetrofitHelper.getWaterFlowInterface().getLatestWaterFlow(1, CommonConstant.DEFAULT_DAY)
+    public void loadDefaultWaterFlowData() {
+        RetrofitHelper.getWaterFlowInterface().getLatestWaterFlow(1, 30)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<WaterFlowVO>>() {
@@ -57,22 +52,68 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
 
                     @Override
                     public void onNext(List<WaterFlowVO> waterFlowVOList) {
-                        int len = waterFlowVOList.size();
-                        List<String> dateList = new ArrayList<>(len);
-                        List<Float> dataList = new ArrayList<>(len);
-
-                        WaterFlowVO waterFlowVO;
-                        for(int i=0;i<len;i++){
-                            waterFlowVO = waterFlowVOList.get(len-i-1);
-                            dateList.add(waterFlowVO.getCollectionTime());
-                            dataList.add((float)(waterFlowVO.getAvgFlow()));
-                        }
-
-                        mView.showRealTimeChart(dateList, dataList);
+                         onNetworkRequest(OrderConstant.DESC, waterFlowVOList);
                     }
                 });
     }
 
+    @Override
+    public void loadWaterLevelDataByDate(String startTime, String endTime) {
+        RetrofitHelper.getWaterFlowInterface().getWaterFlowByDate(1, startTime, endTime)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<WaterFlowVO>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<WaterFlowVO> waterFlowVOList) {
+                        onNetworkRequest(OrderConstant.ASC, waterFlowVOList);
+                    }
+                });
+    }
+
+    @Override
+    public void processTab(int index) {
+        if(index == CommonConstant.REAL_TIME){
+            loadDefaultWaterFlowData();
+        }else {
+            String startTime;
+            String endTime = TimeUtil.getTodayDate();
+            if(index == CommonConstant.DAY){
+                startTime = TimeUtil.getDateBeforeNum(15);
+            }else {
+                startTime = TimeUtil.getDateBeforeNum(30);
+            }
+            loadWaterLevelDataByDate(startTime, endTime);
+        }
+    }
+
+    private void onNetworkRequest(OrderConstant orderConstant, List<WaterFlowVO> waterFlowVOList){
+        int len = waterFlowVOList.size();
+        List<String> dateList = new ArrayList<>(len);
+        List<Float> dataList = new ArrayList<>(len);
+
+        WaterFlowVO waterFlowVO;
+        for(int i=0;i<len;i++){
+            if(orderConstant == OrderConstant.ASC){
+                waterFlowVO = waterFlowVOList.get(i);
+            }else {
+                waterFlowVO = waterFlowVOList.get(len-i-1);
+            }
+            dateList.add(waterFlowVO.getCollectionTime());
+            dataList.add((float)(waterFlowVO.getAvgFlow()));
+        }
+
+        mView.showWaterFlowChartData(dateList, dataList);
+    }
 
 
 }

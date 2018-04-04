@@ -13,6 +13,7 @@
             android:layout_height="200dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
             android:orientation="vertical"
             android:background="@drawable/bg_white_radius_corner" >
 
@@ -54,21 +55,10 @@
 
             </LinearLayout>
 
-            <FrameLayout
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lineChart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.github.mikephil.charting.charts.CandleStickChart
-                    android:id="@+id/candleStickChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/lineChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-
-            </FrameLayout>
+                android:layout_height="match_parent"/>
 
         </LinearLayout>
 

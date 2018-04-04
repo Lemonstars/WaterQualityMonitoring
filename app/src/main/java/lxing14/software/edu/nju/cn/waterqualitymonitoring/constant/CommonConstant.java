@@ -18,4 +18,8 @@ public class CommonConstant {
     public static final float LONGITUDE_OF_NJ = 118.87056f;
     public static final int DEFAULT_DAY = 15;
 
+    public static final int REAL_TIME = 0;
+    public static final int DAY = 1;
+    public static final int MONTH = 2;
+
 }

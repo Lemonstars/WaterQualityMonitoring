@@ -107,7 +107,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     }
 
     @Override
-    public void showWaterLevelInfo(List<String> waterLevelDate, List<Float> waterLevelData) {
+    public void showWaterLevelChartData(List<String> waterLevelDate, List<Float> waterLevelData) {
         int len = waterLevelDate.size();
         mLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(waterLevelDate));
 
@@ -142,13 +142,13 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.realTime_tv:
-                clickTab(WaterLevelPresenter.REAL_TIME);
+                clickTab(CommonConstant.REAL_TIME);
                 break;
             case R.id.day_tv:
-                clickTab(WaterLevelPresenter.DAY);
+                clickTab(CommonConstant.DAY);
                 break;
             case R.id.month_tv:
-                clickTab(WaterLevelPresenter.MONTH);
+                clickTab(CommonConstant.MONTH);
                 break;
             case R.id.currentWaterLevelImg_iv:
                 showSelectedPic(mCurrentWaterLevelImg_iv);
@@ -187,8 +187,6 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     //show the selected tab at first
     private void showInitTabSelected(){
         mRealTime_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
-        mDay_tv.setTextColor(getResources().getColor(R.color.black));
-        mMonth_tv.setTextColor(getResources().getColor(R.color.black));
     }
 
     //show the unit of the chart

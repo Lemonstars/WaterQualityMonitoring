@@ -25,18 +25,26 @@ public class WaterFlowVO {
      * weekFlow : 0
      */
 
-    private int stnId;
-    private String collectionTime;
-    private int totalFlow;
-    private double avgFlow;
-    private int riverArea;
-    private int monthFlow;
-    private double avgSpeed;
-    private int dayFlow;
-    private int yearFlow;
-    private String state;
     private int flowId;
-    private int weekFlow;
+    private int stnId;
+    private double avgSpeed;
+    private double riverArea;
+    private double avgFlow;
+    private String collectionTime;
+    private String state;
+    private double dayFlow;
+    private double weekFlow;
+    private double monthFlow;
+    private double yearFlow;
+    private double totalFlow;
+
+    public int getFlowId() {
+        return flowId;
+    }
+
+    public void setFlowId(int flowId) {
+        this.flowId = flowId;
+    }
 
     public int getStnId() {
         return stnId;
@@ -44,46 +52,6 @@ public class WaterFlowVO {
 
     public void setStnId(int stnId) {
         this.stnId = stnId;
-    }
-
-    public String getCollectionTime() {
-        return collectionTime;
-    }
-
-    public void setCollectionTime(String collectionTime) {
-        this.collectionTime = collectionTime;
-    }
-
-    public int getTotalFlow() {
-        return totalFlow;
-    }
-
-    public void setTotalFlow(int totalFlow) {
-        this.totalFlow = totalFlow;
-    }
-
-    public double getAvgFlow() {
-        return avgFlow;
-    }
-
-    public void setAvgFlow(double avgFlow) {
-        this.avgFlow = avgFlow;
-    }
-
-    public int getRiverArea() {
-        return riverArea;
-    }
-
-    public void setRiverArea(int riverArea) {
-        this.riverArea = riverArea;
-    }
-
-    public int getMonthFlow() {
-        return monthFlow;
-    }
-
-    public void setMonthFlow(int monthFlow) {
-        this.monthFlow = monthFlow;
     }
 
     public double getAvgSpeed() {
@@ -94,20 +62,28 @@ public class WaterFlowVO {
         this.avgSpeed = avgSpeed;
     }
 
-    public int getDayFlow() {
-        return dayFlow;
+    public double getRiverArea() {
+        return riverArea;
     }
 
-    public void setDayFlow(int dayFlow) {
-        this.dayFlow = dayFlow;
+    public void setRiverArea(double riverArea) {
+        this.riverArea = riverArea;
     }
 
-    public int getYearFlow() {
-        return yearFlow;
+    public double getAvgFlow() {
+        return avgFlow;
     }
 
-    public void setYearFlow(int yearFlow) {
-        this.yearFlow = yearFlow;
+    public void setAvgFlow(double avgFlow) {
+        this.avgFlow = avgFlow;
+    }
+
+    public String getCollectionTime() {
+        return collectionTime;
+    }
+
+    public void setCollectionTime(String collectionTime) {
+        this.collectionTime = collectionTime;
     }
 
     public String getState() {
@@ -118,19 +94,43 @@ public class WaterFlowVO {
         this.state = state;
     }
 
-    public int getFlowId() {
-        return flowId;
+    public double getDayFlow() {
+        return dayFlow;
     }
 
-    public void setFlowId(int flowId) {
-        this.flowId = flowId;
+    public void setDayFlow(double dayFlow) {
+        this.dayFlow = dayFlow;
     }
 
-    public int getWeekFlow() {
+    public double getWeekFlow() {
         return weekFlow;
     }
 
-    public void setWeekFlow(int weekFlow) {
+    public void setWeekFlow(double weekFlow) {
         this.weekFlow = weekFlow;
+    }
+
+    public double getMonthFlow() {
+        return monthFlow;
+    }
+
+    public void setMonthFlow(double monthFlow) {
+        this.monthFlow = monthFlow;
+    }
+
+    public double getYearFlow() {
+        return yearFlow;
+    }
+
+    public void setYearFlow(double yearFlow) {
+        this.yearFlow = yearFlow;
+    }
+
+    public double getTotalFlow() {
+        return totalFlow;
+    }
+
+    public void setTotalFlow(double totalFlow) {
+        this.totalFlow = totalFlow;
     }
 }

@@ -20,6 +20,6 @@ public interface WaterFlowInterface {
     Observable<List<WaterFlowVO>> getLatestWaterFlow(@Path("id")int id, @Path("num")int num);
 
     @GET("flow/queryFlowByStdIdTime/{id}/{startTime}/{endTime}")
-    Observable<List<WaterFlowVO>> geWaterFlowByDate(@Path("id")int id, @Path("startTime")String startTime, @Path("endTime")String endTime);
+    Observable<List<WaterFlowVO>> getWaterFlowByDate(@Path("id")int id, @Path("startTime")String startTime, @Path("endTime")String endTime);
 
 }

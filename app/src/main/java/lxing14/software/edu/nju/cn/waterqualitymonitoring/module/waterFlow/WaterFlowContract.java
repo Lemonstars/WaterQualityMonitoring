@@ -23,30 +23,33 @@ public interface WaterFlowContract {
         void showCameraChoiceView(int num);
 
         /**
-         * 展示实时数据
+         * 展示流量图表数据
          * @param dateList
          * @param dataList
          */
-        void showRealTimeChart(List<String> dateList, List<Float> dataList);
-
-        /**
-         * 显示按天数据
-         */
-        void showDayChart();
-
-        /**
-         * 显示按月数据
-         */
-        void showMonthChart();
+        void showWaterFlowChartData(List<String> dateList, List<Float> dataList);
 
     }
 
     interface Presenter extends BasePresenter{
 
         /**
-         * 获取图表数据
+         * 获取默认的流量数据
          */
-        void loadChartData();
+        void loadDefaultWaterFlowData();
+
+        /**
+         * 获取指定时间范围内的流量数据
+         * @param startTime
+         * @param endTime
+         */
+        void loadWaterLevelDataByDate(String startTime, String endTime);
+
+        /**
+         * 处理tab点击
+         * @param index
+         */
+        void processTab(int index);
 
     }
 
