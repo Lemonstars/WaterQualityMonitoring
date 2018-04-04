@@ -27,9 +27,9 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
     private ViewGroup mExit_layout;
     private ViewGroup mWaterLevelLayout;
     private ViewGroup mWaterQualityLayout;
+    private ViewGroup mWaterFlowLayout;
     private ViewGroup mFloatingLayout;
     private ViewGroup mBoatLayout;
-    private ViewGroup mWaterForceLayout;
 
     public static Intent generateIntent(Context context, String userName){
         Intent intent = new Intent(context, MapActivity.class);
@@ -48,7 +48,7 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         mWaterQualityLayout = findViewById(R.id.waterQuality_layout);
         mFloatingLayout = findViewById(R.id.floating_layout);
         mBoatLayout = findViewById(R.id.boat_layout);
-        mWaterForceLayout = findViewById(R.id.waterForce_layout);
+        mWaterFlowLayout = findViewById(R.id.waterFlow_layout);
 
         getIntentData();
 
@@ -82,7 +82,7 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
             case R.id.boat_layout:
                 presenter.loadUnmannedShipInfo();
                 break;
-            case R.id.waterForce_layout:
+            case R.id.waterFlow_layout:
                 presenter.loadWaterForceInfo();
                 break;
         }
@@ -110,7 +110,7 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         mWaterQualityLayout.setOnClickListener(this);
         mFloatingLayout.setOnClickListener(this);
         mBoatLayout.setOnClickListener(this);
-        mWaterForceLayout.setOnClickListener(this);
+        mWaterFlowLayout.setOnClickListener(this);
     }
 
     //get the data of the intent

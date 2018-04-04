@@ -97,6 +97,32 @@
             </LinearLayout>
 
 
+
+            <LinearLayout
+                android:id="@+id/waterFlow_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/ic_water_flow"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:text="@string/waterFlow"/>
+
+            </LinearLayout>
+
+
             <LinearLayout
                 android:id="@+id/floating_layout"
                 android:layout_width="match_parent"
@@ -145,33 +171,6 @@
                     android:text="@string/unmannedShip"/>
 
             </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/waterForce_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/ic_location"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_gravity="center"
-                    android:textSize="14sp"
-                    android:textColor="@color/black"
-                    android:text="@string/waterForce"/>
-
-            </LinearLayout>
-
-
 
 
         </LinearLayout>
