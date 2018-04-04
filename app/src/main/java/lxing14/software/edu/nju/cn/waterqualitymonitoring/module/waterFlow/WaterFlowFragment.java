@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
@@ -33,6 +32,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferen
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.CameraChoiceView;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
 
 public class WaterFlowFragment extends Fragment implements WaterFlowContract.View, View.OnClickListener{
 
@@ -50,8 +50,8 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     private TextView mDateNum_tv;
     private CameraChoiceView[] mCameraChoiceView;
 
+    private ImageDialog mImageDialog;
     private MapView mMapView;
-    private LinearLayout mCamera_layout;
     private LineChart mLineChart;
     private WebView mWebView;
 
@@ -167,6 +167,9 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
             case R.id.camera5:
                 mPresenter.loadCameraInfo(4);
                 break;
+            case R.id.flow_iv:
+                showSelectedPic(mFlow_iv);
+                break;
         }
     }
 
@@ -205,7 +208,6 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     //find the view by the id
     private void findView(View root){
         mMapView = root.findViewById(R.id.map);
-        mCamera_layout = root.findViewById(R.id.camera_layout);
         mLineChart = root.findViewById(R.id.lineChart);
         mRealTime_tv = root.findViewById(R.id.realTime_tv);
         mDay_tv = root.findViewById(R.id.day_tv);
@@ -232,6 +234,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         mRealTime_tv.setOnClickListener(this);
         mDay_tv.setOnClickListener(this);
         mMonth_tv.setOnClickListener(this);
+        mFlow_iv.setOnClickListener(this);
         for(CameraChoiceView cameraChoiceView: mCameraChoiceView){
             cameraChoiceView.setOnClickListener(this);
         }
@@ -245,6 +248,16 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
 
         AMap aMap = mMapView.getMap();
         aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 10f));
+    }
+
+    //show the selected picture
+    private void showSelectedPic(ImageView imageView){
+        if(mImageDialog == null){
+            mImageDialog = new ImageDialog(getContext(), imageView.getDrawable());
+        }else {
+            mImageDialog.setImage(imageView.getDrawable());
+        }
+        mImageDialog.show();
     }
 
     private void loadWebFile(){
