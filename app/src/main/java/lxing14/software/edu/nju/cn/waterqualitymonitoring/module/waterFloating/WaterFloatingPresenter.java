@@ -1,5 +1,16 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFloatingByDateVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFloatingPicVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFloatingVO;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 /**
  * @version : 1.0
  * @auther : starrylemon
@@ -10,14 +21,102 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating;
 public class WaterFloatingPresenter implements WaterFloatingContract.IPresenter {
 
     private WaterFloatingContract.IView mView;
+    private int mStnId;
 
-    public WaterFloatingPresenter(WaterFloatingContract.IView mView) {
+    public WaterFloatingPresenter(WaterFloatingContract.IView mView, int stnId) {
         this.mView = mView;
+        this.mStnId = stnId;
         mView.setPresenter(this);
     }
 
     @Override
     public void start() {
-        mView.showBarChart();
+    }
+
+    @Override
+    public void loadWaterFloatingChartInfo() {
+        RetrofitHelper.getWaterFloatingInterface().getRecentFloatingInfo(1, 30)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<WaterFloatingVO>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<WaterFloatingVO> waterFloatingVOS) {
+                        int len = waterFloatingVOS.size();
+                        List<String> dateList = new ArrayList<>(len);
+                        List<Integer> dataList = new ArrayList<>(len);
+                        for(WaterFloatingVO vo: waterFloatingVOS){
+                            dateList.add(vo.getRecordTime());
+                            dataList.add(vo.getNums());
+                        }
+                        mView.showBarChart(dateList, dataList);
+                    }
+                });
+    }
+
+
+    @Override
+    public void loadWaterFloatingChartByDate(String startTime, String endTime) {
+        RetrofitHelper.getWaterFloatingInterface().getFloatingInfoByDate(mStnId, startTime, endTime)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<WaterFloatingByDateVO>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<WaterFloatingByDateVO> waterFloatingVOS) {
+                        int len = waterFloatingVOS.size();
+                        List<String> dateList = new ArrayList<>(len);
+                        List<Integer> dataList = new ArrayList<>(len);
+                        for(WaterFloatingByDateVO vo: waterFloatingVOS){
+                            dateList.add(vo.getDays());
+                            dataList.add(vo.getNums());
+                        }
+                        mView.showBarChart(dateList, dataList);
+                    }
+                });
+    }
+
+    @Override
+    public void loadWaterFloatingPicURl() {
+        RetrofitHelper.getWaterFloatingInterface().getFloatingInfoPic(mStnId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<WaterFloatingPicVO>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<WaterFloatingPicVO> waterFloatingPicVOS) {
+                        String url1 = waterFloatingPicVOS.get(0).getFilePathResult();
+                        String url2 = waterFloatingPicVOS.get(1).getFilePathResult();
+                        String url3 = waterFloatingPicVOS.get(2).getFilePathResult();
+                        mView.showFloatingPic(url1, url2, url3);
+                    }
+                });
     }
 }

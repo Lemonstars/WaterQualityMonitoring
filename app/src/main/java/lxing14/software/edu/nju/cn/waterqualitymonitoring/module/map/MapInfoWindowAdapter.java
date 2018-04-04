@@ -100,7 +100,7 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
                 intent = WaterFlowActivity.generateIntent(context, stnId);
                 break;
             case 3:
-                intent = new Intent(context, WaterFloatingActivity.class);
+                intent = WaterFloatingActivity.generateIntent(context, stnId);
                 break;
             case 4:
                 intent= new Intent(context, UnMannedShipActivity.class);

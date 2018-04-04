@@ -38,7 +38,6 @@ public interface WaterLevelInterface {
     Observable<List<WaterLevelVO>> getWaterLevelByDate(@Path("stnId")int stnId,
                                                        @Path("startTime")String startTime, @Path("endTime")String endTime);
 
-    //http://172.19.149.86:9080/water/historicalWaterLevel/1/2018-03-04/2018-04-03
 
     @GET("water/historicalWaterLevel/{siteId}/{startTime}/{endTime}")
     Observable<WaterLevelHistoricalVO> getCurrentWaterLevelInfo(@Path("siteId")int siteId, @Path("startTime")String startTime,
