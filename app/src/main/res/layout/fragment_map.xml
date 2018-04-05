@@ -20,6 +20,7 @@
         android:background="@drawable/bg_white_radius_corner">
 
         <EditText
+            android:id="@+id/search_et"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginRight="30dp"

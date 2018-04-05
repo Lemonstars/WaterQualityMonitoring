@@ -1,6 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map;
 
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -14,6 +15,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscri
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.StringUtil;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -26,15 +28,15 @@ import rx.schedulers.Schedulers;
 
 public class MapPresenter implements MapContract.Presenter {
 
-    private MapContract.View mMapView;
+    private MapContract.View mView;
 
     private AMapLocationClient mLocationClient;
     private AMapLocationClientOption mLocationOption;
     private List<WaterStationInfoVO> mWaterStationInfoList;
 
     public MapPresenter(@NonNull MapContract.View view){
-        mMapView = view;
-        mMapView.setPresenter(this);
+        mView = view;
+        mView.setPresenter(this);
     }
 
     @Override
@@ -47,7 +49,7 @@ public class MapPresenter implements MapContract.Presenter {
         RetrofitHelper.getWaterStationInterface().getAllStationInfo()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<List<WaterStationInfoVO>>(mMapView.getContextView()) {
+                .subscribe(new BaseSubscriber<List<WaterStationInfoVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterStationInfoVO> waterStationInfoVOS) {
                         mWaterStationInfoList = waterStationInfoVOS;
@@ -111,9 +113,37 @@ public class MapPresenter implements MapContract.Presenter {
         onRequestStationInfo(waterStationInfoVOS);
     }
 
+    @Override
+    public void search(String input) {
+        if(StringUtil.isEmpty(input)){
+            return;
+        }
+
+        ArrayList<WaterStationInfoVO> target = new ArrayList<>();
+        double latitude = CommonConstant.LATITUDE_OF_NJ;
+        double longitude = CommonConstant.LONGITUDE_OF_NJ;
+        for(WaterStationInfoVO vo: mWaterStationInfoList){
+            if(input.equals(vo.getName())){
+                target.add(vo);
+                latitude = Double.parseDouble(vo.getY());
+                longitude = Double.parseDouble(vo.getX());
+            }
+        }
+
+        if(target.size()==0){
+            Toast.makeText(mView.getContextView(), "未查询到相关站点", Toast.LENGTH_SHORT);
+        }else if(target.size()==1){
+            onRequestStationInfo(target);
+            mView.showLocation(latitude, longitude);
+        }else {
+            Toast.makeText(mView.getContextView(), "查询失败", Toast.LENGTH_SHORT);
+        }
+
+    }
+
     //configure the map
     private void initLocation() {
-        mLocationClient = new AMapLocationClient(mMapView.getContextView());
+        mLocationClient = new AMapLocationClient(mView.getContextView());
         mLocationClient.setLocationListener(aMapLocation -> {
             double latitude = CommonConstant.LATITUDE_OF_NJ;
             double longitude = CommonConstant.LONGITUDE_OF_NJ;
@@ -121,7 +151,7 @@ public class MapPresenter implements MapContract.Presenter {
                 latitude = aMapLocation.getLatitude();
                 longitude = aMapLocation.getLongitude();
             }
-            mMapView.showCurrentLocation(latitude, longitude);
+            mView.showLocation(latitude, longitude);
         });
 
         mLocationOption = new AMapLocationClientOption();
@@ -167,7 +197,7 @@ public class MapPresenter implements MapContract.Presenter {
             markerOptionsArrayList.add(markerOptions);
         }
 
-        mMapView.showStationLocation(markerOptionsArrayList);
+        mView.showStationLocation(markerOptionsArrayList);
     }
 
 

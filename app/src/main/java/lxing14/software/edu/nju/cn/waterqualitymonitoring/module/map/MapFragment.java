@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
@@ -27,6 +29,8 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
     private AMap mAMap;
     private TextView mStandard_tv;
     private TextView mSatellite_tv;
+    private EditText mSearch_et;
+    private ImageView mSearch_iv;
     private boolean mIsStandard = true;
 
     public static MapFragment generateFragment(){
@@ -87,7 +91,7 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
     }
 
     @Override
-    public void showCurrentLocation(double latitude, double longitude) {
+    public void showLocation(double latitude, double longitude) {
         mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 10f));
     }
 
@@ -100,12 +104,21 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
             case R.id.satellite_tv:
                 showMapType(false);
                 break;
+            case R.id.search_iv:
+                search();
+                break;
         }
     }
 
     @Override
     public Context getContextView() {
         return getActivity();
+    }
+
+    //capture the input and search
+    private void search(){
+        String content = mSearch_et.getText().toString();
+        mPresenter.search(content);
     }
 
     //show the selected type of the map
@@ -124,6 +137,7 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
     private void configListener(){
         mStandard_tv.setOnClickListener(this);
         mSatellite_tv.setOnClickListener(this);
+        mSearch_iv.setOnClickListener(this);
     }
 
     //find the view
@@ -132,5 +146,7 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
         mAMap = mMapView.getMap();
         mStandard_tv = root.findViewById(R.id.standard_tv);
         mSatellite_tv = root.findViewById(R.id.satellite_tv);
+        mSearch_et = root.findViewById(R.id.search_et);
+        mSearch_iv = root.findViewById(R.id.search_iv);
     }
 }

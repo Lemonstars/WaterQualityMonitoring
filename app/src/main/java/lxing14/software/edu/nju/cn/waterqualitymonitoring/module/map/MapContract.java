@@ -25,12 +25,12 @@ public interface MapContract {
         void showStationLocation(ArrayList<MarkerOptions> markerOptionsList);
 
         /**
-         * 显示当前定位
+         * 显示定位
          *
          * @param latitude
          * @param longitude
          */
-        void showCurrentLocation(double latitude, double longitude);
+        void showLocation(double latitude, double longitude);
 
     }
 
@@ -65,6 +65,12 @@ public interface MapContract {
          * 加载无人船信息
          */
         void loadUnmannedShipInfo();
+
+        /**
+         * 搜索
+         * @param input
+         */
+        void search(String input);
 
     }
 
