@@ -61,7 +61,7 @@ public class WaterLevelActivity extends AppCompatActivity {
             mDoubleTimeSelectDialog = new DoubleDateSelectDialog(this, DateConstant.ALLOWED_SMALLEST_TIME, DateConstant.ALLOWED_BIGGEST_TIME, TimeUtil.getTodayDate());
             mDoubleTimeSelectDialog.setOnDateSelectFinished((startTime, endTime) -> {
                 mPresenter.loadWaterLevelDataByDate(startTime, endTime);
-                mPresenter.loadCurrentWaterLevelInfo(startTime, endTime);
+                mPresenter.loadCurrentWaterLevelInfo();
             });
             mDoubleTimeSelectDialog.setOnDismissListener(dialog -> dialog.dismiss());
         }

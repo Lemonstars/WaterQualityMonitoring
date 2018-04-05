@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.amap.api.maps.MapView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -23,6 +24,7 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
     private UnMannedShipContract.IPresenter mPresenter;
 
     private LineChart mLineChart;
+    private MapView mMapView;
 
     public static UnMannedShipFragment generateFragment(){
         return new UnMannedShipFragment();
@@ -33,7 +35,7 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_un_manned_ship, container, false);
 
-        mLineChart = root.findViewById(R.id.lineChart);
+        findView(root);
 
         ChartUtil.configLineChart(mLineChart);
 
@@ -69,5 +71,12 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
     @Override
     public Context getContextView() {
         return getContext();
+    }
+
+    //find the view
+    private void findView(View root){
+
+        mLineChart = root.findViewById(R.id.lineChart);
+        mMapView = root.findViewById(R.id.map);
     }
 }

@@ -8,10 +8,10 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.constant;
 
 public class WaterTypeEnum {
 
-    public static final int ALL = 0;
-    public static final int WATER_FORCE = 1;
-    public static final int WATER_QUALITY = 2;
-    public static final int WATER_LEVEL = 3;
-    public static final int FLOATING_MATERIAL = 4;
+    public static final int WATER_LEVEL = 0;
+    public static final int WATER_QUALITY = 1;
+    public static final int WATER_FLOW = 3;
+    public static final int WATER_FLOATING = 4;
+    public static final int WATER_BOAT = 5;
 
 }

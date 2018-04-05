@@ -1,6 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 
 import android.content.Context;
+import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +12,9 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterLevelHisto
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterLevelVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.OrderConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterTypeEnum;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -30,8 +32,11 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
     private int mStnId;
     private String[] picUrl = new String[4];
     private String[] picDate = new String[4];
+    private boolean isRealTime = true;
     private String startTime = TimeUtil.getDateBeforeNum(7);
     private String endTime = TimeUtil.getTodayDate();
+    private ArrayList<String> waterLevelDateList = new ArrayList<>();
+    private ArrayList<Float> waterLevelDataList = new ArrayList<>();
 
     public WaterLevelPresenter(WaterLevelContract.View view, int stnId) {
         this.mView = view;
@@ -41,8 +46,7 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
 
     @Override
     public void start() {
-        loadDefaultWaterLevelData();
-        loadCurrentWaterLevelInfo(startTime, endTime);
+
     }
 
     @Override
@@ -50,8 +54,7 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
         if(index == CommonConstant.REAL_TIME){
             loadDefaultWaterLevelData();
         }else {
-            String startTime;
-            String endTime = TimeUtil.getTodayDate();
+            endTime = TimeUtil.getTodayDate();
             if(index == CommonConstant.DAY){
                 startTime = TimeUtil.getDateBeforeNum(15);
             }else {
@@ -63,6 +66,7 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
 
     @Override
     public void loadDefaultWaterLevelData() {
+        isRealTime = true;
         RetrofitHelper.getWaterInterface().getWaterLevelByNum(mStnId, 30)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -77,6 +81,9 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
 
     @Override
     public void loadWaterLevelDataByDate(String startTime, String endTime) {
+        isRealTime = false;
+        this.startTime = startTime;
+        this.endTime = endTime;
         RetrofitHelper.getWaterInterface().getWaterLevelByDate(mStnId, startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -89,7 +96,7 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
     }
 
     @Override
-    public void loadCurrentWaterLevelInfo(String startTime, String endTime) {
+    public void loadCurrentWaterLevelInfo() {
         RetrofitHelper.getWaterInterface().getCurrentWaterLevelInfo(mStnId, startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -117,9 +124,21 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
 
     }
 
+    @Override
+    public void jumpToChartActivity() {
+        ArrayList<String> dataList = new ArrayList<>(waterLevelDataList.size());
+        for(Float num: waterLevelDataList){
+            dataList.add(String.valueOf(num));
+        }
+
+        Context context = mView.getContextView();
+        Intent intent = ChartActivity.generateIntent(context, WaterTypeEnum.WATER_LEVEL, isRealTime, startTime, endTime, waterLevelDateList, dataList);
+        context.startActivity(intent);
+    }
+
     private void onNetworkRequest(OrderConstant orderConstant, List<WaterLevelVO> waterLevelVOs){
-        List<String> waterLevelDateList = new ArrayList<>();
-        List<Float> waterLevelDataList = new ArrayList<>();
+        waterLevelDateList.clear();
+        waterLevelDataList.clear();
         WaterLevelVO waterLevelVO;
         int len = waterLevelVOs.size();
         for(int i=0;i<len;i++){

@@ -59,10 +59,13 @@ public interface WaterLevelContract {
 
         /**
          * 加载当前水位信息
-         * @param startTime
-         * @param endTime
          */
-        void loadCurrentWaterLevelInfo(String startTime, String endTime);
+        void loadCurrentWaterLevelInfo();
+
+        /**
+         * 跳转至ChartActivity
+         */
+        void jumpToChartActivity();
 
     }
 

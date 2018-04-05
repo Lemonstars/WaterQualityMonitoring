@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -16,18 +17,20 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
-
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 
 public class ChartFragment extends Fragment implements ChartContract.View{
 
     private ChartContract.Presenter mPresenter;
 
     private LineChart mLineChart;
+    private TextView mName_tv;
 
     public static ChartFragment generateFragment(){
         return new ChartFragment();
@@ -37,10 +40,9 @@ public class ChartFragment extends Fragment implements ChartContract.View{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_chart, container, false);
-
-        mLineChart = root.findViewById(R.id.lineChart);
-
-        configLineChart();
+        findView(root);
+        ChartUtil.configLineChart(mLineChart);
+        mPresenter.loadChartData();
 
         return root;
     }
@@ -51,14 +53,32 @@ public class ChartFragment extends Fragment implements ChartContract.View{
     }
 
     @Override
-    public void showChart() {
+    public void showChart(List<String> dateList, List<Float> dataList) {
+        int len = dateList.size();
+        mLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dateList));
+
         List<Entry> lineEntry = new ArrayList<>();
-        for(int i=0;i<25;i++){
-            lineEntry.add(new Entry(i, i));
+        for(int i=0;i<len;i++){
+            lineEntry.add(new Entry(i, dataList.get(i)));
         }
-        LineDataSet lineDataSet = new LineDataSet(lineEntry, "line");
+        LineDataSet lineDataSet = new LineDataSet(lineEntry, "waterLevel");
         LineData lineData = new LineData(lineDataSet);
         mLineChart.setData(lineData);
+        mLineChart.notifyDataSetChanged();
+        mLineChart.setVisibleXRangeMaximum(15f);
+        mLineChart.moveViewToX(0);
+        mLineChart.invalidate();
+    }
+
+    @Override
+    public void showChartName(String name) {
+        mName_tv.setText(name);
+    }
+
+    @Override
+    public void showChartUnit(String unit) {
+        Description description = mLineChart.getDescription();
+        description.setText(unit);
     }
 
     @Override
@@ -73,39 +93,10 @@ public class ChartFragment extends Fragment implements ChartContract.View{
         return getContext();
     }
 
-    //configure the line chart
-    private void configLineChart(){
-        Description description = mLineChart.getDescription();
-        description.setPosition(70,20);
-        description.setText("(m/s)");
-        description.setTextAlign(Paint.Align.RIGHT);
-
-        Legend legend = mLineChart.getLegend();
-        legend.setEnabled(false);
-
-        XAxis xaxis = mLineChart.getXAxis();
-        xaxis.setDrawAxisLine(true);
-        xaxis.setDrawGridLines(false);
-        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xaxis.setAvoidFirstLastClipping(true);
-        xaxis.setLabelCount(5);
-
-        YAxis yAxisLeft = mLineChart.getAxisLeft();
-        yAxisLeft.setDrawGridLines(true);
-        yAxisLeft.setDrawAxisLine(true);
-        yAxisLeft.setDrawLabels(true);
-        yAxisLeft.enableGridDashedLine(10f, 10f, 0f);
-        yAxisLeft.setLabelCount(5, false);
-        yAxisLeft.setSpaceTop(10);
-
-        YAxis yAxisRight = mLineChart.getAxisRight();
-        yAxisRight.setEnabled(false);
-
-        mLineChart.setTouchEnabled(true);
-        mLineChart.setDragEnabled(true);
-        mLineChart.setScaleYEnabled(false);
-        mLineChart.setScaleXEnabled(true);
-        mLineChart.setAutoScaleMinMaxEnabled(true);
+    //find the view
+    private void findView(View root){
+        mLineChart = root.findViewById(R.id.lineChart);
+        mName_tv = root.findViewById(R.id.name_tv);
     }
 
 }

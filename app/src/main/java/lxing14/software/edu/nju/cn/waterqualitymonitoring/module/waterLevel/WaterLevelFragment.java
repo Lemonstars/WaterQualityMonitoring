@@ -1,6 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,6 +29,7 @@ import java.util.List;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ChartMarkerView;
@@ -49,6 +51,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     private TextView mHistoricalWaterLevelNum_tv;
     private TextView mPhotoByDate_tv;
     private ImageDialog mImageDialog;
+    private ImageView mBig_iv;
 
     private TextView mRealTime_tv;
     private TextView mDay_tv;
@@ -75,8 +78,10 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         showInitTabSelected();
         showChartUnit();
 
-        mMapView.onCreate(savedInstanceState);
+        mPresenter.loadDefaultWaterLevelData();
+        mPresenter.loadCurrentWaterLevelInfo();
 
+        mMapView.onCreate(savedInstanceState);
 
         return root;
     }
@@ -162,6 +167,9 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
             case R.id.image3:
                 showSelectedPic(mImage3);
                 break;
+            case R.id.big_iv:
+                mPresenter.jumpToChartActivity();
+                break;
         }
     }
 
@@ -223,6 +231,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mHistoricalWaterLevelNum_tv = root.findViewById(R.id.historicalWaterLevelNum_tv);
         mPhotoByDate_tv = root.findViewById(R.id.photoByDate_tv);
         mLineChart = root.findViewById(R.id.lineChart);
+        mBig_iv = root.findViewById(R.id.big_iv);
 
         mRealTime_tv = root.findViewById(R.id.realTime_tv);
         mDay_tv = root.findViewById(R.id.day_tv);
@@ -236,6 +245,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mDay_tv.setOnClickListener(this);
         mMonth_tv.setOnClickListener(this);
         mCurrentWaterLevelImg_iv.setOnClickListener(this);
+        mBig_iv.setOnClickListener(this);
         mImage1.setOnClickListener(this);
         mImage2.setOnClickListener(this);
         mImage3.setOnClickListener(this);
