@@ -75,7 +75,7 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
     }
 
     @Override
-    public void showInitPoint(ArrayList<MarkerOptions> markerOptionsList) {
+    public void showStationLocation(ArrayList<MarkerOptions> markerOptionsList) {
         AMap aMap = mMapView.getMap();
         aMap.clear();
         aMap.addMarkers(markerOptionsList, false);

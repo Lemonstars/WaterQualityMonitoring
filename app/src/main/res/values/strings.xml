@@ -13,6 +13,7 @@
     
     <string name="standardMap">标准图</string>
     <string name="satelliteMap">卫星图</string>
+    <string name="pleaseInputStationName">请输入站点名称...</string>
 
     <string name="map">地图</string>
     <string name="stationName">站点名称：</string>

@@ -76,14 +76,14 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
             case R.id.waterQuality_layout:
                 presenter.loadWaterQualityInfo();
                 break;
+            case R.id.waterFlow_layout:
+                presenter.loadWaterFlowInfo();
+                break;
             case R.id.floating_layout:
                 presenter.loadFloatingMaterialInfo();
                 break;
             case R.id.boat_layout:
                 presenter.loadUnmannedShipInfo();
-                break;
-            case R.id.waterFlow_layout:
-                presenter.loadWaterForceInfo();
                 break;
         }
 

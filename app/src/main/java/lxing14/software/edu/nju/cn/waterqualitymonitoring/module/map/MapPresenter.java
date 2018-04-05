@@ -14,7 +14,6 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscri
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterTypeEnum;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -31,6 +30,7 @@ public class MapPresenter implements MapContract.Presenter {
 
     private AMapLocationClient mLocationClient;
     private AMapLocationClientOption mLocationOption;
+    private List<WaterStationInfoVO> mWaterStationInfoList;
 
     public MapPresenter(@NonNull MapContract.View view){
         mMapView = view;
@@ -44,34 +44,74 @@ public class MapPresenter implements MapContract.Presenter {
 
     @Override
     public void loadAllWaterTypeInfo() {
-        loadPointInfo(WaterTypeEnum.ALL);
+        RetrofitHelper.getWaterStationInterface().getAllStationInfo()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<List<WaterStationInfoVO>>(mMapView.getContextView()) {
+                    @Override
+                    public void onNext(List<WaterStationInfoVO> waterStationInfoVOS) {
+                        mWaterStationInfoList = waterStationInfoVOS;
+                        onRequestStationInfo(waterStationInfoVOS);
+                    }
+                });
     }
 
     @Override
     public void loadWaterLevelInfo() {
-        loadPointInfo(WaterTypeEnum.WATER_LEVEL);
+        List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
+        for(WaterStationInfoVO vo: mWaterStationInfoList){
+            if(vo.isHasWaterLevel()){
+                waterStationInfoVOS.add(vo);
+            }
+        }
+        onRequestStationInfo(waterStationInfoVOS);
     }
 
     @Override
-    public void loadWaterForceInfo() {
-        loadPointInfo(WaterTypeEnum.WATER_FORCE);
+    public void loadWaterFlowInfo() {
+        List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
+        for(WaterStationInfoVO vo: mWaterStationInfoList){
+            if(vo.isHasWaterFlow()){
+                waterStationInfoVOS.add(vo);
+            }
+        }
+        onRequestStationInfo(waterStationInfoVOS);
     }
 
     @Override
     public void loadWaterQualityInfo() {
-        loadPointInfo(WaterTypeEnum.WATER_QUALITY);
+        List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
+        for(WaterStationInfoVO vo: mWaterStationInfoList){
+            if(vo.isHasWaterQuality()){
+                waterStationInfoVOS.add(vo);
+            }
+        }
+        onRequestStationInfo(waterStationInfoVOS);
     }
 
     @Override
     public void loadFloatingMaterialInfo() {
-        loadPointInfo(WaterTypeEnum.FLOATING_MATERIAL);
+        List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
+        for(WaterStationInfoVO vo: mWaterStationInfoList){
+            if(vo.isHasFloatingMaterial()){
+                waterStationInfoVOS.add(vo);
+            }
+        }
+        onRequestStationInfo(waterStationInfoVOS);
     }
 
     @Override
     public void loadUnmannedShipInfo() {
-
+        List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
+        for(WaterStationInfoVO vo: mWaterStationInfoList){
+            if(vo.isHasUnmannedShip()){
+                waterStationInfoVOS.add(vo);
+            }
+        }
+        onRequestStationInfo(waterStationInfoVOS);
     }
 
+    //configure the map
     private void initLocation() {
         mLocationClient = new AMapLocationClient(mMapView.getContextView());
         mLocationClient.setLocationListener(aMapLocation -> {
@@ -94,46 +134,41 @@ public class MapPresenter implements MapContract.Presenter {
         mLocationClient.startLocation();
     }
 
-    private void loadPointInfo(int waterType){
-        RetrofitHelper.getWaterStationInterface().getAllStationInfo()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<List<WaterStationInfoVO>>(mMapView.getContextView()) {
-                    @Override
-                    public void onNext(List<WaterStationInfoVO> waterStationInfoVOS) {
-                        LatLng latLng;
-                        ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>(waterStationInfoVOS.size());
-                        for(WaterStationInfoVO vo: waterStationInfoVOS){
-                            double x = Double.parseDouble(vo.getX());
-                            double y = Double.parseDouble(vo.getY());
+    //process the data
+    private void onRequestStationInfo(List<WaterStationInfoVO> waterStationInfoVOS){
+        LatLng latLng;
+        ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>(waterStationInfoVOS.size());
+        for(WaterStationInfoVO vo: waterStationInfoVOS){
+            double x = Double.parseDouble(vo.getX());
+            double y = Double.parseDouble(vo.getY());
 
-                            latLng = new LatLng(y, x);
-                            MarkerOptions markerOptions = new MarkerOptions();
-                            StringBuilder sb = new StringBuilder();
-                            sb.append(String.valueOf(vo.getId()));
-                            sb.append(' ');
-                            sb.append(vo.getName());
-                            sb.append(' ');
-                            sb.append(vo.isHasWaterLevel()? 1:0); // water level
-                            sb.append(' ');
-                            sb.append(vo.isHasWaterQuality()? 1:0); // water quality
-                            sb.append(' ');
-                            sb.append(vo.isHasWaterFlow()? 1:0); // water flow
-                            sb.append(' ');
-                            sb.append(vo.isHasFloatingMaterial()? 1:0); // floating
-                            sb.append(' ');
-                            sb.append(vo.isHasUnmannedShip()? 1:0); // boat
-                            sb.append(' ');
-                            sb.append(y);
-                            sb.append(' ');
-                            sb.append(x);
+            latLng = new LatLng(y, x);
+            MarkerOptions markerOptions = new MarkerOptions();
+            StringBuilder sb = new StringBuilder();
+            sb.append(String.valueOf(vo.getId()));
+            sb.append(' ');
+            sb.append(vo.getName());
+            sb.append(' ');
+            sb.append(vo.isHasWaterLevel()? 1:0); // water level
+            sb.append(' ');
+            sb.append(vo.isHasWaterQuality()? 1:0); // water quality
+            sb.append(' ');
+            sb.append(vo.isHasWaterFlow()? 1:0); // water flow
+            sb.append(' ');
+            sb.append(vo.isHasFloatingMaterial()? 1:0); // floating
+            sb.append(' ');
+            sb.append(vo.isHasUnmannedShip()? 1:0); // boat
+            sb.append(' ');
+            sb.append(y);
+            sb.append(' ');
+            sb.append(x);
 
-                            markerOptions.position(latLng).snippet(sb.toString());
-                            markerOptionsArrayList.add(markerOptions);
-                        }
+            markerOptions.position(latLng).snippet(sb.toString());
+            markerOptionsArrayList.add(markerOptions);
+        }
 
-                        mMapView.showInitPoint(markerOptionsArrayList);
-                    }
-                });
+        mMapView.showStationLocation(markerOptionsArrayList);
     }
+
+
 }

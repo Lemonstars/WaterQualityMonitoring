@@ -1,8 +1,5 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map;
 
-import android.content.Context;
-
-import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -21,7 +18,11 @@ public interface MapContract {
 
     interface View extends BaseView<Presenter>{
 
-        void showInitPoint(ArrayList<MarkerOptions> markerOptionsList);
+        /**
+         * 显示站点位置
+         * @param markerOptionsList
+         */
+        void showStationLocation(ArrayList<MarkerOptions> markerOptionsList);
 
         /**
          * 显示当前定位
@@ -35,6 +36,9 @@ public interface MapContract {
 
     interface Presenter extends BasePresenter{
 
+        /**
+         * 加载所有站点信息
+         */
         void loadAllWaterTypeInfo();
 
         /**
@@ -43,14 +47,14 @@ public interface MapContract {
         void loadWaterLevelInfo();
 
         /**
-         * 加载水动力信息
-         */
-        void loadWaterForceInfo();
-
-        /**
          * 加载水质信息
          */
         void loadWaterQualityInfo();
+
+        /**
+         * 加载流量信息
+         */
+        void loadWaterFlowInfo();
 
         /**
          * 加载漂浮物信息

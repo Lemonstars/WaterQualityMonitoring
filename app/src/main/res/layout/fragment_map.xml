@@ -10,6 +10,49 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </com.amap.api.maps.MapView>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="120dp"
+        android:background="@drawable/bg_white_radius_corner">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginRight="30dp"
+            android:paddingLeft="3dp"
+            android:background="@null"
+            android:maxLines="1"
+            android:inputType="text"
+            android:textSize="12sp"
+            android:textColor="@color/lightGray"
+            android:textColorHint="@color/lightGray"
+            android:hint="@string/pleaseInputStationName"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toLeftOf="@id/search_iv"
+            android:background="@color/lightGray"/>
+
+        <ImageView
+            android:id="@+id/search_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingRight="3dp"
+            android:paddingLeft="2dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_search"/>
+
+
+    </RelativeLayout>
 
 
     <LinearLayout

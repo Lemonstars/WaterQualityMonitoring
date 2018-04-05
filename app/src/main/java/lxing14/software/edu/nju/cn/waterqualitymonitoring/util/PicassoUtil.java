@@ -23,7 +23,7 @@ public class PicassoUtil {
         }
 
         Picasso.with(context)
-                .load(WebSite.PIC_Prefix+url)
+                .load(WebSite.PIC_Prefix+url.replace(" ", "%20"))
                 .fit()
                 .into(imageView);
     }
