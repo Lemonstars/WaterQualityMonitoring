@@ -32,7 +32,6 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
     private int mStnId;
     private String[] picUrl = new String[4];
     private String[] picDate = new String[4];
-    private boolean isRealTime = true;
     private String startTime = TimeUtil.getDateBeforeNum(7);
     private String endTime = TimeUtil.getTodayDate();
     private ArrayList<String> waterLevelDateList = new ArrayList<>();
@@ -69,7 +68,6 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
 
     @Override
     public void loadWaterLevelDataByDate(String startTime, String endTime) {
-        isRealTime = false;
         this.startTime = startTime;
         this.endTime = endTime;
         RetrofitHelper.getWaterInterface().getWaterLevelByDate(mStnId, startTime, endTime)
@@ -120,7 +118,7 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
         }
 
         Context context = mView.getContextView();
-        Intent intent = ChartActivity.generateIntent(context, WaterTypeEnum.WATER_LEVEL, isRealTime, startTime, endTime, waterLevelDateList, dataList);
+        Intent intent = ChartActivity.generateIntent(context, "水位", startTime, endTime, waterLevelDateList, dataList);
         context.startActivity(intent);
     }
 

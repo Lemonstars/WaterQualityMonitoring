@@ -56,7 +56,7 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
         }
 
         Context context = mView.getContextView();
-        Intent intent = ChartActivity.generateIntent(context, WaterTypeEnum.WATER_QUALITY, false, startTime, endTime, dateList, dataStrList);
+        Intent intent = ChartActivity.generateIntent(context, WaterQualityData.getChineseName(mState), startTime, endTime, dateList, dataStrList);
         context.startActivity(intent);
     }
 

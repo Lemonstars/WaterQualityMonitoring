@@ -18,6 +18,37 @@ public class WaterQualityData {
     public static final int TRANSPANENCY = 6;
     public static final int AMMONIA = 7;
 
+    public static String getChineseName(int target){
+        String res = "";
+        switch (target){
+            case TEMPERATURE:
+                res = "温度";
+                break;
+            case ELECTRIC:
+                res = "电导率";
+                break;
+            case PH:
+                res = "ph值";
+                break;
+            case OXYGEN:
+                res = "溶解氧";
+                break;
+            case OXIDATION:
+                res = "氧化还原";
+                break;
+            case DIRTY:
+                res = "浊度";
+                break;
+            case TRANSPANENCY:
+                res = "透明度";
+                break;
+            case AMMONIA:
+                res = "氨氮";
+                break;
+        }
+        return res;
+    }
+
     public static String getName(int target){
         String res = "";
         switch (target){

@@ -36,7 +36,6 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
     private double[] cameraWaterSpeed;
     private String mCollectTime;
 
-    private boolean isRealTime=true;
     private String startTime = TimeUtil.getDateBeforeNum(7);
     private String endTime = TimeUtil.getTodayDate();
     private ArrayList<String> dateList = new ArrayList<>();
@@ -58,7 +57,6 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
 
     @Override
     public void loadWaterFlowDataByDate(String startTime, String endTime) {
-        isRealTime = false;
         this.startTime = startTime;
         this.endTime = endTime;
         RetrofitHelper.getWaterFlowInterface().getWaterFlowByDate(mStnId, startTime, endTime)
@@ -158,7 +156,7 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
         }
 
         Context context = mView.getContextView();
-        Intent intent = ChartActivity.generateIntent(context, WaterTypeEnum.WATER_FLOW, isRealTime, startTime, endTime, dateList, dataStrList);
+        Intent intent = ChartActivity.generateIntent(context, "流量", startTime, endTime, dateList, dataStrList);
         context.startActivity(intent);
     }
 

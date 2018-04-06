@@ -14,18 +14,16 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ActivityUtil;
 
 public class ChartActivity extends AppCompatActivity {
 
-    public static final String TYPE = "type";
-    public static final String REAL_TIME = "realTime";
+    public static final String NAME = "name";
     public static final String START_TIME = "startTime";
     public static final String END_TIME = "endTime";
     public static final String DATE_LIST = "dateList";
     public static final String DATA_LIST = "dataList";
 
-    public static Intent generateIntent(Context context, int type, boolean isRealTime, String startTime,
-                                        String endTime, ArrayList<String> dateList, ArrayList<String> dataList){
+    public static Intent generateIntent(Context context,String name, String startTime, String endTime,
+                                        ArrayList<String> dateList, ArrayList<String> dataList){
         Intent intent = new Intent(context, ChartActivity.class);
-        intent.putExtra(TYPE, type);
-        intent.putExtra(REAL_TIME, isRealTime);
+        intent.putExtra(NAME, name);
         intent.putExtra(START_TIME, startTime);
         intent.putExtra(END_TIME, endTime);
         intent.putStringArrayListExtra(DATE_LIST, dateList);
@@ -42,8 +40,7 @@ public class ChartActivity extends AppCompatActivity {
 
         //get the intent data
         Intent intent = getIntent();
-        int type = intent.getIntExtra(TYPE, 0);
-        boolean isRealTime = intent.getBooleanExtra(REAL_TIME, true);
+        String name = intent.getStringExtra(NAME);
         String startTime = intent.getStringExtra(START_TIME);
         String endTime = intent.getStringExtra(END_TIME);
         ArrayList<String> dateList = intent.getStringArrayListExtra(DATE_LIST);
@@ -61,7 +58,7 @@ public class ChartActivity extends AppCompatActivity {
             ActivityUtil.addFragmentToActivity(getSupportFragmentManager(), chartFragment, R.id.contentFrame);
         }
 
-        new ChartPresenter(chartFragment, type, isRealTime, startTime, endTime, dateList, dataNumList);
+        new ChartPresenter(chartFragment,name, startTime, endTime, dateList, dataNumList);
     }
 
 
