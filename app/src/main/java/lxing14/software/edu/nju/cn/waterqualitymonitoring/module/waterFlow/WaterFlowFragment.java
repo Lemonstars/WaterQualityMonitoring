@@ -39,11 +39,6 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
 
     private WaterFlowContract.Presenter mPresenter;
 
-    private TextView mRealTime_tv;
-    private TextView mDay_tv;
-    private TextView mMonth_tv;
-    private TextView[] mTab_tv;
-
     private ImageView mFlow_iv;
     private TextView mCameraHint_tv;
     private TextView mFlowNum_tv;
@@ -54,6 +49,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     private ImageDialog mImageDialog;
     private MapView mMapView;
     private LineChart mLineChart;
+    private TextView[] mTab_tv;
     private ImageView mBig_iv;
     private WebView mWebView;
 
@@ -69,7 +65,6 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         findView(root);
 
         ChartUtil.configLineChart(mLineChart);
-        showInitTabSelected();
         showDescription();
         configListener();
         loadWebFile();
@@ -145,13 +140,13 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.realTime_tv:
+            case R.id.oneWeek_tv:
                 clickTab(CommonConstant.ONE_WEEK);
                 break;
-            case R.id.day_tv:
+            case R.id.oneMonth_tv:
                 clickTab(CommonConstant.ONE_MONTH);
                 break;
-            case R.id.month_tv:
+            case R.id.threeMonth_tv:
                 clickTab(CommonConstant.THREE_MONTH);
                 break;
             case R.id.camera1:
@@ -199,9 +194,9 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
 
     //finalize the listener
     private void removeTabListener(){
-        mRealTime_tv.setOnClickListener(null);
-        mDay_tv.setOnClickListener(null);
-        mMonth_tv.setOnClickListener(null);
+        for(TextView textView: mTab_tv){
+            textView.setOnClickListener(null);
+        }
     }
 
     //show the unit of the chart
@@ -210,21 +205,16 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         description.setText("m/s");
     }
 
-    //show the selected tab at first
-    private void showInitTabSelected(){
-        mRealTime_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
-    }
-
     //find the view by the id
     private void findView(View root){
         mMapView = root.findViewById(R.id.map);
         mLineChart = root.findViewById(R.id.lineChart);
-        mRealTime_tv = root.findViewById(R.id.realTime_tv);
-        mDay_tv = root.findViewById(R.id.day_tv);
-        mMonth_tv = root.findViewById(R.id.month_tv);
-        mWebView = root.findViewById(R.id.webView);
-        mTab_tv = new TextView[]{mRealTime_tv, mDay_tv, mMonth_tv};
+        TextView oneWeek_tv = root.findViewById(R.id.oneWeek_tv);
+        TextView oneMonth_tv = root.findViewById(R.id.oneMonth_tv);
+        TextView threeMonth_tv = root.findViewById(R.id.threeMonth_tv);
+        mTab_tv = new TextView[]{oneWeek_tv, oneMonth_tv, threeMonth_tv};
 
+        mWebView = root.findViewById(R.id.webView);
         mFlow_iv = root.findViewById(R.id.flow_iv);
         mCameraHint_tv = root.findViewById(R.id.cameraHint_tv);
         mFlowNum_tv = root.findViewById(R.id.flowNum_tv);
@@ -242,9 +232,9 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
 
     //configure the listener
     private void configListener(){
-        mRealTime_tv.setOnClickListener(this);
-        mDay_tv.setOnClickListener(this);
-        mMonth_tv.setOnClickListener(this);
+        for(TextView textView: mTab_tv){
+            textView.setOnClickListener(this);
+        }
         mFlow_iv.setOnClickListener(this);
         mBig_iv.setOnClickListener(this);
         for(CameraChoiceView cameraChoiceView: mCameraChoiceView){

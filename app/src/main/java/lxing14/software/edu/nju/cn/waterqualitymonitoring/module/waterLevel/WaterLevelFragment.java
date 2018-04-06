@@ -51,10 +51,6 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     private TextView mPhotoByDate_tv;
     private ImageDialog mImageDialog;
     private ImageView mBig_iv;
-
-    private TextView mRealTime_tv;
-    private TextView mDay_tv;
-    private TextView mMonth_tv;
     private TextView[] mTab_tv;
 
     public static WaterLevelFragment generateFragment(){
@@ -74,7 +70,6 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         configListener();
         ChartUtil.configLineChart(mLineChart);
         mLineChart.setMarker(new ChartMarkerView(getContext(), R.layout.bg_chart_marker_view,  "水位: "));
-        showInitTabSelected();
         showChartUnit();
 
         String startTime = TimeUtil.getDateBeforeNum(7);
@@ -147,13 +142,13 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.realTime_tv:
+            case R.id.oneWeek_tv:
                 clickTab(CommonConstant.ONE_WEEK);
                 break;
-            case R.id.day_tv:
+            case R.id.oneMonth_tv:
                 clickTab(CommonConstant.ONE_MONTH);
                 break;
-            case R.id.month_tv:
+            case R.id.threeMonth_tv:
                 clickTab(CommonConstant.THREE_MONTH);
                 break;
             case R.id.currentWaterLevelImg_iv:
@@ -198,11 +193,6 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mImageDialog.show();
     }
 
-    //show the selected tab at first
-    private void showInitTabSelected(){
-        mRealTime_tv.setTextColor(getResources().getColor(R.color.colorPrimary));
-    }
-
     //show the unit of the chart
     private void showChartUnit(){
         Description description = mLineChart.getDescription();
@@ -234,17 +224,17 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mLineChart = root.findViewById(R.id.lineChart);
         mBig_iv = root.findViewById(R.id.big_iv);
 
-        mRealTime_tv = root.findViewById(R.id.realTime_tv);
-        mDay_tv = root.findViewById(R.id.day_tv);
-        mMonth_tv = root.findViewById(R.id.month_tv);
-        mTab_tv = new TextView[]{mRealTime_tv, mDay_tv, mMonth_tv};
+        TextView oneWeek_tv = root.findViewById(R.id.oneWeek_tv);
+        TextView oneMonth_tv = root.findViewById(R.id.oneMonth_tv);
+        TextView threeMonth_tv = root.findViewById(R.id.threeMonth_tv);
+        mTab_tv = new TextView[]{oneWeek_tv, oneMonth_tv, threeMonth_tv};
     }
 
     //configure the listener
     private void configListener(){
-        mRealTime_tv.setOnClickListener(this);
-        mDay_tv.setOnClickListener(this);
-        mMonth_tv.setOnClickListener(this);
+        for(TextView textView: mTab_tv){
+            textView.setOnClickListener(this);
+        }
         mCurrentWaterLevelImg_iv.setOnClickListener(this);
         mBig_iv.setOnClickListener(this);
         mImage1.setOnClickListener(this);

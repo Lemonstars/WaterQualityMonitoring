@@ -1,5 +1,8 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating;
 
+import android.content.Context;
+import android.content.Intent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +10,9 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscri
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFloatingByDateVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFloatingPicVO;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFloatingVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -18,12 +23,17 @@ import rx.schedulers.Schedulers;
  * @time : 下午2:06
  */
 
-public class WaterFloatingPresenter implements WaterFloatingContract.IPresenter {
+public class WaterFloatingPresenter implements WaterFloatingContract.Presenter {
 
-    private WaterFloatingContract.IView mView;
+    private WaterFloatingContract.View mView;
     private int mStnId;
 
-    public WaterFloatingPresenter(WaterFloatingContract.IView mView, int stnId) {
+    private String startTime = TimeUtil.getDateBeforeNum(7);
+    private String endTime = TimeUtil.getTodayDate();
+    private ArrayList<String> dateList = new ArrayList<>();
+    private ArrayList<Float> dataList = new ArrayList<>();
+
+    public WaterFloatingPresenter(WaterFloatingContract.View mView, int stnId) {
         this.mView = mView;
         this.mStnId = stnId;
         mView.setPresenter(this);
@@ -41,14 +51,13 @@ public class WaterFloatingPresenter implements WaterFloatingContract.IPresenter 
                 .subscribe(new BaseSubscriber<List<WaterFloatingByDateVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterFloatingByDateVO> waterFloatingByDateVOS) {
-                        int len = waterFloatingByDateVOS.size();
-                        List<String> dateList = new ArrayList<>(len);
-                        List<Integer> dataList = new ArrayList<>(len);
+                        dateList.clear();
+                        dataList.clear();
                         for(WaterFloatingByDateVO vo: waterFloatingByDateVOS){
                             dateList.add(vo.getDays());
-                            dataList.add(vo.getNums());
+                            dataList.add((float)(vo.getNums()) );
                         }
-                        mView.showBarChart(dateList, dataList);
+                        mView.showFloatingChart(dateList, dataList);
                     }
                 });
     }
@@ -67,5 +76,34 @@ public class WaterFloatingPresenter implements WaterFloatingContract.IPresenter 
                         mView.showFloatingPic(url1, url2, url3);
                     }
                 });
+    }
+
+    @Override
+    public void processTab(int index) {
+        endTime = TimeUtil.getTodayDate();
+        switch (index){
+            case CommonConstant.ONE_WEEK:
+                startTime = TimeUtil.getDateBeforeNum(7);
+                break;
+            case CommonConstant.ONE_MONTH:
+                startTime = TimeUtil.getDateBeforeNum(30);
+                break;
+            case CommonConstant.THREE_MONTH:
+                startTime = TimeUtil.getDateBeforeNum(90);
+                break;
+        }
+        loadWaterFloatingChartByDate(startTime, endTime);
+    }
+
+    @Override
+    public void jumpToChartActivity() {
+        ArrayList<String> dataStrList = new ArrayList<>(dataList.size());
+        for(Float num: dataList){
+            dataStrList.add(String.valueOf(num));
+        }
+
+        Context context = mView.getContextView();
+        Intent intent = ChartActivity.generateIntent(context, "漂浮物", startTime, endTime, dateList, dataStrList);
+        context.startActivity(intent);
     }
 }

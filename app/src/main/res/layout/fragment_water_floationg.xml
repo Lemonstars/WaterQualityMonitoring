@@ -9,18 +9,72 @@
         android:paddingRight="10dp"
         android:orientation="vertical">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/bg_white_radius_corner">
+            android:orientation="vertical"
+            android:background="@drawable/bg_white_radius_corner"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp" >
 
-            <com.github.mikephil.charting.charts.BarChart
-                android:id="@+id/barChart"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-        </FrameLayout>
+                <TextView
+                    android:id="@+id/oneWeek_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/oneWeek"/>
+
+                <TextView
+                    android:id="@+id/oneMonth_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:text="@string/oneMonth"/>
+
+                <TextView
+                    android:id="@+id/threeMonth_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:text="@string/threeMonth"/>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/lineChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <ImageView
+                    android:id="@+id/big_iv"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="right"
+                    android:src="@drawable/ic_big"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"

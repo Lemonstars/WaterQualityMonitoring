@@ -14,14 +14,14 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.BaseView;
 
 public interface WaterFloatingContract {
 
-    interface IView extends BaseView<IPresenter> {
+    interface View extends BaseView<Presenter> {
 
         /**
-         * 显示漂浮物柱状图
+         * 显示漂浮物图表
          * @param dateList
          * @param dataList
          */
-        void showBarChart(List<String> dateList, List<Integer> dataList);
+        void showFloatingChart(List<String> dateList, List<Float> dataList);
 
         /**
          * 显示漂浮物图片
@@ -32,7 +32,12 @@ public interface WaterFloatingContract {
         void showFloatingPic(String url1, String url2, String url3);
     }
 
-    interface IPresenter extends BasePresenter{
+    interface Presenter extends BasePresenter{
+
+        /**
+         * 跳转至ChartActivity
+         */
+        void jumpToChartActivity();
 
         /**
          * 根据日期范围获取漂浮物数据
@@ -45,6 +50,13 @@ public interface WaterFloatingContract {
          * 获取漂浮物图片url
          */
         void loadWaterFloatingPicURl();
+
+        /**
+         * 处理tab点击
+         * @param index
+         */
+        void processTab(int index);
+
     }
 
 }

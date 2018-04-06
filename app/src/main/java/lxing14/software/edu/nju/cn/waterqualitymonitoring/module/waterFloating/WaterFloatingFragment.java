@@ -1,57 +1,56 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
 
 
-public class WaterFloatingFragment extends Fragment implements WaterFloatingContract.IView, View.OnClickListener{
+public class WaterFloatingFragment extends Fragment implements WaterFloatingContract.View, android.view.View.OnClickListener{
 
-    private WaterFloatingContract.IPresenter mPresenter;
-    private BarChart mBarChart;
+    private WaterFloatingContract.Presenter mPresenter;
+
+    private LineChart mLineChart;
+    private TextView[] mTab_tv;
+    private ImageView mBig_iv;
     private WebView mWebView;
     private ImageView mImage1;
     private ImageView mImage2;
     private ImageView mImage3;
     private ImageDialog mImageDialog;
 
-
     public static WaterFloatingFragment generateFragment(){
         return new WaterFloatingFragment();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View root =  inflater.inflate(R.layout.fragment_water_floationg, container, false);
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                          Bundle savedInstanceState) {
+        android.view.View root =  inflater.inflate(R.layout.fragment_water_floationg, container, false);
 
         findView(root);
-        configBarChart();
+        ChartUtil.configLineChart(mLineChart);
         loadWebFile();
         configListener();
 
@@ -62,26 +61,26 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
     }
 
     @Override
-    public void setPresenter(WaterFloatingContract.IPresenter presenter) {
+    public void setPresenter(WaterFloatingContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
 
     @Override
-    public void showBarChart(List<String> dateList, List<Integer> dataList) {
+    public void showFloatingChart(List<String> dateList, List<Float> dataList) {
         int len = dateList.size();
-        mBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dateList));
+        mLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dateList));
 
-        List<BarEntry> lineEntry = new ArrayList<>();
+        List<Entry> lineEntry = new ArrayList<>();
         for(int i=0;i<len;i++){
-            lineEntry.add(new BarEntry(i, dataList.get(i)));
+            lineEntry.add(new Entry(i, dataList.get(i)));
         }
-        BarDataSet barDataSet = new BarDataSet(lineEntry, "floating");
-        BarData barData = new BarData(barDataSet);
-        mBarChart.setData(barData);
-        mBarChart.notifyDataSetChanged();
-        mBarChart.setVisibleXRangeMaximum(15f);
-        mBarChart.moveViewToX(0);
-        mBarChart.invalidate();
+        LineDataSet lineDataSet = new LineDataSet(lineEntry, "floating");
+        LineData lineData = new LineData(lineDataSet);
+        mLineChart.setData(lineData);
+        mLineChart.notifyDataSetChanged();
+        mLineChart.setVisibleXRangeMaximum(15f);
+        mLineChart.moveViewToX(0);
+        mLineChart.invalidate();
     }
 
     @Override
@@ -98,8 +97,17 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(android.view.View view) {
         switch (view.getId()){
+            case R.id.oneWeek_tv:
+                clickTab(CommonConstant.ONE_WEEK);
+                break;
+            case R.id.oneMonth_tv:
+                clickTab(CommonConstant.ONE_MONTH);
+                break;
+            case R.id.threeMonth_tv:
+                clickTab(CommonConstant.THREE_MONTH);
+                break;
             case R.id.image1:
                 showSelectedPic(mImage1);
                 break;
@@ -109,6 +117,9 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
             case R.id.image3:
                 showSelectedPic(mImage3);
                 break;
+            case R.id.big_iv:
+                mPresenter.jumpToChartActivity();
+                break;
         }
     }
 
@@ -117,44 +128,12 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         return getContext();
     }
 
-    //configure the bar chart
-    private void configBarChart(){
-        mBarChart.setNoDataText("正在加载数据");
-        mBarChart.setNoDataTextColor(R.color.black);
-
-        Description description = mBarChart.getDescription();
-        description.setPosition(70,20);
-        description.setTextAlign(Paint.Align.RIGHT);
-        description.setText("");
-
-        Legend legend = mBarChart.getLegend();
-        legend.setEnabled(false);
-
-        XAxis xaxis = mBarChart.getXAxis();
-        xaxis.setDrawAxisLine(true);
-        xaxis.setDrawGridLines(false);
-        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xaxis.setAvoidFirstLastClipping(true);
-        xaxis.setLabelCount(2);
-        xaxis.setGranularityEnabled(true);
-        xaxis.setGranularity(10f);
-
-        YAxis yAxisLeft = mBarChart.getAxisLeft();
-        yAxisLeft.setDrawGridLines(true);
-        yAxisLeft.setDrawAxisLine(true);
-        yAxisLeft.setDrawLabels(true);
-        yAxisLeft.enableGridDashedLine(10f, 10f, 0f);
-        yAxisLeft.setLabelCount(5, false);
-        yAxisLeft.setSpaceTop(10);
-
-        YAxis yAxisRight = mBarChart.getAxisRight();
-        yAxisRight.setEnabled(false);
-
-        mBarChart.setTouchEnabled(true);
-        mBarChart.setDragEnabled(true);
-        mBarChart.setScaleYEnabled(false);
-        mBarChart.setScaleXEnabled(true);
-        mBarChart.setAutoScaleMinMaxEnabled(true);
+    //the change of the color of the tab
+    private void clickTab(int index){
+        for(int i=0;i<mTab_tv.length;i++){
+            mTab_tv[i].setTextColor(getResources().getColor(i==index ? R.color.colorPrimary:R.color.black));
+        }
+        mPresenter.processTab(index);
     }
 
     //show the selected picture
@@ -169,14 +148,23 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
 
     //configure the listener
     private void configListener(){
+        for(TextView textView: mTab_tv){
+            textView.setOnClickListener(this);
+        }
         mImage1.setOnClickListener(this);
         mImage2.setOnClickListener(this);
         mImage3.setOnClickListener(this);
+        mBig_iv.setOnClickListener(this);
     }
 
     //find the view by the id
-    private void findView(View root){
-        mBarChart = root.findViewById(R.id.barChart);
+    private void findView(android.view.View root){
+        TextView oneWeek_tv = root.findViewById(R.id.oneWeek_tv);
+        TextView oneMonth_tv = root.findViewById(R.id.oneMonth_tv);
+        TextView threeMonth_tv = root.findViewById(R.id.threeMonth_tv);
+        mTab_tv = new TextView[]{oneWeek_tv, oneMonth_tv, threeMonth_tv};
+        mLineChart = root.findViewById(R.id.lineChart);
+        mBig_iv = root.findViewById(R.id.big_iv);
         mWebView = root.findViewById(R.id.webView);
         mImage1 = root.findViewById(R.id.image1);
         mImage2 = root.findViewById(R.id.image2);

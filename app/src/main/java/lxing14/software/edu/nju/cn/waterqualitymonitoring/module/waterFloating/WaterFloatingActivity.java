@@ -18,7 +18,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 public class WaterFloatingActivity extends AppCompatActivity {
 
     private DoubleDateSelectDialog mDoubleTimeSelectDialog;
-    private WaterFloatingContract.IPresenter mPresenter;
+    private WaterFloatingContract.Presenter mPresenter;
 
     public static Intent generateIntent(Context context, int stnId){
         Intent intent = new Intent(context, WaterFloatingActivity.class);
