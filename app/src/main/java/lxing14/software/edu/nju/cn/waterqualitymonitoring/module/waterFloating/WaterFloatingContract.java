@@ -21,7 +21,7 @@ public interface WaterFloatingContract {
          * @param dateList
          * @param dataList
          */
-        void showFloatingChart(List<String> dateList, List<Float> dataList);
+        void showFloatingChart(List<String> dateList, List<Integer> dataList);
 
         /**
          * 显示漂浮物图片

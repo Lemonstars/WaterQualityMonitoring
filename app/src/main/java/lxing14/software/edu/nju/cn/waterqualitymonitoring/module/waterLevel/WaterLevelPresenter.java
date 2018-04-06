@@ -44,11 +44,6 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
     }
 
     @Override
-    public void start() {
-
-    }
-
-    @Override
     public void processTab(int index) {
         endTime = TimeUtil.getTodayDate();
         switch (index){
@@ -76,7 +71,16 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
                 .subscribe(new BaseSubscriber<List<WaterLevelVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterLevelVO> waterLevelVOS) {
-                        onNetworkRequest(OrderConstant.ASC, waterLevelVOS);
+                        waterLevelDateList.clear();
+                        waterLevelDataList.clear();
+                        WaterLevelVO waterLevelVO;
+                        int len = waterLevelVOS.size();
+                        for(int i=0;i<len;i++){
+                            waterLevelVO = waterLevelVOS.get(i);
+                            waterLevelDateList.add(waterLevelVO.getC_time());
+                            waterLevelDataList.add(waterLevelVO.getWaterLevel());
+                        }
+                        mView.showWaterLevelChartData(waterLevelDateList, waterLevelDataList);
                     }
                 });
     }
@@ -122,20 +126,4 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
         context.startActivity(intent);
     }
 
-    private void onNetworkRequest(OrderConstant orderConstant, List<WaterLevelVO> waterLevelVOs){
-        waterLevelDateList.clear();
-        waterLevelDataList.clear();
-        WaterLevelVO waterLevelVO;
-        int len = waterLevelVOs.size();
-        for(int i=0;i<len;i++){
-            if(orderConstant == OrderConstant.ASC){
-                waterLevelVO = waterLevelVOs.get(i);
-            }else {
-                waterLevelVO = waterLevelVOs.get(len-i-1);
-            }
-            waterLevelDateList.add(waterLevelVO.getC_time());
-            waterLevelDataList.add(waterLevelVO.getWaterLevel());
-        }
-        mView.showWaterLevelChartData(waterLevelDateList, waterLevelDataList);
-    }
 }

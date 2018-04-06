@@ -32,11 +32,6 @@ public class ChartPresenter implements ChartContract.Presenter {
     }
 
     @Override
-    public void start() {
-
-    }
-
-    @Override
     public void loadChartData() {
         String chartName = mStartTime+"至"+mEndTime+mName+"图";
         mView.showChartName(chartName);

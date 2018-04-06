@@ -44,11 +44,6 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
     }
 
     @Override
-    public void start() {
-
-    }
-
-    @Override
     public void jumpToChartActivity() {
         ArrayList<String> dataStrList = new ArrayList<>(dataList.size());
         for(Float num: dataList){
@@ -76,7 +71,25 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
                 .subscribe(new BaseSubscriber<List<WaterQualityTypeNumVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterQualityTypeNumVO> waterQualityTypeNumVOS) {
-                        onNetworkRequest(waterQualityTypeNumVOS, OrderConstant.ASC);
+                        dateList.clear();
+                        dataList.clear();
+                        int len = waterQualityTypeNumVOS.size();
+                        WaterQualityTypeNumVO waterQualityTypeNumVO;
+                        String numStr;
+                        float num;
+                        for(int i=0;i<len;i++){
+                            waterQualityTypeNumVO = waterQualityTypeNumVOS.get(i);
+
+                            numStr = waterQualityTypeNumVO.getReturnDateValue();
+                            num = Float.parseFloat(numStr);
+                            dataList.add(num);
+
+                            dateList.add(waterQualityTypeNumVO.getCollectionTime());
+                        }
+
+                        mView.showTabSelected(mState);
+                        mView.showChartUnit(mState);
+                        mView.showWaterQualityChart(dateList, dataList);
                     }
                 });
     }
@@ -103,31 +116,4 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
                     }
                 });
     }
-
-    private void onNetworkRequest(List<WaterQualityTypeNumVO> waterQualityTypeVOS, OrderConstant orderConstant){
-        dateList.clear();
-        dataList.clear();
-        int len = waterQualityTypeVOS.size();
-        WaterQualityTypeNumVO waterQualityTypeNumVO;
-        String numStr;
-        float num;
-        for(int i=0;i<len;i++){
-            if(orderConstant == OrderConstant.ASC){
-                waterQualityTypeNumVO = waterQualityTypeVOS.get(i);
-            }else {
-                waterQualityTypeNumVO = waterQualityTypeVOS.get(len-i-1);
-            }
-
-            numStr = waterQualityTypeNumVO.getReturnDateValue();
-            num = Float.parseFloat(numStr);
-            dataList.add(num);
-
-            dateList.add(waterQualityTypeNumVO.getCollectionTime());
-        }
-
-        mView.showTabSelected(mState);
-        mView.showChartUnit(mState);
-        mView.showWaterQualityChart(dateList, dataList);
-    }
-
 }

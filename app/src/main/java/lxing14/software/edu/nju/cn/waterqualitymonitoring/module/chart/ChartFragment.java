@@ -82,13 +82,6 @@ public class ChartFragment extends Fragment implements ChartContract.View{
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        mPresenter.start();
-    }
-
-    @Override
     public Context getContextView() {
         return getContext();
     }

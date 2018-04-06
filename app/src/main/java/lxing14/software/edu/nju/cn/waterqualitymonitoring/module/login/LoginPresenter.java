@@ -25,12 +25,6 @@ public class LoginPresenter implements LoginContract.ILoginPresenter {
         this.mView = mView;
         mView.setPresenter(this);
     }
-
-    @Override
-    public void start() {
-
-    }
-
     @Override
     public void verifyPassword(String userName, String password) {
         if(StringUtil.isEmpty(userName)){

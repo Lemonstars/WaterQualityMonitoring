@@ -81,8 +81,6 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         super.onResume();
         mMapView.onResume();
         showCurrentLocation();
-
-        mPresenter.start();
     }
 
     @Override

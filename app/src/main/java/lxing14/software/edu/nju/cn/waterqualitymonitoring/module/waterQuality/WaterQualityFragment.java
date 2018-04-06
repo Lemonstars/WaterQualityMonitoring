@@ -77,7 +77,6 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         mMapView.onResume();
         showCurrentLocation();
 
-        mPresenter.start();
     }
 
     @Override

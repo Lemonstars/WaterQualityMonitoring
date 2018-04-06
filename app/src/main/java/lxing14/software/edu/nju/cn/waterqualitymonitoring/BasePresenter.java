@@ -9,6 +9,5 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring;
 
 public interface BasePresenter {
 
-    void start();
 
 }

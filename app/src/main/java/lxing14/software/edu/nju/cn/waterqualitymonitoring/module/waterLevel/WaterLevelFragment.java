@@ -87,7 +87,6 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         super.onResume();
 
         showCurrentLocation();
-        mPresenter.start();
     }
 
     @Override

@@ -31,16 +31,12 @@ public class WaterFloatingPresenter implements WaterFloatingContract.Presenter {
     private String startTime = TimeUtil.getDateBeforeNum(7);
     private String endTime = TimeUtil.getTodayDate();
     private ArrayList<String> dateList = new ArrayList<>();
-    private ArrayList<Float> dataList = new ArrayList<>();
+    private ArrayList<Integer> dataList = new ArrayList<>();
 
     public WaterFloatingPresenter(WaterFloatingContract.View mView, int stnId) {
         this.mView = mView;
         this.mStnId = stnId;
         mView.setPresenter(this);
-    }
-
-    @Override
-    public void start() {
     }
 
     @Override
@@ -55,7 +51,7 @@ public class WaterFloatingPresenter implements WaterFloatingContract.Presenter {
                         dataList.clear();
                         for(WaterFloatingByDateVO vo: waterFloatingByDateVOS){
                             dateList.add(vo.getDays());
-                            dataList.add((float)(vo.getNums()) );
+                            dataList.add((vo.getNums()) );
                         }
                         mView.showFloatingChart(dateList, dataList);
                     }
@@ -98,7 +94,7 @@ public class WaterFloatingPresenter implements WaterFloatingContract.Presenter {
     @Override
     public void jumpToChartActivity() {
         ArrayList<String> dataStrList = new ArrayList<>(dataList.size());
-        for(Float num: dataList){
+        for(Integer num: dataList){
             dataStrList.add(String.valueOf(num));
         }
 

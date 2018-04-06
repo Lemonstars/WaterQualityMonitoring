@@ -51,9 +51,6 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
         mView.setPresenter(this);
     }
 
-    @Override
-    public void start() {
-    }
 
     @Override
     public void loadWaterFlowDataByDate(String startTime, String endTime) {
@@ -65,7 +62,17 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
                 .subscribe(new BaseSubscriber<List<WaterFlowVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterFlowVO> waterFlowVOList) {
-                        onNetworkRequest(OrderConstant.ASC, waterFlowVOList);
+                        dateList.clear();
+                        dataList.clear();
+                        int len = waterFlowVOList.size();
+                        WaterFlowVO waterFlowVO;
+                        for(int i=0;i<len;i++){
+                            waterFlowVO = waterFlowVOList.get(i);
+                            dateList.add(waterFlowVO.getCollectionTime());
+                            dataList.add((float)(waterFlowVO.getAvgFlow()));
+                        }
+
+                        mView.showWaterFlowChartData(dateList, dataList);
                     }
                 });
     }
@@ -159,25 +166,5 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
         Intent intent = ChartActivity.generateIntent(context, "流量", startTime, endTime, dateList, dataStrList);
         context.startActivity(intent);
     }
-
-    // process the data
-    private void onNetworkRequest(OrderConstant orderConstant, List<WaterFlowVO> waterFlowVOList){
-        dateList.clear();
-        dataList.clear();
-        int len = waterFlowVOList.size();
-        WaterFlowVO waterFlowVO;
-        for(int i=0;i<len;i++){
-            if(orderConstant == OrderConstant.ASC){
-                waterFlowVO = waterFlowVOList.get(i);
-            }else {
-                waterFlowVO = waterFlowVOList.get(len-i-1);
-            }
-            dateList.add(waterFlowVO.getCollectionTime());
-            dataList.add((float)(waterFlowVO.getAvgFlow()));
-        }
-
-        mView.showWaterFlowChartData(dateList, dataList);
-    }
-
 
 }

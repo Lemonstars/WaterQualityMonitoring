@@ -47,6 +47,7 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
         mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getContext()));
 
         mPresenter.loadAllWaterTypeInfo();
+        mPresenter.initLocation();
 
         mMapView.onCreate(savedInstanceState);
         return root;
@@ -56,8 +57,6 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
     public void onResume() {
         super.onResume();
         mMapView.onResume();
-
-        mPresenter.start();
     }
 
     @Override

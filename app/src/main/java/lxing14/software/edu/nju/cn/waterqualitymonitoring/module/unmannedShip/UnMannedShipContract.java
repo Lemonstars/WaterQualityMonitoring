@@ -12,7 +12,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.BaseView;
 
 public interface UnMannedShipContract {
 
-    interface IView extends BaseView<UnMannedShipContract.IPresenter>{
+    interface View extends BaseView<Presenter>{
 
         /**
          * 显示水质图表
@@ -21,7 +21,7 @@ public interface UnMannedShipContract {
 
     }
 
-    interface IPresenter extends BasePresenter{
+    interface Presenter extends BasePresenter{
 
     }
 

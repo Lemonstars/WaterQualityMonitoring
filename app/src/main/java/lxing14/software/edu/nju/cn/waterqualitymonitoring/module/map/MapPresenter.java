@@ -39,10 +39,6 @@ public class MapPresenter implements MapContract.Presenter {
         mView.setPresenter(this);
     }
 
-    @Override
-    public void start() {
-        initLocation();
-    }
 
     @Override
     public void loadAllWaterTypeInfo() {
@@ -141,8 +137,8 @@ public class MapPresenter implements MapContract.Presenter {
 
     }
 
-    //configure the map
-    private void initLocation() {
+    @Override
+    public void initLocation() {
         mLocationClient = new AMapLocationClient(mView.getContextView());
         mLocationClient.setLocationListener(aMapLocation -> {
             double latitude = CommonConstant.LATITUDE_OF_NJ;

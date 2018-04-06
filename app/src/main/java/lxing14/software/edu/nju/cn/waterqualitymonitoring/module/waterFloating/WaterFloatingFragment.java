@@ -66,7 +66,7 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
     }
 
     @Override
-    public void showFloatingChart(List<String> dateList, List<Float> dataList) {
+    public void showFloatingChart(List<String> dateList, List<Integer> dataList) {
         int len = dateList.size();
         mLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dateList));
 
@@ -88,12 +88,6 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         PicassoUtil.loadUrl(getContext(), url1, mImage1);
         PicassoUtil.loadUrl(getContext(), url2, mImage2);
         PicassoUtil.loadUrl(getContext(), url3, mImage3);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
     }
 
     @Override

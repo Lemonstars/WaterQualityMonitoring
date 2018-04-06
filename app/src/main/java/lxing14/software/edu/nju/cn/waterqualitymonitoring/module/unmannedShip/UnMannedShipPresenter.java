@@ -7,17 +7,13 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.unmannedShip;
  * @time : 下午3:48
  */
 
-public class UnMannedShipPresenter implements UnMannedShipContract.IPresenter {
+public class UnMannedShipPresenter implements UnMannedShipContract.Presenter {
 
-    private UnMannedShipContract.IView mView;
+    private UnMannedShipContract.View mView;
 
-    public UnMannedShipPresenter(UnMannedShipContract.IView mView) {
+    public UnMannedShipPresenter(UnMannedShipContract.View mView) {
         this.mView = mView;
         mView.setPresenter(this);
     }
 
-    @Override
-    public void start() {
-        mView.showWaterQualityChart();
-    }
 }
