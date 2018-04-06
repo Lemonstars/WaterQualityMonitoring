@@ -1,19 +1,21 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterQuality;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscriber;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.*;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityTypeNumVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.OrderConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterQualityData;
-import rx.Subscriber;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterTypeEnum;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -30,6 +32,11 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
     private int mState = WaterQualityData.TEMPERATURE;
     private int mStnId;
 
+    private String startTime= TimeUtil.getDateBeforeNum(7);
+    private String endTime = TimeUtil.getTodayDate();
+    private ArrayList<String> dateList = new ArrayList<>();
+    private ArrayList<Float> dataList = new ArrayList<>();
+
     public WaterQualityPresenter(WaterQualityContract.View mView, int stnId) {
         this.mView = mView;
         this.mStnId = stnId;
@@ -38,10 +45,20 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
 
     @Override
     public void start() {
-        loadChartDataByType(mState);
-        loadCurrentWaterQualityInfo();
+
     }
 
+    @Override
+    public void jumpToChartActivity() {
+        ArrayList<String> dataStrList = new ArrayList<>(dataList.size());
+        for(Float num: dataList){
+            dataStrList.add(String.valueOf(num));
+        }
+
+        Context context = mView.getContextView();
+        Intent intent = ChartActivity.generateIntent(context, WaterTypeEnum.WATER_QUALITY, false, startTime, endTime, dateList, dataStrList);
+        context.startActivity(intent);
+    }
 
     @Override
     public void loadChartDataByType(int type) {
@@ -60,6 +77,8 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
 
     @Override
     public void loadChartDataByDateAndType(String startTime, String endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
         RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.getName(mState), startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -95,10 +114,9 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
     }
 
     private void onNetworkRequest(List<WaterQualityTypeNumVO> waterQualityTypeVOS, OrderConstant orderConstant){
+        dateList.clear();
+        dataList.clear();
         int len = waterQualityTypeVOS.size();
-        List<Float> dataList = new ArrayList<>(len);
-        List<String> dateList = new ArrayList<>(len);
-
         WaterQualityTypeNumVO waterQualityTypeNumVO;
         String numStr;
         float num;

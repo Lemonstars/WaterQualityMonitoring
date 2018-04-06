@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
@@ -37,6 +38,7 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
     private WaterQualityContract.Presenter mPresenter;
 
     private LineChart mLineChart;
+    private ImageView mBig_iv;
     private RecyclerView mType_rv;
     private MapView mMapView;
     private WaterQualityRVAdapter mAdapter;
@@ -59,6 +61,9 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         initRecyclerView();
         configListener();
         ChartUtil.configLineChart(mLineChart);
+
+        mPresenter.loadCurrentWaterQualityInfo();
+        mPresenter.loadChartDataByType(WaterQualityData.TEMPERATURE);
 
         mMapView.onCreate(savedInstanceState);
         return root;
@@ -148,35 +153,36 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
 
     @Override
     public void onClick(View view) {
-        int index =0;
         switch (view.getId()){
             case R.id.temperature_tv:
-                index = WaterQualityData.TEMPERATURE;
+                mPresenter.loadChartDataByType(WaterQualityData.TEMPERATURE);
                 break;
             case R.id.conductivity_tv:
-                index = WaterQualityData.ELECTRIC;
+                mPresenter.loadChartDataByType(WaterQualityData.ELECTRIC);
                 break;
             case R.id.ph_tv:
-                index = WaterQualityData.PH;
+                mPresenter.loadChartDataByType(WaterQualityData.PH);
                 break;
             case R.id.dissolvedOxygen_tv:
-                index = WaterQualityData.OXYGEN;
+                mPresenter.loadChartDataByType(WaterQualityData.OXYGEN);
                 break;
             case R.id.redox_tv:
-                index = WaterQualityData.OXIDATION;
+                mPresenter.loadChartDataByType(WaterQualityData.OXIDATION);
                 break;
             case R.id.turbidity_tv:
-                index = WaterQualityData.DIRTY;
+                mPresenter.loadChartDataByType(WaterQualityData.DIRTY);
                 break;
             case R.id.transparency_tv:
-                index = WaterQualityData.TRANSPANENCY;
+                mPresenter.loadChartDataByType(WaterQualityData.TRANSPANENCY);
                 break;
             case R.id.nh3_tv:
-                index = WaterQualityData.AMMONIA;
+                mPresenter.loadChartDataByType(WaterQualityData.AMMONIA);
+                break;
+            case R.id.big_iv:
+                mPresenter.jumpToChartActivity();
                 break;
         }
 
-        mPresenter.loadChartDataByType(index);
     }
 
     @Override
@@ -199,6 +205,7 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         mType_rv = root.findViewById(R.id.type_rv);
         mMapView = root.findViewById(R.id.map);
         mLineChart = root.findViewById(R.id.lineChart);
+        mBig_iv = root.findViewById(R.id.big_iv);
 
         TextView temperature_tv = root.findViewById(R.id.temperature_tv);
         TextView conductivity_tv = root.findViewById(R.id.conductivity_tv);
@@ -226,6 +233,7 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         for(TextView textView: mTab_tv){
             textView.setOnClickListener(this);
         }
+        mBig_iv.setOnClickListener(this);
     }
 
 }

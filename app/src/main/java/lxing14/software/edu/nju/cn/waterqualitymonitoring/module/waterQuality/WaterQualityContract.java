@@ -53,6 +53,11 @@ public interface WaterQualityContract {
     interface Presenter extends BasePresenter{
 
         /**
+         * 跳转至ChartActivity
+         */
+        void jumpToChartActivity();
+
+        /**
          * 根据类型获取当前图表数据
          * @param type
          */
