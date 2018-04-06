@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -58,7 +59,9 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
 
         LinearLayout infoWindow = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bg_info_window, null);
         TextView name_tv = infoWindow.findViewById(R.id.name_tv);
+        ImageView hide_iv = infoWindow.findViewById(R.id.hide_iv);
         name_tv.setText(name);
+        hide_iv.setOnClickListener(v -> marker.hideInfoWindow());
 
         WaterInfoView waterInfoView;
         for(int i=0;i<typeExisted.length;i++){
@@ -77,7 +80,6 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
                 });
             }
         }
-
 
         return infoWindow;
     }
