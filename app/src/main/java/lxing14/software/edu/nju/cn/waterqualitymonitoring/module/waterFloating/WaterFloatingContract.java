@@ -35,11 +35,6 @@ public interface WaterFloatingContract {
     interface IPresenter extends BasePresenter{
 
         /**
-         * 加载最近30天漂浮物数据
-         */
-        void loadWaterFloatingChartInfo();
-
-        /**
          * 根据日期范围获取漂浮物数据
          * @param startTime
          * @param endTime

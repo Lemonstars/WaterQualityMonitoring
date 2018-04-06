@@ -19,15 +19,6 @@ import rx.Observable;
 public interface WaterFlowInterface {
 
     /**
-     * 获取最近n条流量数据
-     * @param id
-     * @param num
-     * @return
-     */
-    @GET("flow/lastFlowRecordsNum/{id}/{num}")
-    Observable<List<WaterFlowVO>> getLatestWaterFlow(@Path("id")int id, @Path("num")int num);
-
-    /**
      * 根据时间范围获取流量数据
      * @param id
      * @param startTime

@@ -43,11 +43,6 @@ public interface WaterFlowContract {
         void jumpToChartActivity();
 
         /**
-         * 获取默认的流量数据
-         */
-        void loadDefaultWaterFlowData();
-
-        /**
          * 获取指定时间范围内的流量数据
          * @param startTime
          * @param endTime

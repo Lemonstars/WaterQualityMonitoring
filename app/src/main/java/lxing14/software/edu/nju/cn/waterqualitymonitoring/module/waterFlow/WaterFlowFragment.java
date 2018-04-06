@@ -31,6 +31,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstan
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.CameraChoiceView;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
 
@@ -72,8 +73,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         showDescription();
         configListener();
         loadWebFile();
-
-        mPresenter.loadDefaultWaterFlowData();
+        mPresenter.loadWaterFlowDataByDate(TimeUtil.getDateBeforeNum(7), TimeUtil.getTodayDate());
         mPresenter.loadWaterFlowVideoUrl();
         mPresenter.loadCameraInfoFromNetwork();
 
@@ -146,13 +146,13 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.realTime_tv:
-                clickTab(CommonConstant.REAL_TIME);
+                clickTab(CommonConstant.ONE_WEEK);
                 break;
             case R.id.day_tv:
-                clickTab(CommonConstant.DAY);
+                clickTab(CommonConstant.ONE_MONTH);
                 break;
             case R.id.month_tv:
-                clickTab(CommonConstant.MONTH);
+                clickTab(CommonConstant.THREE_MONTH);
                 break;
             case R.id.camera1:
                 mPresenter.loadCameraInfo(0);

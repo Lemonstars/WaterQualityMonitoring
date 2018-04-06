@@ -51,31 +51,19 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
 
     @Override
     public void processTab(int index) {
-        if(index == CommonConstant.REAL_TIME){
-            loadDefaultWaterLevelData();
-        }else {
-            endTime = TimeUtil.getTodayDate();
-            if(index == CommonConstant.DAY){
-                startTime = TimeUtil.getDateBeforeNum(15);
-            }else {
+        endTime = TimeUtil.getTodayDate();
+        switch (index){
+            case CommonConstant.ONE_WEEK:
+                startTime = TimeUtil.getDateBeforeNum(7);
+                break;
+            case CommonConstant.ONE_MONTH:
                 startTime = TimeUtil.getDateBeforeNum(30);
-            }
-            loadWaterLevelDataByDate(startTime, endTime);
+                break;
+            case CommonConstant.THREE_MONTH:
+                startTime = TimeUtil.getDateBeforeNum(90);
+                break;
         }
-    }
-
-    @Override
-    public void loadDefaultWaterLevelData() {
-        isRealTime = true;
-        RetrofitHelper.getWaterInterface().getWaterLevelByNum(mStnId, 30)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<List<WaterLevelVO>>(mView.getContextView()) {
-                    @Override
-                    public void onNext(List<WaterLevelVO> waterLevelVOS) {
-                        onNetworkRequest(OrderConstant.DESC, waterLevelVOS);
-                    }
-                });
+        loadWaterLevelDataByDate(startTime, endTime);
 
     }
 

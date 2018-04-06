@@ -61,7 +61,7 @@ public class WaterQualityActivity extends AppCompatActivity {
 
         if (mDoubleTimeSelectDialog == null) {
             mDoubleTimeSelectDialog = new DoubleDateSelectDialog(this, DateConstant.ALLOWED_SMALLEST_TIME, DateConstant.ALLOWED_BIGGEST_TIME, defaultChooseDate);
-            mDoubleTimeSelectDialog.setOnDateSelectFinished( (startTime, endTime) -> mPresenter.loadChartDataByDateAndType(startTime, endTime) );
+            mDoubleTimeSelectDialog.setOnDateSelectFinished( (startTime, endTime) -> mPresenter.loadChartDataByDate(startTime, endTime) );
             mDoubleTimeSelectDialog.setOnDismissListener(dialog -> dialog.dismiss());
         }
 

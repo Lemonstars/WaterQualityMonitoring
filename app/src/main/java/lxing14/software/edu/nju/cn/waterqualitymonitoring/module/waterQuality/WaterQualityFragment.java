@@ -32,6 +32,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstan
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterQualityData;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 
 public class WaterQualityFragment extends Fragment implements WaterQualityContract.View, View.OnClickListener{
 
@@ -62,8 +63,8 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         configListener();
         ChartUtil.configLineChart(mLineChart);
 
+        mPresenter.loadChartDataByDate(TimeUtil.getDateBeforeNum(7), TimeUtil.getTodayDate());
         mPresenter.loadCurrentWaterQualityInfo();
-        mPresenter.loadChartDataByType(WaterQualityData.TEMPERATURE);
 
         mMapView.onCreate(savedInstanceState);
         return root;

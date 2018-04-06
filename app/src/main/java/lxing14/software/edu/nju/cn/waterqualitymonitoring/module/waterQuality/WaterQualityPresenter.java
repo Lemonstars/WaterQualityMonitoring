@@ -62,21 +62,12 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
 
     @Override
     public void loadChartDataByType(int type) {
-        mState = type;
-
-        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.getName(mState), CommonConstant.DEFAULT_DAY)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<List<WaterQualityTypeNumVO>>(mView.getContextView()) {
-                    @Override
-                    public void onNext(List<WaterQualityTypeNumVO> waterQualityTypeNumVOS) {
-                        onNetworkRequest(waterQualityTypeNumVOS, OrderConstant.DESC);
-                    }
-                });
+        this.mState = type;
+        loadChartDataByDate(startTime, endTime);
     }
 
     @Override
-    public void loadChartDataByDateAndType(String startTime, String endTime) {
+    public void loadChartDataByDate(String startTime, String endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
         RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.getName(mState), startTime, endTime)

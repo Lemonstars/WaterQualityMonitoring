@@ -30,6 +30,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstan
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ChartMarkerView;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
 
@@ -76,7 +77,9 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         showInitTabSelected();
         showChartUnit();
 
-        mPresenter.loadDefaultWaterLevelData();
+        String startTime = TimeUtil.getDateBeforeNum(7);
+        String endTime = TimeUtil.getTodayDate();
+        mPresenter.loadWaterLevelDataByDate(startTime, endTime);
         mPresenter.loadCurrentWaterLevelInfo();
 
         mMapView.onCreate(savedInstanceState);
@@ -145,13 +148,13 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.realTime_tv:
-                clickTab(CommonConstant.REAL_TIME);
+                clickTab(CommonConstant.ONE_WEEK);
                 break;
             case R.id.day_tv:
-                clickTab(CommonConstant.DAY);
+                clickTab(CommonConstant.ONE_MONTH);
                 break;
             case R.id.month_tv:
-                clickTab(CommonConstant.MONTH);
+                clickTab(CommonConstant.THREE_MONTH);
                 break;
             case R.id.currentWaterLevelImg_iv:
                 showSelectedPic(mCurrentWaterLevelImg_iv);

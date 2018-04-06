@@ -26,6 +26,7 @@ import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
 
 
@@ -54,7 +55,7 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         loadWebFile();
         configListener();
 
-        mPresenter.loadWaterFloatingChartInfo();
+        mPresenter.loadWaterFloatingChartByDate(TimeUtil.getDateBeforeNum(7), TimeUtil.getTodayDate());
         mPresenter.loadWaterFloatingPicURl();
 
         return root;

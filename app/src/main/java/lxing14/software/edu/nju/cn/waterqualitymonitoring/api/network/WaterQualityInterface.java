@@ -38,14 +38,4 @@ public interface WaterQualityInterface {
     Observable<List<WaterQualityTypeNumVO>> getWaterQualityInfo(@Path("siteId")int siteId, @Path("param")String type,
                                                          @Path("startTime")String startTime, @Path("endTime")String endTime);
 
-    /**
-     * 获取最近n天的数据
-     * @param stnId
-     * @param type
-     * @param days
-     * @return
-     */
-    @GET("waterquality/lastWaterQualityRecordsNum/{stnId}/{type}/{days}")
-    Observable<List<WaterQualityTypeNumVO>> getWaterQualityInfo(@Path("stnId")int stnId, @Path("type")String type, @Path("days")int days);
-
 }

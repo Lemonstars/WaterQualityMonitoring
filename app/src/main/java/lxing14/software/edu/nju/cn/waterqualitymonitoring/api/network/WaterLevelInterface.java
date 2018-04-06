@@ -19,16 +19,7 @@ import rx.Observable;
 public interface WaterLevelInterface {
 
     /**
-     * 根据条目数获取水位数据
-     * @param siteId
-     * @param days
-     * @return
-     */
-    @GET("water/lastWaterRecordsNum/{siteId}/{days}")
-    Observable<List<WaterLevelVO>> getWaterLevelByNum(@Path("siteId")int siteId, @Path("days")int days);
-
-    /**
-     * 根据日期区间获取水位数据
+     * 根据日期区间获取水位图表数据
      * @param stnId
      * @param startTime
      * @param endTime
@@ -39,6 +30,13 @@ public interface WaterLevelInterface {
                                                        @Path("startTime")String startTime, @Path("endTime")String endTime);
 
 
+    /**
+     * 根据日期区间获取水位详细数据
+     * @param siteId
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     @GET("water/historicalWaterLevel/{siteId}/{startTime}/{endTime}")
     Observable<WaterLevelHistoricalVO> getCurrentWaterLevelInfo(@Path("siteId")int siteId, @Path("startTime")String startTime,
                                                                 @Path("endTime")String endTime);

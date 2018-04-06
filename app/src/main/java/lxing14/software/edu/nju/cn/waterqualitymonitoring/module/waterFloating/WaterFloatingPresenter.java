@@ -34,27 +34,6 @@ public class WaterFloatingPresenter implements WaterFloatingContract.IPresenter 
     }
 
     @Override
-    public void loadWaterFloatingChartInfo() {
-        RetrofitHelper.getWaterFloatingInterface().getRecentFloatingInfo(mStnId, 30)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<List<WaterFloatingVO>>(mView.getContextView()) {
-                    @Override
-                    public void onNext(List<WaterFloatingVO> waterFloatingVOS) {
-                        int len = waterFloatingVOS.size();
-                        List<String> dateList = new ArrayList<>(len);
-                        List<Integer> dataList = new ArrayList<>(len);
-                        for(WaterFloatingVO vo: waterFloatingVOS){
-                            dateList.add(vo.getRecordTime());
-                            dataList.add(vo.getNums());
-                        }
-                        mView.showBarChart(dateList, dataList);
-                    }
-                });
-    }
-
-
-    @Override
     public void loadWaterFloatingChartByDate(String startTime, String endTime) {
         RetrofitHelper.getWaterFloatingInterface().getFloatingInfoByDate(mStnId, startTime, endTime)
                 .subscribeOn(Schedulers.io())

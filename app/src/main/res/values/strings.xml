@@ -24,9 +24,10 @@
     <string name="MORE">MORE</string>
     <string name="title_activity_water_level">WaterLevelActivity</string>
 
-    <string name="realTime">实时</string>
-    <string name="monthDecided">按月</string>
-    <string name="dayDecided">按天</string>
+    <!-- 实时变为一周内 按天变成一月内 按月变成三月内  -->
+    <string name="realTime">一周内</string>
+    <string name="dayDecided">一月内</string>
+    <string name="monthDecided">三月内</string>
 
     <string name="temperature">温度</string>
     <string name="conductivity">电导率</string>

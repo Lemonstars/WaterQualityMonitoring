@@ -45,11 +45,6 @@ public interface WaterLevelContract {
         void processTab(int index);
 
         /**
-         * 获取默认的水位数据
-         */
-        void loadDefaultWaterLevelData();
-
-        /**
          * 获取指定时间范围内的水位数据
          * @param startTime
          * @param endTime

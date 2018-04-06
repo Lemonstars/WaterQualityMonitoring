@@ -19,15 +19,6 @@ import rx.Observable;
 public interface WaterFloatingInterface {
 
     /**
-     * 获取最近n天的漂浮物数据
-     * @param siteId
-     * @param days
-     * @return
-     */
-    @GET("floating/queryLastFMRecordsNum/{siteId}/{days}")
-    Observable<List<WaterFloatingVO>> getRecentFloatingInfo(@Path("siteId")int siteId, @Path("days")int days);
-
-    /**
      * 根据日期范围获取漂浮物数据
      * @param siteId
      * @param startTime

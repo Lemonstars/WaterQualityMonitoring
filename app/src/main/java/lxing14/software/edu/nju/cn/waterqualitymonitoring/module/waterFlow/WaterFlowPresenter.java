@@ -57,20 +57,6 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
     }
 
     @Override
-    public void loadDefaultWaterFlowData() {
-        isRealTime = true;
-        RetrofitHelper.getWaterFlowInterface().getLatestWaterFlow(mStnId, 30)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<List<WaterFlowVO>>(mView.getContextView()) {
-                    @Override
-                    public void onNext(List<WaterFlowVO> waterFlowVOList) {
-                        onNetworkRequest(OrderConstant.DESC, waterFlowVOList);
-                    }
-                });
-    }
-
-    @Override
     public void loadWaterFlowDataByDate(String startTime, String endTime) {
         isRealTime = false;
         this.startTime = startTime;
@@ -148,17 +134,20 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
 
     @Override
     public void processTab(int index) {
-        if(index == CommonConstant.REAL_TIME){
-            loadDefaultWaterFlowData();
-        }else {
-            endTime = TimeUtil.getTodayDate();
-            if(index == CommonConstant.DAY){
-                startTime = TimeUtil.getDateBeforeNum(15);
-            }else {
+        endTime = TimeUtil.getTodayDate();
+        switch (index){
+            case CommonConstant.ONE_WEEK:
+                startTime = TimeUtil.getDateBeforeNum(7);
+                break;
+            case CommonConstant.ONE_MONTH:
                 startTime = TimeUtil.getDateBeforeNum(30);
-            }
-            loadWaterFlowDataByDate(startTime, endTime);
+                break;
+            case CommonConstant.THREE_MONTH:
+                startTime = TimeUtil.getDateBeforeNum(90);
+                break;
         }
+        loadWaterFlowDataByDate(startTime, endTime);
+
     }
 
     @Override
