@@ -53,6 +53,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     private ImageDialog mImageDialog;
     private MapView mMapView;
     private LineChart mLineChart;
+    private ImageView mBig_iv;
     private WebView mWebView;
 
     public static WaterFlowFragment generateFragment() {
@@ -72,6 +73,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         configListener();
         loadWebFile();
 
+        mPresenter.loadDefaultWaterFlowData();
         mPresenter.loadWaterFlowVideoUrl();
         mPresenter.loadCameraInfoFromNetwork();
 
@@ -170,6 +172,9 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
             case R.id.flow_iv:
                 showSelectedPic(mFlow_iv);
                 break;
+            case R.id.big_iv:
+                mPresenter.jumpToChartActivity();
+                break;
         }
     }
 
@@ -225,6 +230,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         mFlowNum_tv = root.findViewById(R.id.flowNum_tv);
         mAverageFlowSpeedNum_tv = root.findViewById(R.id.averageFlowSpeedNum_tv);
         mDateNum_tv = root.findViewById(R.id.dateNum_tv);
+        mBig_iv = root.findViewById(R.id.big_iv);
 
         CameraChoiceView camera1 = root.findViewById(R.id.camera1);
         CameraChoiceView camera2 = root.findViewById(R.id.camera2);
@@ -240,6 +246,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         mDay_tv.setOnClickListener(this);
         mMonth_tv.setOnClickListener(this);
         mFlow_iv.setOnClickListener(this);
+        mBig_iv.setOnClickListener(this);
         for(CameraChoiceView cameraChoiceView: mCameraChoiceView){
             cameraChoiceView.setOnClickListener(this);
         }

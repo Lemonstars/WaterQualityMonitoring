@@ -38,6 +38,11 @@ public interface WaterFlowContract {
     interface Presenter extends BasePresenter{
 
         /**
+         * 跳转至ChartActivity
+         */
+        void jumpToChartActivity();
+
+        /**
          * 获取默认的流量数据
          */
         void loadDefaultWaterFlowData();

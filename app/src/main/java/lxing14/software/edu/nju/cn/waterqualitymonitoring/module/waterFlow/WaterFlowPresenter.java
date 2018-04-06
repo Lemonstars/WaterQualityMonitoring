@@ -1,6 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFlow;
 
 import android.content.Context;
+import android.content.Intent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +13,9 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFlowVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFlowVideoUrlVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.OrderConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterTypeEnum;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -34,6 +36,12 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
     private double[] cameraWaterSpeed;
     private String mCollectTime;
 
+    private boolean isRealTime=true;
+    private String startTime = TimeUtil.getDateBeforeNum(7);
+    private String endTime = TimeUtil.getTodayDate();
+    private ArrayList<String> dateList = new ArrayList<>();
+    private ArrayList<Float> dataList = new ArrayList<>();
+
     public WaterFlowPresenter(WaterFlowContract.View mView, int stnId) {
         this.mView = mView;
         this.mStnId = stnId;
@@ -46,11 +54,11 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
 
     @Override
     public void start() {
-        loadDefaultWaterFlowData();
     }
 
     @Override
     public void loadDefaultWaterFlowData() {
+        isRealTime = true;
         RetrofitHelper.getWaterFlowInterface().getLatestWaterFlow(mStnId, 30)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -64,6 +72,9 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
 
     @Override
     public void loadWaterFlowDataByDate(String startTime, String endTime) {
+        isRealTime = false;
+        this.startTime = startTime;
+        this.endTime = endTime;
         RetrofitHelper.getWaterFlowInterface().getWaterFlowByDate(mStnId, startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -140,8 +151,7 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
         if(index == CommonConstant.REAL_TIME){
             loadDefaultWaterFlowData();
         }else {
-            String startTime;
-            String endTime = TimeUtil.getTodayDate();
+            endTime = TimeUtil.getTodayDate();
             if(index == CommonConstant.DAY){
                 startTime = TimeUtil.getDateBeforeNum(15);
             }else {
@@ -151,12 +161,23 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
         }
     }
 
+    @Override
+    public void jumpToChartActivity() {
+        ArrayList<String> dataStrList = new ArrayList<>(dataList.size());
+        for(Float num: dataList){
+            dataStrList.add(String.valueOf(num));
+        }
+
+        Context context = mView.getContextView();
+        Intent intent = ChartActivity.generateIntent(context, WaterTypeEnum.WATER_FLOW, isRealTime, startTime, endTime, dateList, dataStrList);
+        context.startActivity(intent);
+    }
+
     // process the data
     private void onNetworkRequest(OrderConstant orderConstant, List<WaterFlowVO> waterFlowVOList){
+        dateList.clear();
+        dataList.clear();
         int len = waterFlowVOList.size();
-        List<String> dateList = new ArrayList<>(len);
-        List<Float> dataList = new ArrayList<>(len);
-
         WaterFlowVO waterFlowVO;
         for(int i=0;i<len;i++){
             if(orderConstant == OrderConstant.ASC){
