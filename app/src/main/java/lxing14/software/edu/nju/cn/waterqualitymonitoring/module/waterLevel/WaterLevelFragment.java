@@ -20,6 +20,7 @@ import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     private ImageDialog mImageDialog;
     private ImageView mBig_iv;
     private TextView[] mTab_tv;
+    private ChartMarkerView mChartMarkerView;
 
     public static WaterLevelFragment generateFragment(){
         WaterLevelFragment waterLevelFragment = new WaterLevelFragment();
@@ -68,8 +70,8 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
 
         findView(root);
         configListener();
+        configChartMarkerView();
         ChartUtil.configLineChart(mLineChart);
-        mLineChart.setMarker(new ChartMarkerView(getContext(), R.layout.bg_chart_marker_view,  "水位: "));
         showChartUnit();
 
         String startTime = TimeUtil.getDateBeforeNum(7);
@@ -109,7 +111,10 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     @Override
     public void showWaterLevelChartData(List<String> waterLevelDate, List<Float> waterLevelData) {
         int len = waterLevelDate.size();
-        mLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(waterLevelDate));
+        IAxisValueFormatter iAxisValueFormatter = new IndexAxisValueFormatter(waterLevelDate);
+        mLineChart.getXAxis().setValueFormatter(iAxisValueFormatter);
+        mChartMarkerView.setIAxisValueFormatter(iAxisValueFormatter);
+        mLineChart.setMarker(mChartMarkerView);
 
         List<Entry> lineEntry = new ArrayList<>();
         for(int i=0;i<len;i++){
@@ -171,6 +176,11 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     @Override
     public Context getContextView() {
         return getContext();
+    }
+
+    //configure the name and the unit
+    private void configChartMarkerView(){
+        mChartMarkerView = new ChartMarkerView(getContext(),  "水位:", "m");
     }
 
     //show the current location

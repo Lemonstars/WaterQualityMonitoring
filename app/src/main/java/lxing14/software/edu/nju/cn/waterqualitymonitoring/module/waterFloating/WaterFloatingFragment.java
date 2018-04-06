@@ -14,6 +14,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstan
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ChartMarkerView;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
 
 
@@ -39,6 +41,7 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
     private ImageView mImage2;
     private ImageView mImage3;
     private ImageDialog mImageDialog;
+    private ChartMarkerView mChartMarkerView;
 
     public static WaterFloatingFragment generateFragment(){
         return new WaterFloatingFragment();
@@ -53,6 +56,7 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         ChartUtil.configLineChart(mLineChart);
         loadWebFile();
         configListener();
+        configChartMarkerView();
 
         mPresenter.loadWaterFloatingChartByDate(TimeUtil.getDateBeforeNum(7), TimeUtil.getTodayDate());
         mPresenter.loadWaterFloatingPicURl();
@@ -68,7 +72,11 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
     @Override
     public void showFloatingChart(List<String> dateList, List<Integer> dataList) {
         int len = dateList.size();
-        mLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dateList));
+        IAxisValueFormatter iAxisValueFormatter = new IndexAxisValueFormatter(dateList);
+        mLineChart.getXAxis().setValueFormatter(iAxisValueFormatter);
+        mChartMarkerView.setIAxisValueFormatter(iAxisValueFormatter);
+        mLineChart.setMarker(mChartMarkerView);
+
 
         List<Entry> lineEntry = new ArrayList<>();
         for(int i=0;i<len;i++){
@@ -120,6 +128,11 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
     @Override
     public Context getContextView() {
         return getContext();
+    }
+
+    //configure the name and the unit
+    private void configChartMarkerView(){
+        mChartMarkerView = new ChartMarkerView(getContext(),  "漂浮物:", "个");
     }
 
     //the change of the color of the tab

@@ -21,6 +21,7 @@ import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.CameraChoiceView;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ChartMarkerView;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
 
 public class WaterFlowFragment extends Fragment implements WaterFlowContract.View, View.OnClickListener{
@@ -52,6 +54,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     private TextView[] mTab_tv;
     private ImageView mBig_iv;
     private WebView mWebView;
+    private ChartMarkerView mChartMarkerView;
 
     public static WaterFlowFragment generateFragment() {
         return new WaterFlowFragment();
@@ -67,6 +70,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         ChartUtil.configLineChart(mLineChart);
         showDescription();
         configListener();
+        configChartMarkerView();
         loadWebFile();
         mPresenter.loadWaterFlowDataByDate(TimeUtil.getDateBeforeNum(7), TimeUtil.getTodayDate());
         mPresenter.loadWaterFlowVideoUrl();
@@ -103,7 +107,10 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     @Override
     public void showWaterFlowChartData(List<String> dateList, List<Float> dataList) {
         int len = dateList.size();
-        mLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dateList));
+        IAxisValueFormatter iAxisValueFormatter = new IndexAxisValueFormatter(dateList);
+        mLineChart.getXAxis().setValueFormatter(iAxisValueFormatter);
+        mChartMarkerView.setIAxisValueFormatter(iAxisValueFormatter);
+        mLineChart.setMarker(mChartMarkerView);
 
         List<Entry> lineEntry = new ArrayList<>();
         for(int i=0;i<len;i++){
@@ -180,6 +187,11 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     @Override
     public Context getContextView() {
         return getContext();
+    }
+
+    //configure the name and the unit
+    private void configChartMarkerView(){
+        mChartMarkerView = new ChartMarkerView(getContext(),  "流量:", "m/s");
     }
 
     //the change of the color of the tab

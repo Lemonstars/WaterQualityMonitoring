@@ -6,7 +6,9 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.utils.MPPointF;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 
@@ -19,13 +21,17 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 
 public class ChartMarkerView extends MarkerView {
 
+    private String mUnit;
     private TextView mEntry_tv;
     private TextView mEntryNum_tv;
     private TextView mTimeNum_tv;
 
-    public ChartMarkerView(Context context, int layoutResource, String entry) {
-        super(context, layoutResource);
+    private IAxisValueFormatter mIAxisValueFormatter;
 
+    public ChartMarkerView(Context context, String entry, String unit) {
+        super(context, R.layout.bg_chart_marker_view);
+
+        this.mUnit = unit;
         mEntry_tv = findViewById(R.id.entry_tv);
         mEntryNum_tv = findViewById(R.id.entryNum_tv);
         mTimeNum_tv = findViewById(R.id.timeNum_tv);
@@ -33,11 +39,20 @@ public class ChartMarkerView extends MarkerView {
         mEntry_tv.setText(entry);
     }
 
-    // callbacks everytime the MarkerView is redrawn, can be used to update the
-    // content (user-interface)
+    public void setIAxisValueFormatter(IAxisValueFormatter mIAxisValueFormatter) {
+        this.mIAxisValueFormatter = mIAxisValueFormatter;
+    }
+
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        mEntryNum_tv.setText(String.valueOf(e.getY()));
+        mEntryNum_tv.setText(String.valueOf(e.getY())+mUnit);
+        mTimeNum_tv.setText(mIAxisValueFormatter.getFormattedValue(e.getX(), null));
+        super.refreshContent(e, highlight);
+    }
+
+    @Override
+    public MPPointF getOffset() {
+        return new MPPointF(-(getWidth() / 2), -getHeight());
     }
 
 }
