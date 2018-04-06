@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.NetworkUtil;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.LoadingDialog;
 import rx.Subscriber;
 
 /**
@@ -15,32 +16,42 @@ import rx.Subscriber;
 
 public abstract class BaseSubscriber<T> extends Subscriber<T> {
 
-    private Context context;
+    private Context mContext;
+    private LoadingDialog mLoadingDialog;
 
     public BaseSubscriber(Context context) {
-        this.context = context;
+        this.mContext = context;
+        mLoadingDialog = new LoadingDialog(context);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (!NetworkUtil.isNetworkAccessed(context)) {
-            Toast.makeText(context, "当前网络不可用，请检查网络情况", Toast.LENGTH_SHORT).show();
+        if (!NetworkUtil.isNetworkAccessed(mContext)) {
+            Toast.makeText(mContext, "当前网络不可用，请检查网络情况", Toast.LENGTH_SHORT).show();
             if (!isUnsubscribed()) {
                 unsubscribe();
             }
         }
 
+        if (mLoadingDialog != null){
+            mLoadingDialog.show();
+        }
     }
 
     @Override
     public void onCompleted() {
-
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
+        }
     }
 
     @Override
     public void onError(Throwable e) {
-        Toast.makeText(context, "未知错误", Toast.LENGTH_SHORT).show();
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
+        }
+        Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
     }
 
     @Override

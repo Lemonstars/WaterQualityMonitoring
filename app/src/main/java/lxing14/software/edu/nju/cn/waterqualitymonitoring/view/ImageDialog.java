@@ -5,8 +5,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.view.Display;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -40,15 +38,10 @@ public class ImageDialog extends Dialog{
         Display display = windowManager.getDefaultDisplay();
         WindowManager.LayoutParams lp = window.getAttributes();
         lp.width = (int)(display.getWidth() * 0.8);
-        lp.height = (int) (display.getHeight() * 0.5);
+        lp.height = (int)(display.getHeight() * 0.5);
         window.setAttributes(lp);
 
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+        imageView.setOnClickListener(v -> dismiss());
     }
 
     public void setImage(Drawable drawable){
