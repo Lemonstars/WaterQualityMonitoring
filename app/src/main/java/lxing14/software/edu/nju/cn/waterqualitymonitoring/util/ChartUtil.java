@@ -46,7 +46,7 @@ public class ChartUtil {
         yAxisLeft.setDrawLabels(true);
         yAxisLeft.enableGridDashedLine(10f, 10f, 0f);
         yAxisLeft.setLabelCount(5, false);
-        yAxisLeft.setSpaceTop(10);
+        yAxisLeft.setSpaceTop(15f);
 
         YAxis yAxisRight = lineChart.getAxisRight();
         yAxisRight.setEnabled(false);

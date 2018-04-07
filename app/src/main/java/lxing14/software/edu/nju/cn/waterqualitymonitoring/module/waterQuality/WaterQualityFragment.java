@@ -71,6 +71,7 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
 
         mPresenter.loadChartDataByDate(TimeUtil.getDateBeforeNum(7), TimeUtil.getTodayDate());
         mPresenter.loadCurrentWaterQualityInfo();
+        mPresenter.loadAllStationInfo();
 
         mMapView.onCreate(savedInstanceState);
         return root;

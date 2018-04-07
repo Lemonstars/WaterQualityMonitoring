@@ -76,6 +76,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         mPresenter.loadWaterFlowDataByDate(TimeUtil.getDateBeforeNum(7), TimeUtil.getTodayDate());
         mPresenter.loadWaterFlowVideoUrl();
         mPresenter.loadCameraInfoFromNetwork();
+        mPresenter.loadAllStationInfo();
 
         mMapView.onCreate(savedInstanceState);
         return root;
