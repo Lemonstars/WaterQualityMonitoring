@@ -17,6 +17,7 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
@@ -32,6 +33,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterQualityData;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map.MapInfoWindowAdapter;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ChartMarkerView;
@@ -44,6 +46,7 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
     private ImageView mBig_iv;
     private RecyclerView mType_rv;
     private MapView mMapView;
+    private AMap mAMap;
     private WaterQualityRVAdapter mAdapter;
     private TextView[] mTab_tv;
     private ChartMarkerView mChartMarkerView;
@@ -63,6 +66,7 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         initRecyclerView();
         configListener();
         configChartMarkerView();
+        configMapView();
         ChartUtil.configLineChart(mLineChart);
 
         mPresenter.loadChartDataByDate(TimeUtil.getDateBeforeNum(7), TimeUtil.getTodayDate());
@@ -96,6 +100,13 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
     @Override
     public void setPresenter(WaterQualityContract.Presenter presenter) {
         this.mPresenter = presenter;
+    }
+
+    @Override
+    public void showStationLocation(ArrayList<MarkerOptions> markerOptionsList) {
+        AMap aMap = mMapView.getMap();
+        aMap.clear();
+        aMap.addMarkers(markerOptionsList, false);
     }
 
     @Override
@@ -221,6 +232,7 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
     private void findView(View root){
         mType_rv = root.findViewById(R.id.type_rv);
         mMapView = root.findViewById(R.id.map);
+        mAMap = mMapView.getMap();
         mLineChart = root.findViewById(R.id.lineChart);
         mBig_iv = root.findViewById(R.id.big_iv);
 
@@ -251,6 +263,11 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
             textView.setOnClickListener(this);
         }
         mBig_iv.setOnClickListener(this);
+    }
+
+    //configure the map
+    private void configMapView(){
+        mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getActivity(), false));
     }
 
 }

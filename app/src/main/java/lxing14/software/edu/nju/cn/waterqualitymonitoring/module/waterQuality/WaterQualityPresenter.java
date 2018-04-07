@@ -3,6 +3,9 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterQuality;
 import android.content.Context;
 import android.content.Intent;
 
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +13,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscri
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityTypeNumVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.OrderConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterQualityData;
@@ -118,6 +122,50 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
 
                         mView.showCurrentWaterQualityInfo(temperature, ph, dissolvedOxygen, redox,
                                 transparency, conductivity, turbidity, nh3);
+                    }
+                });
+    }
+
+    @Override
+    public void loadAllStationInfo() {
+        RetrofitHelper.getWaterStationInterface().getAllStationInfo()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<List<WaterStationInfoVO>>(mView.getContextView()) {
+                    @Override
+                    public void onNext(List<WaterStationInfoVO> waterStationInfoVOS) {
+                        LatLng latLng;
+                        ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>(waterStationInfoVOS.size());
+                        for(WaterStationInfoVO vo: waterStationInfoVOS){
+                            double x = Double.parseDouble(vo.getX());
+                            double y = Double.parseDouble(vo.getY());
+
+                            latLng = new LatLng(y, x);
+                            MarkerOptions markerOptions = new MarkerOptions();
+                            StringBuilder sb = new StringBuilder();
+                            sb.append(String.valueOf(vo.getId()));
+                            sb.append(' ');
+                            sb.append(vo.getName());
+                            sb.append(' ');
+                            sb.append(vo.isHasWaterLevel()? 1:0); // water level
+                            sb.append(' ');
+                            sb.append(vo.isHasWaterQuality()? 1:0); // water quality
+                            sb.append(' ');
+                            sb.append(vo.isHasWaterFlow()? 1:0); // water flow
+                            sb.append(' ');
+                            sb.append(vo.isHasFloatingMaterial()? 1:0); // floating
+                            sb.append(' ');
+                            sb.append(vo.isHasUnmannedShip()? 1:0); // boat
+                            sb.append(' ');
+                            sb.append(y);
+                            sb.append(' ');
+                            sb.append(x);
+
+                            markerOptions.position(latLng).snippet(sb.toString());
+                            markerOptionsArrayList.add(markerOptions);
+                        }
+
+                        mView.showStationLocation(markerOptionsArrayList);
                     }
                 });
     }

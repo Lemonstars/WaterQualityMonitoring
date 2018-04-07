@@ -11,10 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
@@ -29,6 +32,7 @@ import java.util.List;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map.MapInfoWindowAdapter;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
@@ -71,6 +75,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         findView(root);
         configListener();
         configChartMarkerView();
+        configMapView();
         ChartUtil.configLineChart(mLineChart);
         showChartUnit();
 
@@ -78,6 +83,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         String endTime = TimeUtil.getTodayDate();
         mPresenter.loadWaterLevelDataByDate(startTime, endTime);
         mPresenter.loadCurrentWaterLevelInfo();
+        mPresenter.loadAllStationInfo();
 
         mMapView.onCreate(savedInstanceState);
 
@@ -106,6 +112,13 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     @Override
     public void setPresenter(WaterLevelContract.Presenter presenter) {
         this.mPresenter = presenter;
+    }
+
+    @Override
+    public void showStationLocation(ArrayList<MarkerOptions> markerOptionsList) {
+        AMap aMap = mMapView.getMap();
+        aMap.clear();
+        aMap.addMarkers(markerOptionsList, false);
     }
 
     @Override
@@ -249,6 +262,11 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mImage1.setOnClickListener(this);
         mImage2.setOnClickListener(this);
         mImage3.setOnClickListener(this);
+    }
+
+    //configure the map
+    private void configMapView(){
+        mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getActivity(), false));
     }
 
 }

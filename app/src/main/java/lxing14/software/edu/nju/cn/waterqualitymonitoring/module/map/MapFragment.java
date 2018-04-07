@@ -48,7 +48,6 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
         findView(root);
         configListener();
         configMapView();
-        mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getContext()));
 
         mPresenter.loadAllWaterTypeInfo();
 
@@ -119,6 +118,9 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
 
     //configure the map
     private void configMapView(){
+
+        mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getActivity(), true));
+
         AMapLocationClient mLocationClient = new AMapLocationClient(getContext());
         mLocationClient.setLocationListener(aMapLocation -> {
             double latitude = CommonConstant.LATITUDE_OF_NJ;

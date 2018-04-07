@@ -1,5 +1,8 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterQuality;
 
+import com.amap.api.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BasePresenter;
@@ -15,6 +18,12 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.BaseView;
 public interface WaterQualityContract {
 
     interface View extends BaseView<WaterQualityContract.Presenter>{
+
+        /**
+         * 显示站点位置
+         * @param markerOptionsList
+         */
+        void showStationLocation(ArrayList<MarkerOptions> markerOptionsList);
 
         /**
          * 显示被选中的tab
@@ -81,6 +90,11 @@ public interface WaterQualityContract {
          * 获取当前水质数据
          */
         void loadCurrentWaterQualityInfo();
+
+        /**
+         * 加载所有站点信息
+         */
+        void loadAllStationInfo();
 
     }
 

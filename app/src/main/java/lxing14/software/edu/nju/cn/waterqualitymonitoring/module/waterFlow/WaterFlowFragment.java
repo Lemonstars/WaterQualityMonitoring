@@ -16,6 +16,7 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
@@ -102,6 +103,13 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     @Override
     public void setPresenter(WaterFlowContract.Presenter presenter) {
         this.mPresenter = presenter;
+    }
+
+    @Override
+    public void showStationLocation(ArrayList<MarkerOptions> markerOptionsList) {
+        AMap aMap = mMapView.getMap();
+        aMap.clear();
+        aMap.addMarkers(markerOptionsList, false);
     }
 
     @Override

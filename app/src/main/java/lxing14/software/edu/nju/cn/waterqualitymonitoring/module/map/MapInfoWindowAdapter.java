@@ -1,5 +1,6 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,11 +32,13 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.WaterInfoView;
 
 public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
 
-    private Context context;
+    private Activity context;
+    private boolean isFrontPage;
     private int[] type;
 
-    public MapInfoWindowAdapter(Context context) {
+    public MapInfoWindowAdapter(Activity context, boolean isFrontPage) {
         this.context = context;
+        this.isFrontPage = isFrontPage;
 
         type = new int[]{R.string.waterLevel, R.string.waterQuality, R.string.waterFlow, R.string.floatingMaterial, R.string.unmannedShip};
     }
@@ -71,6 +74,10 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
                 Intent intent = generateIntent(i, stn);
                 waterInfoView.setOnClickListener(v -> {
                     context.startActivity(intent);
+                    marker.hideInfoWindow();
+                    if(!isFrontPage){
+                        context.finish();
+                    }
                     SharedPreferences sharedPreferences =
                             context.getSharedPreferences(SharePreferencesConstant.APP_NAME, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();

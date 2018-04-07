@@ -1,5 +1,8 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 
+import com.amap.api.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BasePresenter;
@@ -15,6 +18,12 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.BaseView;
 public interface WaterLevelContract {
 
     interface View extends BaseView<WaterLevelContract.Presenter>{
+
+        /**
+         * 显示站点位置
+         * @param markerOptionsList
+         */
+        void showStationLocation(ArrayList<MarkerOptions> markerOptionsList);
 
         /**
          * 显示水位默认图标数据
@@ -62,6 +71,10 @@ public interface WaterLevelContract {
          */
         void jumpToChartActivity();
 
+        /**
+         * 加载所有站点信息
+         */
+        void loadAllStationInfo();
     }
 
 }
