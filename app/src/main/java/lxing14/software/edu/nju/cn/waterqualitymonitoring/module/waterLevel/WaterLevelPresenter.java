@@ -122,7 +122,7 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
         }
 
         Context context = mView.getContextView();
-        Intent intent = ChartActivity.generateIntent(context, "水位", startTime, endTime, waterLevelDateList, dataList);
+        Intent intent = ChartActivity.generateIntent(context, "水位", "m",startTime, endTime, waterLevelDateList, dataList);
         context.startActivity(intent);
     }
 

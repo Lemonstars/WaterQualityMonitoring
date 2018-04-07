@@ -34,6 +34,13 @@ public interface ChartContract {
          * @param unit
          */
         void showChartUnit(String unit);
+
+        /**
+         * 图表markerView显示的条目和单位
+         * @param entry
+         * @param unit
+         */
+        void configChartMarkerView(String entry, String unit);
     }
 
     interface Presenter extends BasePresenter{

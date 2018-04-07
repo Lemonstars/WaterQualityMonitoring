@@ -14,15 +14,17 @@ public class ChartPresenter implements ChartContract.Presenter {
     private ChartContract.View mView;
 
     private String mName;
+    private String mUnit;
     private String mStartTime;
     private String mEndTime;
     private ArrayList<String> mDateList;
     private ArrayList<Float> mDataList;
 
-    public ChartPresenter(ChartContract.View mView,String name, String startTime,
+    public ChartPresenter(ChartContract.View view,String name, String unit, String startTime,
                           String endTime, ArrayList<String> dateList, ArrayList<Float> dataList) {
-        this.mView = mView;
+        this.mView = view;
         this.mName = name;
+        this.mUnit= unit;
         this.mStartTime = startTime;
         this.mEndTime = endTime;
         this.mDateList = dateList;
@@ -36,6 +38,7 @@ public class ChartPresenter implements ChartContract.Presenter {
         String chartName = mStartTime+"至"+mEndTime+mName+"图";
         mView.showChartName(chartName);
         mView.showChart(mDateList, mDataList);
-        mView.showChartUnit("m");
+        mView.showChartUnit(mUnit);
+        mView.configChartMarkerView(mName+":", mUnit);
     }
 }

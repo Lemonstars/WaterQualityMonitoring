@@ -39,6 +39,10 @@ public class ChartMarkerView extends MarkerView {
 
     }
 
+    public ChartMarkerView(Context context) {
+        this(context, "", "");
+    }
+
     public void setIAxisValueFormatter(IAxisValueFormatter mIAxisValueFormatter) {
         this.mIAxisValueFormatter = mIAxisValueFormatter;
     }

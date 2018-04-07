@@ -99,7 +99,7 @@ public class WaterFloatingPresenter implements WaterFloatingContract.Presenter {
         }
 
         Context context = mView.getContextView();
-        Intent intent = ChartActivity.generateIntent(context, "漂浮物", startTime, endTime, dateList, dataStrList);
+        Intent intent = ChartActivity.generateIntent(context, "漂浮物", "个",startTime, endTime, dateList, dataStrList);
         context.startActivity(intent);
     }
 }

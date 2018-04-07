@@ -1,7 +1,6 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,12 +10,10 @@ import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
@@ -24,6 +21,7 @@ import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ChartMarkerView;
 
 public class ChartFragment extends Fragment implements ChartContract.View{
 
@@ -31,6 +29,7 @@ public class ChartFragment extends Fragment implements ChartContract.View{
 
     private LineChart mLineChart;
     private TextView mName_tv;
+    private ChartMarkerView mChartMarkerView;
 
     public static ChartFragment generateFragment(){
         return new ChartFragment();
@@ -42,6 +41,7 @@ public class ChartFragment extends Fragment implements ChartContract.View{
         View root = inflater.inflate(R.layout.fragment_chart, container, false);
         findView(root);
         ChartUtil.configLineChart(mLineChart);
+        configChartMarkerView();
         mPresenter.loadChartData();
 
         return root;
@@ -55,13 +55,16 @@ public class ChartFragment extends Fragment implements ChartContract.View{
     @Override
     public void showChart(List<String> dateList, List<Float> dataList) {
         int len = dateList.size();
-        mLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dateList));
+        IAxisValueFormatter iAxisValueFormatter = new IndexAxisValueFormatter(dateList);
+        mLineChart.getXAxis().setValueFormatter(iAxisValueFormatter);
+        mChartMarkerView.setIAxisValueFormatter(iAxisValueFormatter);
+        mLineChart.setMarker(mChartMarkerView);
 
         List<Entry> lineEntry = new ArrayList<>();
         for(int i=0;i<len;i++){
             lineEntry.add(new Entry(i, dataList.get(i)));
         }
-        LineDataSet lineDataSet = new LineDataSet(lineEntry, "waterLevel");
+        LineDataSet lineDataSet = new LineDataSet(lineEntry, "data");
         LineData lineData = new LineData(lineDataSet);
         mLineChart.setData(lineData);
         mLineChart.notifyDataSetChanged();
@@ -82,8 +85,19 @@ public class ChartFragment extends Fragment implements ChartContract.View{
     }
 
     @Override
+    public void configChartMarkerView(String entry, String unit) {
+        mChartMarkerView.setEntry(entry);
+        mChartMarkerView.setUnit(unit);
+    }
+
+    @Override
     public Context getContextView() {
         return getContext();
+    }
+
+    //configure the name and the unit
+    private void configChartMarkerView(){
+        mChartMarkerView = new ChartMarkerView(getContext());
     }
 
     //find the view

@@ -163,7 +163,7 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
         }
 
         Context context = mView.getContextView();
-        Intent intent = ChartActivity.generateIntent(context, "流量", startTime, endTime, dateList, dataStrList);
+        Intent intent = ChartActivity.generateIntent(context, "流量", "m/s",startTime, endTime, dateList, dataStrList);
         context.startActivity(intent);
     }
 
