@@ -22,6 +22,7 @@ import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferen
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterQualityData;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ChartMarkerView;
 
 public class WaterQualityFragment extends Fragment implements WaterQualityContract.View, View.OnClickListener{
 
@@ -43,10 +45,9 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
     private RecyclerView mType_rv;
     private MapView mMapView;
     private WaterQualityRVAdapter mAdapter;
-
     private TextView[] mTab_tv;
-    //TODO 等待确认
-    private String[] mChartUnit = new String[]{"°C", "S/m", "", "mg/L", "mV", "NTU", "%", "mg/L"};
+    private ChartMarkerView mChartMarkerView;
+
 
     public static WaterQualityFragment generateFragment(){
         return new WaterQualityFragment();
@@ -61,6 +62,7 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
 
         initRecyclerView();
         configListener();
+        configChartMarkerView();
         ChartUtil.configLineChart(mLineChart);
 
         mPresenter.loadChartDataByDate(TimeUtil.getDateBeforeNum(7), TimeUtil.getTodayDate());
@@ -104,14 +106,24 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
     }
 
     @Override
-    public void showChartUnit(int index) {
+    public void showChartUnit(String unit) {
         Description description = mLineChart.getDescription();
-        description.setText(mChartUnit[index]);
+        description.setText(unit);
+    }
+
+
+    @Override
+    public void configChartMarkerView(String entry, String unit) {
+        mChartMarkerView.setEntry(entry);
+        mChartMarkerView.setUnit(unit);
     }
 
     @Override
     public void showWaterQualityChart(List<String> dateList, List<Float> dataList ) {
-        mLineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dateList));
+        IAxisValueFormatter iAxisValueFormatter = new IndexAxisValueFormatter(dateList);
+        mLineChart.getXAxis().setValueFormatter(iAxisValueFormatter);
+        mChartMarkerView.setIAxisValueFormatter(iAxisValueFormatter);
+        mLineChart.setMarker(mChartMarkerView);
 
         List<Entry> lineEntry = new ArrayList<>();
         int len = dateList.size();
@@ -188,6 +200,11 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
     @Override
     public Context getContextView() {
         return getContext();
+    }
+
+    //configure the name and the unit
+    private void configChartMarkerView(){
+        mChartMarkerView = new ChartMarkerView(getContext(),  "温度:", "°C");
     }
 
     //show the current location

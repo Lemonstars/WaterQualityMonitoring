@@ -32,6 +32,10 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
     private int mState = WaterQualityData.TEMPERATURE;
     private int mStnId;
 
+    //TODO 等待确认
+    private String[] mChartUnit = new String[]{"°C", "S/m", "", "mg/L", "mV", "NTU", "%", "mg/L"};
+    private String[] mEntry = new String[]{"温度", "电导率", "ph值", "溶解氧", "氧化还原", "浊度", "透明度", "氨氮"};
+
     private String startTime= TimeUtil.getDateBeforeNum(7);
     private String endTime = TimeUtil.getTodayDate();
     private ArrayList<String> dateList = new ArrayList<>();
@@ -88,7 +92,8 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
                         }
 
                         mView.showTabSelected(mState);
-                        mView.showChartUnit(mState);
+                        mView.showChartUnit(mChartUnit[mState]);
+                        mView.configChartMarkerView(mEntry[mState]+":", mChartUnit[mState]);
                         mView.showWaterQualityChart(dateList, dataList);
                     }
                 });

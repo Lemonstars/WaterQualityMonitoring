@@ -24,9 +24,16 @@ public interface WaterQualityContract {
 
         /**
          * 显示图表的单位
-         * @param index
+         * @param unit
          */
-        void showChartUnit(int index);
+        void showChartUnit(String unit);
+
+        /**
+         * 配置图表marker显示的条目和单位
+         * @param entry
+         * @param unit
+         */
+        void configChartMarkerView(String entry, String unit);
 
         /**
          * 显示水质图表
