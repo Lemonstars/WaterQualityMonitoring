@@ -1,5 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.unmannedShip;
 
+import com.amap.api.maps.model.LatLng;
+
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BasePresenter;
@@ -34,12 +36,24 @@ public interface UnMannedShipContract {
         void showChartUnit(String unit);
 
         /**
+         * 显示中心点
+         * @param latitude
+         * @param longitude
+         */
+        void showCenterPoint(float latitude, float longitude);
+
+        /**
+         * 添加无人船位置标记
+         * @param points
+         */
+        void addBoatLocation(List<LatLng> points);
+
+        /**
          * 配置图表marker显示的条目和单位
          * @param entry
          * @param unit
          */
         void configChartMarkerView(String entry, String unit);
-
 
     }
 
@@ -65,6 +79,11 @@ public interface UnMannedShipContract {
          * @param type
          */
         void loadChartDataByType(int type);
+
+        /**
+         * 加载无人船当前位置
+         */
+        void loadBoatCurrentLocation();
 
     }
 

@@ -1,6 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.unmannedShip;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,7 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.BitmapDescriptor;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.PolylineOptions;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
@@ -31,6 +39,7 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
     private UnMannedShipContract.Presenter mPresenter;
 
     private MapView mMapView;
+    private AMap mAMap;
     private LineChart mLineChart;
     private ImageView mBig_iv;
     private TextView[] mTab_tv;
@@ -52,6 +61,7 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
 
         mPresenter.loadChartDataByType(WaterQualityData.TEMPERATURE);
 
+        mMapView.onCreate(savedInstanceState);
         return root;
     }
 
@@ -62,7 +72,21 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
 
     @Override
     public void onResume() {
+        mPresenter.loadBoatCurrentLocation();
+        mMapView.onResume();
         super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        mMapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        mMapView.onDestroy();
+        super.onDestroy();
     }
 
     @Override
@@ -97,6 +121,24 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
     public void showChartUnit(String unit) {
         Description description = mLineChart.getDescription();
         description.setText(unit);
+    }
+
+    @Override
+    public void showCenterPoint(float latitude, float longitude) {
+        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 50f));
+    }
+
+    @Override
+    public void addBoatLocation(List<LatLng> points) {
+        mAMap.clear();
+        mAMap.addPolyline(new PolylineOptions().addAll(points).width(8).color(R.color.skyBlue));
+        LatLng currentLatLng = points.get(points.size()-1);
+
+        ArrayList<MarkerOptions>  markerOptionList = new ArrayList<>();
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(currentLatLng).icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_moving_boat));
+        markerOptionList.add(markerOptions);
+        mAMap.addMarkers(markerOptionList, false);
     }
 
     @Override
@@ -152,6 +194,7 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
     private void findView(android.view.View root){
 
         mMapView = root.findViewById(R.id.map);
+        mAMap = mMapView.getMap();
         mLineChart = root.findViewById(R.id.lineChart);
         mBig_iv = root.findViewById(R.id.big_iv);
 
@@ -174,4 +217,5 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
         }
         mBig_iv.setOnClickListener(this);
     }
+
 }
