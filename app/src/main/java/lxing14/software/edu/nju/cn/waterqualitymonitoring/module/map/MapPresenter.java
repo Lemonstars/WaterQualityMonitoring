@@ -3,8 +3,6 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
 
@@ -30,8 +28,6 @@ public class MapPresenter implements MapContract.Presenter {
 
     private MapContract.View mView;
 
-    private AMapLocationClient mLocationClient;
-    private AMapLocationClientOption mLocationOption;
     private List<WaterStationInfoVO> mWaterStationInfoList;
 
     public MapPresenter(@NonNull MapContract.View view){
@@ -135,29 +131,6 @@ public class MapPresenter implements MapContract.Presenter {
             Toast.makeText(mView.getContextView(), "查询失败", Toast.LENGTH_SHORT);
         }
 
-    }
-
-    @Override
-    public void initLocation() {
-        mLocationClient = new AMapLocationClient(mView.getContextView());
-        mLocationClient.setLocationListener(aMapLocation -> {
-            double latitude = CommonConstant.LATITUDE_OF_NJ;
-            double longitude = CommonConstant.LONGITUDE_OF_NJ;
-            if(aMapLocation.getErrorCode() == 0){
-                latitude = aMapLocation.getLatitude();
-                longitude = aMapLocation.getLongitude();
-            }
-            mView.showLocation(latitude, longitude);
-        });
-
-        mLocationOption = new AMapLocationClientOption();
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        mLocationOption.setNeedAddress(true);
-        mLocationOption.setOnceLocation(true);
-        mLocationOption.setMockEnable(false);
-
-        mLocationClient.setLocationOption(mLocationOption);
-        mLocationClient.startLocation();
     }
 
     //process the data

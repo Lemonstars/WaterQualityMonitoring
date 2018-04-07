@@ -72,11 +72,6 @@ public interface MapContract {
          */
         void search(String input);
 
-        /**
-         * 加载初始定位信息
-         */
-        void initLocation();
-
     }
 
 }

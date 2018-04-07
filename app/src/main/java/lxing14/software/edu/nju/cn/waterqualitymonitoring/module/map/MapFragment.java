@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
@@ -20,6 +22,7 @@ import com.amap.api.maps.model.MarkerOptions;
 import java.util.ArrayList;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 
 public class MapFragment extends Fragment implements MapContract.View, View.OnClickListener{
 
@@ -44,10 +47,10 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
 
         findView(root);
         configListener();
+        configMapView();
         mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getContext()));
 
         mPresenter.loadAllWaterTypeInfo();
-        mPresenter.initLocation();
 
         mMapView.onCreate(savedInstanceState);
         return root;
@@ -112,6 +115,29 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
     @Override
     public Context getContextView() {
         return getActivity();
+    }
+
+    //configure the map
+    private void configMapView(){
+        AMapLocationClient mLocationClient = new AMapLocationClient(getContext());
+        mLocationClient.setLocationListener(aMapLocation -> {
+            double latitude = CommonConstant.LATITUDE_OF_NJ;
+            double longitude = CommonConstant.LONGITUDE_OF_NJ;
+            if(aMapLocation.getErrorCode() == 0){
+                latitude = aMapLocation.getLatitude();
+                longitude = aMapLocation.getLongitude();
+            }
+            showLocation(latitude, longitude);
+        });
+
+        AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        mLocationOption.setNeedAddress(true);
+        mLocationOption.setOnceLocation(true);
+        mLocationOption.setMockEnable(false);
+
+        mLocationClient.setLocationOption(mLocationOption);
+        mLocationClient.startLocation();
     }
 
     //capture the input and search
