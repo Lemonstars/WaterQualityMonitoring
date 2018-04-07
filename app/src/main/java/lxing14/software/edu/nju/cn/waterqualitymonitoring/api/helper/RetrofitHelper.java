@@ -3,6 +3,8 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.TimeUnit;
+
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.UserInterface;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.WaterFloatingInterface;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network.WaterFlowInterface;
@@ -34,6 +36,7 @@ public class RetrofitHelper {
     private static void initRetrofit(){
         OkHttpClient okHttpClient= new OkHttpClient.Builder()
                 .addNetworkInterceptor(new LogInterceptor())
+                .connectTimeout(5, TimeUnit.SECONDS)
                 .build();
 
         Gson gson = new GsonBuilder()

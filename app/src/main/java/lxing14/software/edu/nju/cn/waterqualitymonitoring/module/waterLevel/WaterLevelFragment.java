@@ -75,7 +75,6 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         findView(root);
         configListener();
         configChartMarkerView();
-        configMapView();
         ChartUtil.configLineChart(mLineChart);
         showChartUnit();
 
@@ -191,8 +190,9 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         return getContext();
     }
 
-    //configure the name and the unit
+    //configure the markerView
     private void configChartMarkerView(){
+        mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getActivity(), false));
         mChartMarkerView = new ChartMarkerView(getContext(),  "水位:", "m");
     }
 
@@ -229,7 +229,6 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mPresenter.processTab(index);
     }
 
-
     //find the view by the id
     private void findView(View root){
         mMapView = root.findViewById(R.id.map);
@@ -263,10 +262,4 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mImage2.setOnClickListener(this);
         mImage3.setOnClickListener(this);
     }
-
-    //configure the map
-    private void configMapView(){
-        mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getActivity(), false));
-    }
-
 }

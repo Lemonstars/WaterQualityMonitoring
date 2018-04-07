@@ -38,7 +38,7 @@ public class ChartUtil {
         xaxis.setAvoidFirstLastClipping(true);
         xaxis.setLabelCount(2);
         xaxis.setGranularityEnabled(true);
-        xaxis.setGranularity(10f);
+        xaxis.setGranularity(20f);
 
         YAxis yAxisLeft = lineChart.getAxisLeft();
         yAxisLeft.setDrawGridLines(true);

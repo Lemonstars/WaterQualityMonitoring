@@ -66,7 +66,6 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         initRecyclerView();
         configListener();
         configChartMarkerView();
-        configMapView();
         ChartUtil.configLineChart(mLineChart);
 
         mPresenter.loadChartDataByDate(TimeUtil.getDateBeforeNum(7), TimeUtil.getTodayDate());
@@ -216,6 +215,7 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
 
     //configure the name and the unit
     private void configChartMarkerView(){
+        mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getActivity(), false));
         mChartMarkerView = new ChartMarkerView(getContext(),  "温度:", "°C");
     }
 
@@ -265,10 +265,4 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         }
         mBig_iv.setOnClickListener(this);
     }
-
-    //configure the map
-    private void configMapView(){
-        mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getActivity(), false));
-    }
-
 }

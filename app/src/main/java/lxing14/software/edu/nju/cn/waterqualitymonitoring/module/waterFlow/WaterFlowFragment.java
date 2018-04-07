@@ -31,6 +31,7 @@ import java.util.List;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map.MapInfoWindowAdapter;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
@@ -51,6 +52,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
 
     private ImageDialog mImageDialog;
     private MapView mMapView;
+    private AMap mAMap;
     private LineChart mLineChart;
     private TextView[] mTab_tv;
     private ImageView mBig_iv;
@@ -200,6 +202,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
 
     //configure the name and the unit
     private void configChartMarkerView(){
+        mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getActivity(), false));
         mChartMarkerView = new ChartMarkerView(getContext(),  "流量:", "m/s");
     }
 
@@ -227,6 +230,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     //find the view by the id
     private void findView(View root){
         mMapView = root.findViewById(R.id.map);
+        mAMap = mMapView.getMap();
         mLineChart = root.findViewById(R.id.lineChart);
         TextView oneWeek_tv = root.findViewById(R.id.oneWeek_tv);
         TextView oneMonth_tv = root.findViewById(R.id.oneMonth_tv);
