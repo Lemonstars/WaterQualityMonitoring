@@ -105,7 +105,7 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
                 intent = WaterFloatingActivity.generateIntent(context, stnId);
                 break;
             case 4:
-                intent= new Intent(context, UnMannedShipActivity.class);
+                intent = UnMannedShipActivity.generateIntent(context, stnId);
                 break;
             default:
                 throw new IllegalArgumentException();
