@@ -1,6 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.view;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -19,8 +20,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 
 public class CameraChoiceView extends LinearLayout{
 
-    private static char chNum = 'A';
-
+    private int num;
     private TextView mNum_tv;
     private View mItem_view;
     private ImageView mCamera_iv;
@@ -28,15 +28,19 @@ public class CameraChoiceView extends LinearLayout{
 
     public CameraChoiceView(Context context) {
         super(context);
-        init(context);
+        init(context, null);
     }
 
     public CameraChoiceView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init(context, attrs);
     }
 
-    private void init(Context context){
+    private void init(Context context, AttributeSet attributeSet){
+        TypedArray ta = context.obtainStyledAttributes(attributeSet, R.styleable.CameraChoiceView);
+        this.num = ta.getInteger(R.styleable.CameraChoiceView_showNum, 0);
+        ta.recycle();
+
         inflate(context, R.layout.bg_camera_choice, this);
 
         mNum_tv = findViewById(R.id.num_tv);
@@ -44,13 +48,10 @@ public class CameraChoiceView extends LinearLayout{
         mCamera_iv = findViewById(R.id.camera_iv);
         mChar_tv = findViewById(R.id.char_tv);
 
-        int num = chNum - 'A' + 1;
         String cameraNum = "1." + num;
         mNum_tv.setText(cameraNum);
-        String cameraChar = "相机"+String.valueOf(chNum);
+        String cameraChar = "相机"+(char)('A'-1+num);
         mChar_tv.setText(cameraChar);
-
-        chNum = (char)(chNum+1);
     }
 
     public void setClick() {
