@@ -66,6 +66,7 @@ public class ChartFragment extends Fragment implements ChartContract.View{
             lineEntry.add(new Entry(i, dataList.get(i)));
         }
         LineDataSet lineDataSet = new LineDataSet(lineEntry, "data");
+        lineDataSet.setLineWidth(4f);
         LineData lineData = new LineData(lineDataSet);
         mLineChart.setData(lineData);
         mLineChart.notifyDataSetChanged();

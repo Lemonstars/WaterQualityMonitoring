@@ -127,7 +127,8 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         for(int i=0;i<len;i++){
             lineEntry.add(new Entry(i, dataList.get(i)));
         }
-        LineDataSet lineDataSet = new LineDataSet(lineEntry, "waterFlowRealTime");
+        LineDataSet lineDataSet = new LineDataSet(lineEntry, "waterFlow");
+        lineDataSet.setLineWidth(2f);
         LineData lineData = new LineData(lineDataSet);
         mLineChart.setData(lineData);
         mLineChart.notifyDataSetChanged();

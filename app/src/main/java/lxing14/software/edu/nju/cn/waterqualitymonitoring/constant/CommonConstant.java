@@ -16,7 +16,6 @@ public class CommonConstant {
     public static final float LONGITUDE_OF_BJ = 116.405285f;
     public static final float LATITUDE_OF_NJ = 31.864978f;
     public static final float LONGITUDE_OF_NJ = 118.87056f;
-    public static final int DEFAULT_DAY = 15;
 
     public static final int ONE_WEEK = 0;
     public static final int ONE_MONTH = 1;

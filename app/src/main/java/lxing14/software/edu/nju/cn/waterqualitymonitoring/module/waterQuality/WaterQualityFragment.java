@@ -142,6 +142,7 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
             lineEntry.add(new Entry(i, dataList.get(i)));
         }
         LineDataSet lineDataSet = new LineDataSet(lineEntry, "waterQuality");
+        lineDataSet.setLineWidth(2f);
         LineData lineData = new LineData(lineDataSet);
         mLineChart.setData(lineData);
         mLineChart.notifyDataSetChanged();

@@ -133,6 +133,7 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
             lineEntry.add(new Entry(i, waterLevelData.get(i)));
         }
         LineDataSet lineDataSet = new LineDataSet(lineEntry, "waterLevel");
+        lineDataSet.setLineWidth(2f);
         LineData lineData = new LineData(lineDataSet);
         mLineChart.setData(lineData);
         mLineChart.notifyDataSetChanged();

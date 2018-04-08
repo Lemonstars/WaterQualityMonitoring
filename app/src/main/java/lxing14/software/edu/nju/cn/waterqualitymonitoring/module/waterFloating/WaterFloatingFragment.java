@@ -83,6 +83,7 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
             lineEntry.add(new Entry(i, dataList.get(i)));
         }
         LineDataSet lineDataSet = new LineDataSet(lineEntry, "floating");
+        lineDataSet.setLineWidth(2f);
         LineData lineData = new LineData(lineDataSet);
         mLineChart.setData(lineData);
         mLineChart.notifyDataSetChanged();
