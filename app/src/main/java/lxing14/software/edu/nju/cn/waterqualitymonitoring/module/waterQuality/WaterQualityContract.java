@@ -26,12 +26,6 @@ public interface WaterQualityContract {
         void showStationLocation(ArrayList<MarkerOptions> markerOptionsList);
 
         /**
-         * 显示被选中的tab
-         * @param index
-         */
-        void showTabSelected(int index);
-
-        /**
          * 显示图表的单位
          * @param unit
          */
@@ -72,12 +66,6 @@ public interface WaterQualityContract {
          * 跳转至ChartActivity
          */
         void jumpToChartActivity();
-
-        /**
-         * 根据类型获取当前图表数据
-         * @param type
-         */
-        void loadChartDataByType(int type);
 
         /**
          * 根据起止时间获取当前图表数据

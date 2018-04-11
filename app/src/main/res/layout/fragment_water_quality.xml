@@ -8,122 +8,29 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="200dp"
             android:orientation="vertical"
             android:background="@drawable/bg_white_radius_corner"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="15dp"  >
+            android:layout_marginTop="10dp">
 
-            <LinearLayout
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lineChart"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"/>
 
-                <TextView
-                    android:id="@+id/temperature_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:text="@string/temperature"/>
+            <ImageView
+                android:id="@+id/big_iv"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="right"
+                android:src="@drawable/ic_big"/>
 
-                <TextView
-                    android:id="@+id/conductivity_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:text="@string/conductivity"/>
+        </FrameLayout>
 
-                <TextView
-                    android:id="@+id/ph_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:text="@string/ph"/>
-
-                <TextView
-                    android:id="@+id/dissolvedOxygen_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:text="@string/dissolvedOxygen"/>
-
-                <TextView
-                    android:id="@+id/redox_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:text="@string/redox"/>
-
-                <TextView
-                    android:id="@+id/turbidity_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:text="@string/turbidity"/>
-
-                <TextView
-                    android:id="@+id/transparency_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:text="@string/transparency"/>
-
-                <TextView
-                    android:id="@+id/nh3_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
-                    android:text="@string/NH3"/>
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/lineChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-
-                <ImageView
-                    android:id="@+id/big_iv"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="right"
-                    android:src="@drawable/ic_big"/>
-
-            </FrameLayout>
-
-        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/type_rv"

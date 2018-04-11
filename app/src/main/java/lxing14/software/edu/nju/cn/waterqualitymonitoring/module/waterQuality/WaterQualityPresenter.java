@@ -14,10 +14,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHel
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityTypeNumVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.OrderConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterQualityData;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterTypeEnum;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import rx.android.schedulers.AndroidSchedulers;
@@ -64,12 +61,6 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
     }
 
     @Override
-    public void loadChartDataByType(int type) {
-        this.mState = type;
-        loadChartDataByDate(startTime, endTime);
-    }
-
-    @Override
     public void loadChartDataByDate(String startTime, String endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
@@ -95,7 +86,6 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
                             dateList.add(waterQualityTypeNumVO.getCollectionTime());
                         }
 
-                        mView.showTabSelected(mState);
                         mView.showChartUnit(mChartUnit[mState]);
                         mView.configChartMarkerView(mEntry[mState]+":", mChartUnit[mState]);
                         mView.showWaterQualityChart(dateList, dataList);
