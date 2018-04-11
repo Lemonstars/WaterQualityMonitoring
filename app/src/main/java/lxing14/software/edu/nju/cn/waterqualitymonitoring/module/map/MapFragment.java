@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +22,7 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
@@ -32,7 +35,7 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
     private AMap mAMap;
     private TextView mStandard_tv;
     private TextView mSatellite_tv;
-    private EditText mSearch_et;
+    private AutoCompleteTextView mSearch_et;
     private ImageView mSearch_iv;
     private boolean mIsStandard = true;
 
@@ -94,6 +97,11 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
     @Override
     public void showLocation(double latitude, double longitude) {
         mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 10f));
+    }
+
+    @Override
+    public void setCompleteAdapter(List<String> strArray) {
+        mSearch_et.setAdapter(new CompletionListAdapter(strArray, getContext()));
     }
 
     @Override

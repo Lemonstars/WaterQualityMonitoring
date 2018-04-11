@@ -3,6 +3,7 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map;
 import com.amap.api.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BasePresenter;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BaseView;
@@ -31,6 +32,12 @@ public interface MapContract {
          * @param longitude
          */
         void showLocation(double latitude, double longitude);
+
+        /**
+         * 设置自动补全的数据
+         * @param strArray
+         */
+        void setCompleteAdapter(List<String> strArray);
 
     }
 

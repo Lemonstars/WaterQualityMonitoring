@@ -29,6 +29,7 @@ public class MapPresenter implements MapContract.Presenter {
     private MapContract.View mView;
 
     private List<WaterStationInfoVO> mWaterStationInfoList;
+    private List<String> completeDataList;
 
     public MapPresenter(@NonNull MapContract.View view){
         mView = view;
@@ -46,6 +47,14 @@ public class MapPresenter implements MapContract.Presenter {
                     public void onNext(List<WaterStationInfoVO> waterStationInfoVOS) {
                         mWaterStationInfoList = waterStationInfoVOS;
                         onRequestStationInfo(waterStationInfoVOS);
+
+                        completeDataList = new ArrayList<>(waterStationInfoVOS.size());
+                        WaterStationInfoVO stationInfoVO;
+                        for(int i=0;i<waterStationInfoVOS.size();i++){
+                            stationInfoVO = waterStationInfoVOS.get(i);
+                            completeDataList.add(stationInfoVO.getName());
+                        }
+                        mView.setCompleteAdapter(completeDataList);
                     }
                 });
     }
