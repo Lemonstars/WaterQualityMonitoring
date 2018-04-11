@@ -37,8 +37,8 @@ public class ImageDialog extends Dialog{
         WindowManager windowManager = window.getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         WindowManager.LayoutParams lp = window.getAttributes();
-        lp.width = (int)(display.getWidth() * 0.8);
-        lp.height = (int)(display.getHeight() * 0.5);
+        lp.width = display.getWidth();
+        lp.height = display.getHeight();
         window.setAttributes(lp);
 
         imageView.setOnClickListener(v -> dismiss());
