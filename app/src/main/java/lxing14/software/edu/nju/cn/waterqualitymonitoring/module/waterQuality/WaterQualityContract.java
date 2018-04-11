@@ -47,17 +47,9 @@ public interface WaterQualityContract {
 
         /**
          * 显示当前水质数据
-         * @param temperature 温度
-         * @param conductivity 电导率
-         * @param ph ph值
-         * @param dissolvedOxygen 溶解氧
-         * @param redox 氧化还原
-         * @param turbidity 浊度
-         * @param transparency 透明度
-         * @param nh3 氨氮
+         * @param waterQualityList
          */
-        void showCurrentWaterQualityInfo(String temperature, double ph, double dissolvedOxygen, double redox,
-                                         double transparency, double conductivity, double turbidity, double nh3);
+        void showCurrentWaterQualityInfo(List<Double> waterQualityList);
     }
 
     interface Presenter extends BasePresenter{

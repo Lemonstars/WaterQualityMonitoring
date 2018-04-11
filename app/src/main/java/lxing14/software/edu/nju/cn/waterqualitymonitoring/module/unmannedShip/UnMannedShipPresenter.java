@@ -2,17 +2,9 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.unmannedShip;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscriber;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
@@ -20,10 +12,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityTyp
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterQualityData;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
-import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -77,7 +66,7 @@ public class UnMannedShipPresenter implements UnMannedShipContract.Presenter {
     public void loadChartDataByDate(String startTime, String endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
-        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.getName(mState), startTime, endTime)
+        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.getEnglishName(mState), startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<List<WaterQualityTypeNumVO>>(mView.getContextView()) {

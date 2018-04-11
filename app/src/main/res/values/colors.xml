@@ -13,16 +13,28 @@
     <color name="lightGray">#495b64</color>
 
 
-    <!-- 水质相关参数颜色值：温度 电导率 PH 溶解氧 氧化还原 浊度 透明度 氨氮 -->
-    <color name="temperature_color">#5c7cbd</color>
-    <color name="electric_color">#5d7bbd</color>
-    <color name="ph_color">#3d758a</color>
-    <color name="oxygen_color">#7a5858</color>
-    <color name="oxidation_color">#f9cc8d</color>
-    <color name="dirty_color">#6de5b7</color>
+    <!-- 水质相关参数颜色值：温度 电导率 PH 溶解氧 氧化还原 浊度 透明度 氨氮
+                           盐度 矿化物 水密度 溶解氧饱和度 总悬浮物 叶绿素a
+                           藻蓝素 舱盖开 舱体进水 电压-->
+    <color name="temperature_color">#1cabe1</color>
+    <color name="electric_color">#5c7abf</color>
+    <color name="ph_color">#3a758b</color>
+    <color name="oxygen_color">#7b5858</color>
+    <color name="oxidation_color">#facd89</color>
+    <color name="dirty_color">#68e6b6</color>
     <color name="transparency_color">#fce8b5</color>
     <color name="ammonia_color">#8c98c9</color>
 
+    <color name="salinity">#208fc9</color>
+    <color name="tds">#ff9500</color>
+    <color name="density">#00b36f</color>
+    <color name="doSaturation">#ad80cd</color>
+    <color name="tss">#448aca</color>
+    <color name="chlorophylA">#924545</color>
+    <color name="phycocyanobilin">#695b74</color>
+    <color name="hatchOpen">#bfbfbf</color>
+    <color name="waterPenetration">#d1c0a5</color>
+    <color name="voltage">#cce198</color>
 
     <color name="skyBlue">#2a98ef</color>
 

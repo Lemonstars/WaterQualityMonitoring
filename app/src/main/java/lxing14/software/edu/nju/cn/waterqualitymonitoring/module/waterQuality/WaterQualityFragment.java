@@ -142,26 +142,16 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
     }
 
     @Override
-    public void showCurrentWaterQualityInfo(String temperature, double ph, double dissolvedOxygen, double redox,
-                                            double transparency, double conductivity, double turbidity, double nh3) {
-        WaterQualityTypeVO temperatureVO = new WaterQualityTypeVO(WaterQualityData.TEMPERATURE, temperature);
-        WaterQualityTypeVO phVO = new WaterQualityTypeVO(WaterQualityData.PH, String.valueOf(ph));
-        WaterQualityTypeVO dissolvedOxygenVO = new WaterQualityTypeVO(WaterQualityData.OXYGEN, String.valueOf(dissolvedOxygen));
-        WaterQualityTypeVO redoxVO = new WaterQualityTypeVO(WaterQualityData.OXIDATION, String.valueOf(redox));
-        WaterQualityTypeVO transparencyVO = new WaterQualityTypeVO(WaterQualityData.TRANSPANENCY, String.valueOf(transparency));
-        WaterQualityTypeVO conductivityVO = new WaterQualityTypeVO(WaterQualityData.ELECTRIC, String.valueOf(conductivity));
-        WaterQualityTypeVO turbidityVO = new WaterQualityTypeVO(WaterQualityData.DIRTY, String.valueOf(turbidity));
-        WaterQualityTypeVO nh3VO = new WaterQualityTypeVO(WaterQualityData.AMMONIA, String.valueOf(nh3));
+    public void showCurrentWaterQualityInfo(List<Double> waterQualityList) {
+        List<WaterQualityTypeVO> data= new ArrayList<>();
+        Double currentNum;
+        for(int i=0;i<waterQualityList.size();i++){
+            currentNum = waterQualityList.get(i);
+            if(currentNum!=null){
+                data.add(new WaterQualityTypeVO(i, String.valueOf(currentNum)));
+            }
+        }
 
-        List<WaterQualityTypeVO> data = new ArrayList<>();
-        data.add(temperatureVO);
-        data.add(phVO);
-        data.add(dissolvedOxygenVO);
-        data.add(redoxVO);
-        data.add(transparencyVO);
-        data.add(conductivityVO);
-        data.add(turbidityVO);
-        data.add(nh3VO);
         mAdapter.setData(data);
     }
 

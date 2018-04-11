@@ -64,7 +64,7 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
     public void loadChartDataByDate(String startTime, String endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
-        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.getName(mState), startTime, endTime)
+        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.getEnglishName(mState), startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<List<WaterQualityTypeNumVO>>(mView.getContextView()) {
@@ -100,18 +100,29 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<WaterQualityVO>(mView.getContextView()) {
                     @Override
-                    public void onNext(WaterQualityVO waterQualityVO) {
-                        String temperature = waterQualityVO.getTemperature();
-                        double ph = waterQualityVO.getPh()==null?-1:waterQualityVO.getPh();
-                        double dissolvedOxygen = waterQualityVO.getDissolvedOxygen()==null?-1:waterQualityVO.getDissolvedOxygen();
-                        double redox = waterQualityVO.getRedox()==null?-1:waterQualityVO.getRedox();
-                        double transparency = waterQualityVO.getTransparency()==null?-1:waterQualityVO.getTransparency();
-                        double conductivity = waterQualityVO.getConductivity()==null?-1:waterQualityVO.getConductivity();
-                        double turbidity = waterQualityVO.getTurbidity()==null?-1:waterQualityVO.getTurbidity();
-                        double nh3 = waterQualityVO.getNH3()==null?-1:waterQualityVO.getNH3();
+                    public void onNext(WaterQualityVO vo) {
 
-                        mView.showCurrentWaterQualityInfo(temperature, ph, dissolvedOxygen, redox,
-                                transparency, conductivity, turbidity, nh3);
+                        List<Double> waterQualityList = new ArrayList<>(18);
+                        waterQualityList.add(Double.parseDouble(vo.getTemperature()));
+                        waterQualityList.add(vo.getConductivity());
+                        waterQualityList.add(vo.getPh());
+                        waterQualityList.add(vo.getDissolvedOxygen());
+                        waterQualityList.add(vo.getRedox());
+                        waterQualityList.add(vo.getTurbidity());
+                        waterQualityList.add(vo.getTransparency());
+                        waterQualityList.add(vo.getNH3());
+                        waterQualityList.add(vo.getSalinity());
+                        waterQualityList.add(vo.getTds());
+                        waterQualityList.add(vo.getDensity());
+                        waterQualityList.add(vo.getDoSaturation());
+                        waterQualityList.add(vo.getTss());
+                        waterQualityList.add(vo.getChlorophylA());
+                        waterQualityList.add(vo.getPhycocyanobilin());
+                        waterQualityList.add(vo.getHatchOpen());
+                        waterQualityList.add(vo.getWaterPenetration());
+                        waterQualityList.add(vo.getVoltage());
+
+                        mView.showCurrentWaterQualityInfo(waterQualityList);
                     }
                 });
     }

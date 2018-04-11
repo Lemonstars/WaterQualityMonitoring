@@ -1,7 +1,6 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterQuality;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterQualityData;
 
 /**
  * @version : 1.0
@@ -41,11 +40,13 @@ public class WaterQualityRVAdapter extends RecyclerView.Adapter<WaterQualityRVAd
     @Override
     public void onBindViewHolder(WaterQualityVH holder, int position) {
         WaterQualityTypeVO vo = data.get(position);
+        int type = vo.getType();
+        String num = vo.getNum();
 
-        holder.typeNum_tv.setText(String.valueOf(vo.getNum()));
-        holder.typeHint_tv.setText(vo.getName());
-        holder.root_layout.setBackgroundResource(vo.getBg_id());
-        holder.icon_iv.setBackgroundResource(vo.getIcon_pic_id());
+        holder.typeNum_tv.setText(num);
+        holder.typeHint_tv.setText(WaterQualityData.getChineseName(type));
+        holder.icon_iv.setBackgroundResource(WaterQualityData.getPicResId(type));
+        holder.root_layout.setBackgroundResource(WaterQualityData.getBgResId(type));
     }
 
     @Override
