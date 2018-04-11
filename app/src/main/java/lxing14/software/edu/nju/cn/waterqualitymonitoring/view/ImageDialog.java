@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
@@ -21,12 +22,14 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 public class ImageDialog extends Dialog{
 
     private ImageView imageView;
+    private FrameLayout image_layout;
 
     public ImageDialog(@NonNull Context context, Drawable drawable) {
         super(context, R.style.imageDialog_style);
         setContentView(R.layout.dialog_image);
 
         imageView = findViewById(R.id.imageView);
+        image_layout = findViewById(R.id.image_layout);
         if(drawable == null){
             imageView.setImageResource(R.drawable.ic_default_pic);
         }else {
@@ -42,6 +45,7 @@ public class ImageDialog extends Dialog{
         window.setAttributes(lp);
 
         imageView.setOnClickListener(v -> dismiss());
+        image_layout.setOnClickListener(v -> dismiss());
     }
 
     public void setImage(Drawable drawable){
