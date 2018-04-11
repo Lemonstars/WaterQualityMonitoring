@@ -59,7 +59,7 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
         configListener();
         ChartUtil.configLineChart(mLineChart);
 
-        mPresenter.loadChartDataByType(WaterQualityData.TEMPERATURE);
+//        mPresenter.loadChartDataByType(WaterQualityData.TEMPERATURE);
 
         mMapView.onCreate(savedInstanceState);
         return root;
@@ -156,33 +156,33 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.temperature_tv:
-                mPresenter.loadChartDataByType(WaterQualityData.TEMPERATURE);
-                break;
-            case R.id.conductivity_tv:
-                mPresenter.loadChartDataByType(WaterQualityData.ELECTRIC);
-                break;
-            case R.id.ph_tv:
-                mPresenter.loadChartDataByType(WaterQualityData.PH);
-                break;
-            case R.id.dissolvedOxygen_tv:
-                mPresenter.loadChartDataByType(WaterQualityData.OXYGEN);
-                break;
-            case R.id.redox_tv:
-                mPresenter.loadChartDataByType(WaterQualityData.OXIDATION);
-                break;
-            case R.id.turbidity_tv:
-                mPresenter.loadChartDataByType(WaterQualityData.DIRTY);
-                break;
-            case R.id.transparency_tv:
-                mPresenter.loadChartDataByType(WaterQualityData.TRANSPANENCY);
-                break;
-            case R.id.nh3_tv:
-                mPresenter.loadChartDataByType(WaterQualityData.AMMONIA);
-                break;
-            case R.id.big_iv:
-                mPresenter.jumpToChartActivity();
-                break;
+//            case R.id.temperature_tv:
+//                mPresenter.loadChartDataByType(WaterQualityData.TEMPERATURE);
+//                break;
+//            case R.id.conductivity_tv:
+//                mPresenter.loadChartDataByType(WaterQualityData.ELECTRIC);
+//                break;
+//            case R.id.ph_tv:
+//                mPresenter.loadChartDataByType(WaterQualityData.PH);
+//                break;
+//            case R.id.dissolvedOxygen_tv:
+//                mPresenter.loadChartDataByType(WaterQualityData.OXYGEN);
+//                break;
+//            case R.id.redox_tv:
+//                mPresenter.loadChartDataByType(WaterQualityData.OXIDATION);
+//                break;
+//            case R.id.turbidity_tv:
+//                mPresenter.loadChartDataByType(WaterQualityData.DIRTY);
+//                break;
+//            case R.id.transparency_tv:
+//                mPresenter.loadChartDataByType(WaterQualityData.TRANSPANENCY);
+//                break;
+//            case R.id.nh3_tv:
+//                mPresenter.loadChartDataByType(WaterQualityData.AMMONIA);
+//                break;
+//            case R.id.big_iv:
+//                mPresenter.jumpToChartActivity();
+//                break;
         }
     }
 

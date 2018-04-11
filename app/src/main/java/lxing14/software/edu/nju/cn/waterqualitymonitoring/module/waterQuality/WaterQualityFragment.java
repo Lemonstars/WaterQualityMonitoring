@@ -30,7 +30,6 @@ import java.util.List;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterQualityData;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map.MapInfoWindowAdapter;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
@@ -148,7 +147,8 @@ public class WaterQualityFragment extends Fragment implements WaterQualityContra
         for(int i=0;i<waterQualityList.size();i++){
             currentNum = waterQualityList.get(i);
             if(currentNum!=null){
-                data.add(new WaterQualityTypeVO(i, String.valueOf(currentNum)));
+                int j = i;
+                data.add(new WaterQualityTypeVO(i, String.valueOf(currentNum), () -> mPresenter.loadChartDataByType(j)));
             }
         }
 

@@ -67,6 +67,12 @@ public interface WaterQualityContract {
         void loadChartDataByDate(String startTime, String endTime);
 
         /**
+         * 根据类型获取当前图表数据
+         * @param type
+         */
+        void loadChartDataByType(int type);
+
+        /**
          * 获取当前水质数据
          */
         void loadCurrentWaterQualityInfo();

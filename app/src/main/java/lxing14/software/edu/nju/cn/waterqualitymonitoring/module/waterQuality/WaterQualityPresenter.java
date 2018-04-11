@@ -16,7 +16,6 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterQualityData;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -33,12 +32,8 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
     private int mState = WaterQualityData.TEMPERATURE;
     private int mStnId;
 
-    //TODO 等待确认
-    private String[] mChartUnit = new String[]{"°C", "S/m", "", "mg/L", "mV", "NTU", "%", "mg/L"};
-    private String[] mEntry = new String[]{"温度", "电导率", "ph值", "溶解氧", "氧化还原", "浊度", "透明度", "氨氮"};
-
-    private String startTime= TimeUtil.getDateBeforeNum(7);
-    private String endTime = TimeUtil.getTodayDate();
+    private String startTime;
+    private String endTime;
     private ArrayList<String> dateList = new ArrayList<>();
     private ArrayList<Float> dataList = new ArrayList<>();
 
@@ -56,7 +51,7 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
         }
 
         Context context = mView.getContextView();
-        Intent intent = ChartActivity.generateIntent(context, mEntry[mState], mChartUnit[mState], startTime, endTime, dateList, dataStrList);
+        Intent intent = ChartActivity.generateIntent(context, WaterQualityData.NAME_CHINESE[mState], WaterQualityData.UNIT[mState], startTime, endTime, dateList, dataStrList);
         context.startActivity(intent);
     }
 
@@ -64,7 +59,7 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
     public void loadChartDataByDate(String startTime, String endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
-        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.getEnglishName(mState), startTime, endTime)
+        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.NAME_ENGLISH[mState], startTime, endTime)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<List<WaterQualityTypeNumVO>>(mView.getContextView()) {
@@ -86,16 +81,25 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
                             dateList.add(waterQualityTypeNumVO.getCollectionTime());
                         }
 
-                        mView.showChartUnit(mChartUnit[mState]);
-                        mView.configChartMarkerView(mEntry[mState]+":", mChartUnit[mState]);
+                        mView.showChartUnit(WaterQualityData.UNIT[mState]);
+                        mView.configChartMarkerView(WaterQualityData.NAME_CHINESE[mState]+":", WaterQualityData.UNIT[mState]);
                         mView.showWaterQualityChart(dateList, dataList);
                     }
                 });
     }
 
     @Override
+    public void loadChartDataByType(int type) {
+        if(type == mState){
+            return;
+        }
+        this.mState = type;
+        loadChartDataByDate(startTime, endTime);
+    }
+
+    @Override
     public void loadCurrentWaterQualityInfo() {
-        RetrofitHelper.getWaterQualityInterface().getCurrentWaterQualityInfo(1)
+        RetrofitHelper.getWaterQualityInterface().getCurrentWaterQualityInfo(mStnId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<WaterQualityVO>(mView.getContextView()) {

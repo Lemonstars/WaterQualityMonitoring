@@ -12,7 +12,6 @@ import com.fantasy.doubledatepicker.DoubleDateSelectDialog;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.DateConstant;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel.WaterLevelActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ActivityUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 

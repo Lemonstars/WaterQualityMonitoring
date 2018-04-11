@@ -11,10 +11,12 @@ public class WaterQualityTypeVO {
 
     private int type;
     private String num;
+    private WaterQualityRVAdapter.OnItemClick onItemClick;
 
-    public WaterQualityTypeVO(int type, String num) {
+    public WaterQualityTypeVO(int type, String num, WaterQualityRVAdapter.OnItemClick onItemClick) {
         this.type = type;
         this.num = num;
+        this.onItemClick = onItemClick;
     }
 
     public int getType() {
@@ -23,5 +25,9 @@ public class WaterQualityTypeVO {
 
     public String getNum() {
         return num;
+    }
+
+    public WaterQualityRVAdapter.OnItemClick getOnItemClick() {
+        return onItemClick;
     }
 }

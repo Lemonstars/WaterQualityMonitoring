@@ -44,9 +44,13 @@ public class WaterQualityRVAdapter extends RecyclerView.Adapter<WaterQualityRVAd
         String num = vo.getNum();
 
         holder.typeNum_tv.setText(num);
-        holder.typeHint_tv.setText(WaterQualityData.getChineseName(type));
-        holder.icon_iv.setBackgroundResource(WaterQualityData.getPicResId(type));
-        holder.root_layout.setBackgroundResource(WaterQualityData.getBgResId(type));
+        holder.typeHint_tv.setText(WaterQualityData.NAME_CHINESE[type]);
+        holder.icon_iv.setBackgroundResource(WaterQualityData.PIC_RES_ID[type]);
+        holder.root_layout.setBackgroundResource(WaterQualityData.BG_RES_ID[type]);
+        holder.root_layout.setOnClickListener( v -> {
+            OnItemClick onItemClick = vo.getOnItemClick();
+            onItemClick.onClick();
+        } );
     }
 
     @Override
@@ -75,6 +79,11 @@ public class WaterQualityRVAdapter extends RecyclerView.Adapter<WaterQualityRVAd
             typeHint_tv = itemView.findViewById(R.id.typeHint_tv);
         }
 
+    }
+
+
+    interface OnItemClick{
+        void onClick();
     }
 
 }

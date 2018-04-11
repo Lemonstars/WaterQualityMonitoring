@@ -30,7 +30,7 @@ public class WaterQualityData {
     public static final int WATER_PENETRATION =16;
     public static final int VOLTAGE = 17;
 
-    private static final String[] NAME_ENGLISH =
+    public static final String[] NAME_ENGLISH =
             {
                     "temperature", "conductivity", "ph", "dissolvedOxygen",
                     "redox", "turbidity", "transparency", "nh3",
@@ -39,7 +39,7 @@ public class WaterQualityData {
                     "waterPenetration", "voltage"
             };
 
-    private static final String[] NAME_CHINESE =
+    public static final String[] NAME_CHINESE =
             {
                     "温度", "电导率", "PH值", "溶解氧",
                     "氧化还原", "浊度", "透明度", "氨氮",
@@ -48,7 +48,15 @@ public class WaterQualityData {
                     "舱体进水", "电压"
             };
 
-    private static final int[] PIC_RES_ID =
+
+    public static final String[] UNIT =
+            {
+                    "°C", "S/m", "", "mg/L", "mV", "NTU", "%", "mg/L",
+                    "%", "mg/L", "kg/m^3", "%", "", "", "", "",
+                    "", "v"
+            };
+
+    public static final int[] PIC_RES_ID =
             {
                     R.drawable.ic_temperature, R.drawable.ic_electric, R.drawable.ic_ph, R.drawable.ic_oxygen,
                     R.drawable.ic_redox, R.drawable.ic_dirty, R.drawable.ic_transparency, R.drawable.ic_nh3,
@@ -57,7 +65,7 @@ public class WaterQualityData {
                     R.drawable.ic_water_penetration, R.drawable.ic_voltage
             };
 
-    private static final int[] BG_RES_ID =
+    public static final int[] BG_RES_ID =
             {
                     R.drawable.bg_temperature, R.drawable.bg_electric, R.drawable.bg_ph, R.drawable.bg_oxygen,
                     R.drawable.bg_oxidation, R.drawable.bg_dirty, R.drawable.bg_transparency, R.drawable.bg_nh3,
@@ -65,22 +73,5 @@ public class WaterQualityData {
                     R.drawable.bg_tss, R.drawable.bg_chlorophyl_a, R.drawable.bg_phycocyanobilin, R.drawable.bg_hatch_open,
                     R.drawable.bg_water_penetration, R.drawable.bg_voltage
             };
-
-
-    public static String getEnglishName(int target){
-         return NAME_ENGLISH[target];
-    }
-
-    public static String getChineseName(int target){
-        return NAME_CHINESE[target];
-    }
-
-    public static int getPicResId(int target){
-        return PIC_RES_ID[target];
-    }
-
-    public static int getBgResId(int target){
-        return BG_RES_ID[target];
-    }
 
 }

@@ -26,7 +26,7 @@ public class UnMannedShipPresenter implements UnMannedShipContract.Presenter {
 
     private UnMannedShipContract.View mView;
 
-    private int mState = WaterQualityData.TEMPERATURE;
+    private int mState = 0;
     private int mStnId;
 
     //TODO 等待确认
@@ -66,34 +66,34 @@ public class UnMannedShipPresenter implements UnMannedShipContract.Presenter {
     public void loadChartDataByDate(String startTime, String endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
-        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.getEnglishName(mState), startTime, endTime)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<List<WaterQualityTypeNumVO>>(mView.getContextView()) {
-                    @Override
-                    public void onNext(List<WaterQualityTypeNumVO> waterQualityTypeNumVOS) {
-                        dateList.clear();
-                        dataList.clear();
-                        int len = waterQualityTypeNumVOS.size();
-                        WaterQualityTypeNumVO waterQualityTypeNumVO;
-                        String numStr;
-                        float num;
-                        for(int i=0;i<len;i++){
-                            waterQualityTypeNumVO = waterQualityTypeNumVOS.get(i);
-
-                            numStr = waterQualityTypeNumVO.getReturnDateValue();
-                            num = Float.parseFloat(numStr);
-                            dataList.add(num);
-
-                            dateList.add(waterQualityTypeNumVO.getCollectionTime());
-                        }
-
-                        mView.showTabSelected(mState);
-                        mView.showChartUnit(mChartUnit[mState]);
-                        mView.configChartMarkerView(mEntry[mState]+":", mChartUnit[mState]);
-                        mView.showWaterQualityChart(dateList, dataList);
-                    }
-                });
+//        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.getEnglishName(mState), startTime, endTime)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new BaseSubscriber<List<WaterQualityTypeNumVO>>(mView.getContextView()) {
+//                    @Override
+//                    public void onNext(List<WaterQualityTypeNumVO> waterQualityTypeNumVOS) {
+//                        dateList.clear();
+//                        dataList.clear();
+//                        int len = waterQualityTypeNumVOS.size();
+//                        WaterQualityTypeNumVO waterQualityTypeNumVO;
+//                        String numStr;
+//                        float num;
+//                        for(int i=0;i<len;i++){
+//                            waterQualityTypeNumVO = waterQualityTypeNumVOS.get(i);
+//
+//                            numStr = waterQualityTypeNumVO.getReturnDateValue();
+//                            num = Float.parseFloat(numStr);
+//                            dataList.add(num);
+//
+//                            dateList.add(waterQualityTypeNumVO.getCollectionTime());
+//                        }
+//
+//                        mView.showTabSelected(mState);
+//                        mView.showChartUnit(mChartUnit[mState]);
+//                        mView.configChartMarkerView(mEntry[mState]+":", mChartUnit[mState]);
+//                        mView.showWaterQualityChart(dateList, dataList);
+//                    }
+//                });
     }
 
     @Override
