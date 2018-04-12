@@ -27,6 +27,14 @@ public interface UnMannedShipContract {
         void showCenterPoint(float latitude, float longitude);
 
         /**
+         * 显示水质数据
+         * @param date
+         * @param tPh
+         * @param o2
+         */
+        void showWaterQualityNum(String date, String tPh, String o2);
+
+        /**
          * 添加无人船位置标记
          * @param points
          */

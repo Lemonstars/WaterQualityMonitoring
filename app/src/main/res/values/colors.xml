@@ -7,11 +7,11 @@
     <color name="white">#ffFFFFFF</color>
     <color name="gray">#ff263238</color>
     <color name="black">#000000</color>
+    <color name="grayWhite">#ffedede5</color>
 
     <color name="lightBlue">#2a799b</color>
     <color name="lightRed">#fced2b09</color>
     <color name="lightGray">#495b64</color>
-
 
     <!-- 水质相关参数颜色值：温度 电导率 PH 溶解氧 氧化还原 浊度 透明度 氨氮
                            盐度 矿化物 水密度 溶解氧饱和度 总悬浮物 叶绿素a

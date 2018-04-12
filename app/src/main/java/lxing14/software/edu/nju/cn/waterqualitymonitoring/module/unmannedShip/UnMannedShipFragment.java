@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -25,6 +26,9 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
 
     private MapView mMapView;
     private AMap mAMap;
+    private TextView time_tv;
+    private TextView tPh_tv;
+    private TextView o2_tv;
 
     public static UnMannedShipFragment generateFragment(){
         return new UnMannedShipFragment();
@@ -71,6 +75,13 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
     }
 
     @Override
+    public void showWaterQualityNum(String date, String tPh, String o2) {
+        time_tv.setText(date);
+        tPh_tv.setText(tPh);
+        o2_tv.setText(o2);
+    }
+
+    @Override
     public void addBoatLocation(List<LatLng> points) {
         mAMap.clear();
         mAMap.addPolyline(new PolylineOptions().addAll(points).width(8).color(R.color.skyBlue));
@@ -93,6 +104,9 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
     private void findView(android.view.View root){
         mMapView = root.findViewById(R.id.map);
         mAMap = mMapView.getMap();
+        time_tv = root.findViewById(R.id.time_tv);
+        tPh_tv = root.findViewById(R.id.tPh_tv);
+        o2_tv = root.findViewById(R.id.o2_tv);
     }
 
 }
