@@ -11,6 +11,7 @@ import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscriber;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.CameraVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFlowCameraInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFlowVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFlowVideoUrlVO;
@@ -32,10 +33,10 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
 
     private WaterFlowContract.View mView;
     private int mStnId;
-    private String[] videoUrl;
-    private String[] cameraPic;
-    private double[] cameraWaterFlow;
-    private double[] cameraWaterSpeed;
+    private List<String> videoUrlList;
+    private List<String> cameraPicList;
+    private List<Double> cameraWaterFlowList;
+    private List<Double> cameraWaterSpeedList;
     private String mCollectTime;
 
     private String startTime = TimeUtil.getDateBeforeNum(7);
@@ -46,10 +47,10 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
     public WaterFlowPresenter(WaterFlowContract.View mView, int stnId) {
         this.mView = mView;
         this.mStnId = stnId;
-        videoUrl = new String[5];
-        cameraPic = new String[5];
-        cameraWaterFlow = new double[5];
-        cameraWaterSpeed = new double[5];
+        this.videoUrlList = new ArrayList<>();
+        this.cameraPicList = new ArrayList<>();
+        this.cameraWaterFlowList = new ArrayList<>();
+        this.cameraWaterSpeedList = new ArrayList<>();
         mView.setPresenter(this);
     }
 
@@ -86,58 +87,37 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<WaterFlowCameraInfoVO>(mView.getContextView()) {
                     @Override
-                    public void onNext(WaterFlowCameraInfoVO vo) {
+                    public void onNext(WaterFlowCameraInfoVO waterFlowCameraInfoVO) {
+                        mCollectTime = waterFlowCameraInfoVO.getCollectionTime();
+                        List<CameraVO> cameraVOList = waterFlowCameraInfoVO.getList();
+                        for(CameraVO vo: cameraVOList){
+                            cameraPicList.add(vo.getFilePath());
+                            cameraWaterFlowList.add(vo.getFlow());
+                            cameraWaterSpeedList.add(vo.getSpeed());
+                        }
 
-
-
-//                        WaterFlowCameraInfoVO vo = waterFlowCameraInfoVOS.get(0);
-//                        cameraPic[0]=vo.getFilePath1();
-//                        cameraPic[1]=vo.getFilePath2();
-//                        cameraPic[2]=vo.getFilePath3();
-//                        cameraPic[3]=vo.getFilePath4();
-//                        cameraPic[4]=vo.getFilePath5();
-//
-//                        cameraWaterFlow[0]=vo.getWaterFlow1();
-//                        cameraWaterFlow[1]=vo.getWaterFlow2();
-//                        cameraWaterFlow[2]=vo.getWaterFlow3();
-//                        cameraWaterFlow[3]=vo.getWaterFlow4();
-//                        cameraWaterFlow[4]=vo.getWaterFlow5();
-//
-//                        cameraWaterSpeed[0]=vo.getWaterSpeed1();
-//                        cameraWaterSpeed[1]=vo.getWaterSpeed2();
-//                        cameraWaterSpeed[2]=vo.getWaterSpeed3();
-//                        cameraWaterSpeed[3]=vo.getWaterSpeed4();
-//                        cameraWaterSpeed[4]=vo.getWaterSpeed5();
-//
-//                        mCollectTime = vo.getCollectionTime();
-//
-//                        loadCameraInfo(0);
+                        loadCameraInfo(0);
                     }
                 });
     }
 
     @Override
-    public void loadCameraInfo(int index) {
-        mView.showCameraInfo(index, mCollectTime, cameraPic[index], cameraWaterFlow[index], cameraWaterSpeed[index]);
+    public void loadCameraInfo(int i) {
+        mView.showCameraInfo(i, mCollectTime, cameraPicList.get(i), cameraWaterFlowList.get(i), cameraWaterSpeedList.get(i));
     }
 
     @Override
     public void loadWaterFlowVideoUrl() {
         RetrofitHelper.getWaterFlowInterface().getVideoUrl(mStnId)
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<List<WaterFlowVideoUrlVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterFlowVideoUrlVO> waterFlowVideoUrlVOList) {
-                        int size = waterFlowVideoUrlVOList.size();
-                        if(size != 5){
-                            throw new IllegalArgumentException();
-                        }else {
-                            WaterFlowVideoUrlVO waterFlowVideoUrlVO;
-                            for(int i=0;i<size;i++){
-                                waterFlowVideoUrlVO = waterFlowVideoUrlVOList.get(i);
-                                videoUrl[i] = waterFlowVideoUrlVO.getUrl();
-                            }
-                        }
+                         for(WaterFlowVideoUrlVO vo: waterFlowVideoUrlVOList){
+                             videoUrlList.add(vo.getUrl());
+                         }
+                         mView.showCameraLayout(videoUrlList.size());
                     }
                 });
     }

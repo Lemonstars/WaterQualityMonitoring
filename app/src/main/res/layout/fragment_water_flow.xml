@@ -113,36 +113,6 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <lxing14.software.edu.nju.cn.waterqualitymonitoring.view.CameraChoiceView
-                        android:id="@+id/camera1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:showNum="1"/>
-
-                    <lxing14.software.edu.nju.cn.waterqualitymonitoring.view.CameraChoiceView
-                        android:id="@+id/camera2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:showNum="2"/>
-
-                    <lxing14.software.edu.nju.cn.waterqualitymonitoring.view.CameraChoiceView
-                        android:id="@+id/camera3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:showNum="3"/>
-
-                    <lxing14.software.edu.nju.cn.waterqualitymonitoring.view.CameraChoiceView
-                        android:id="@+id/camera4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:showNum="4"/>
-
-                    <lxing14.software.edu.nju.cn.waterqualitymonitoring.view.CameraChoiceView
-                        android:id="@+id/camera5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:showNum="5"/>
-
                 </LinearLayout>
 
             </HorizontalScrollView>

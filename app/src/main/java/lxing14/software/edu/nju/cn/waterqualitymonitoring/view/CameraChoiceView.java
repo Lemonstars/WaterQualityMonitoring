@@ -1,9 +1,6 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.view;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.support.annotation.Nullable;
-import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,27 +17,21 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 
 public class CameraChoiceView extends LinearLayout{
 
-    private int num;
+    private OnLayoutClick onLayoutClick;
+    private int mNum;
     private TextView mNum_tv;
     private View mItem_view;
     private ImageView mCamera_iv;
     private TextView mChar_tv;
 
-    public CameraChoiceView(Context context) {
+    public CameraChoiceView(Context context, int num, OnLayoutClick onLayoutClick) {
         super(context);
-        init(context, null);
+        this.mNum = num;
+        this.onLayoutClick = onLayoutClick;
+        init(context);
     }
 
-    public CameraChoiceView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        init(context, attrs);
-    }
-
-    private void init(Context context, AttributeSet attributeSet){
-        TypedArray ta = context.obtainStyledAttributes(attributeSet, R.styleable.CameraChoiceView);
-        this.num = ta.getInteger(R.styleable.CameraChoiceView_showNum, 0);
-        ta.recycle();
-
+    private void init(Context context){
         inflate(context, R.layout.bg_camera_choice, this);
 
         mNum_tv = findViewById(R.id.num_tv);
@@ -48,10 +39,12 @@ public class CameraChoiceView extends LinearLayout{
         mCamera_iv = findViewById(R.id.camera_iv);
         mChar_tv = findViewById(R.id.char_tv);
 
-        String cameraNum = "1." + num;
+        String cameraNum = "1." + mNum;
         mNum_tv.setText(cameraNum);
-        String cameraChar = "相机"+(char)('A'-1+num);
+        String cameraChar = "相机"+(char)('A'-1+ mNum);
         mChar_tv.setText(cameraChar);
+
+        setOnClickListener( e -> onLayoutClick.onClick());
     }
 
     public void setClick() {
@@ -66,6 +59,11 @@ public class CameraChoiceView extends LinearLayout{
         mChar_tv.setTextColor(getResources().getColor(R.color.lightGray));
         mItem_view.setBackgroundColor(getResources().getColor(R.color.lightGray));
         mCamera_iv.setImageResource(R.drawable.ic_camera);
+    }
+
+
+    public interface OnLayoutClick{
+        void onClick();
     }
 
 }
