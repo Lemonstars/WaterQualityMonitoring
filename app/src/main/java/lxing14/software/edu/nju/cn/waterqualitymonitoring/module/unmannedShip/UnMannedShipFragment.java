@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -37,9 +38,10 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
     @Override
     public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
                                           Bundle savedInstanceState) {
-        android.view.View root = inflater.inflate(R.layout.fragment_un_manned_ship, container, false);
-
+        View root = inflater.inflate(R.layout.fragment_un_manned_ship, container, false);
         findView(root);
+
+        mPresenter.loadInitLocation();
 
         mMapView.onCreate(savedInstanceState);
         return root;

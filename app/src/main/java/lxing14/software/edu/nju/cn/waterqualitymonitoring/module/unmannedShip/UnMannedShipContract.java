@@ -1,5 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.unmannedShip;
 
+import android.content.Context;
+
 import com.amap.api.maps.model.LatLng;
 
 import java.util.List;
@@ -18,6 +20,11 @@ public interface UnMannedShipContract {
 
     interface View extends BaseView<Presenter>{
 
+        /**
+         * 获取上下文
+         * @return
+         */
+        Context getContextView();
 
         /**
          * 显示中心点
@@ -48,6 +55,11 @@ public interface UnMannedShipContract {
          * 加载无人船当前位置
          */
         void loadBoatCurrentLocation();
+
+        /**
+         * 加载初始位置
+         */
+        void loadInitLocation();
 
     }
 
