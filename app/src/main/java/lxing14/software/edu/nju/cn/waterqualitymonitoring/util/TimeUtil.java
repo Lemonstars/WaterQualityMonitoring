@@ -35,6 +35,12 @@ public class TimeUtil {
         return dateFormat.format(date);
     }
 
+    public static String getCurrentTime(){
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd mm:ss");
+        return dateFormat.format(date);
+    }
+
     /**
      * 获取前n天d的日期
      * @param num

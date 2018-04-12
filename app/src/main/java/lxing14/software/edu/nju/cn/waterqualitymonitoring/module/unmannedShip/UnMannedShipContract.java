@@ -1,5 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.unmannedShip;
 
+import android.content.Context;
+
 import com.amap.api.maps.model.LatLng;
 
 import java.util.List;
@@ -19,21 +21,10 @@ public interface UnMannedShipContract {
     interface View extends BaseView<Presenter>{
 
         /**
-         * 显示水质图表
+         * 获取上下文
+         * @return
          */
-        void showWaterQualityChart(List<String> dateList, List<Float> dataList);
-
-        /**
-         * 显示被选中的tab
-         * @param index
-         */
-        void showTabSelected(int index);
-
-        /**
-         * 显示图表的单位
-         * @param unit
-         */
-        void showChartUnit(String unit);
+        Context getContextView();
 
         /**
          * 显示中心点
@@ -43,47 +34,32 @@ public interface UnMannedShipContract {
         void showCenterPoint(float latitude, float longitude);
 
         /**
+         * 显示水质数据
+         * @param date
+         * @param tPh
+         * @param o2
+         */
+        void showWaterQualityNum(String date, String tPh, String o2);
+
+        /**
          * 添加无人船位置标记
          * @param points
          */
         void addBoatLocation(List<LatLng> points);
 
-        /**
-         * 配置图表marker显示的条目和单位
-         * @param entry
-         * @param unit
-         */
-        void configChartMarkerView(String entry, String unit);
-
     }
 
     interface Presenter extends BasePresenter{
-
-
-        /**
-         * 跳转至ChartActivity
-         */
-        void jumpToChartActivity();
-
-
-        /**
-         * 根据起止时间获取当前图表数据
-         * @param startTime
-         * @param endTime
-         */
-        void loadChartDataByDate(String startTime, String endTime);
-
-
-        /**
-         * 根据类型获取当前图表数据
-         * @param type
-         */
-        void loadChartDataByType(int type);
 
         /**
          * 加载无人船当前位置
          */
         void loadBoatCurrentLocation();
+
+        /**
+         * 加载初始位置
+         */
+        void loadInitLocation();
 
     }
 

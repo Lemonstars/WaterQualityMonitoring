@@ -1,17 +1,19 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.unmannedShip;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
+
+import com.amap.api.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscriber;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityTypeNumVO;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterQualityData;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -25,18 +27,8 @@ import rx.schedulers.Schedulers;
 public class UnMannedShipPresenter implements UnMannedShipContract.Presenter {
 
     private UnMannedShipContract.View mView;
-
-    private int mState = 0;
     private int mStnId;
 
-    //TODO 等待确认
-    private String[] mChartUnit = new String[]{"°C", "S/m", "", "mg/L", "mV", "NTU", "%", "mg/L"};
-    private String[] mEntry = new String[]{"温度", "电导率", "ph值", "溶解氧", "氧化还原", "浊度", "透明度", "氨氮"};
-
-    private String startTime= TimeUtil.getDateBeforeNum(7);
-    private String endTime = TimeUtil.getTodayDate();
-    private ArrayList<String> dateList = new ArrayList<>();
-    private ArrayList<Float> dataList = new ArrayList<>();
 
     public UnMannedShipPresenter(UnMannedShipContract.View mView, int stnId) {
         this.mView = mView;
@@ -45,74 +37,42 @@ public class UnMannedShipPresenter implements UnMannedShipContract.Presenter {
     }
 
     @Override
-    public void jumpToChartActivity() {
-        ArrayList<String> dataStrList = new ArrayList<>(dataList.size());
-        for(Float num: dataList){
-            dataStrList.add(String.valueOf(num));
-        }
-
-        Context context = mView.getContextView();
-        Intent intent = ChartActivity.generateIntent(context, mEntry[mState], mChartUnit[mState], startTime, endTime, dateList, dataStrList);
-        context.startActivity(intent);
-    }
-
-    @Override
-    public void loadChartDataByType(int type) {
-        this.mState = type;
-        loadChartDataByDate(startTime, endTime);
-    }
-
-    @Override
-    public void loadChartDataByDate(String startTime, String endTime) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-//        RetrofitHelper.getWaterQualityInterface().getWaterQualityInfo(mStnId, WaterQualityData.getEnglishName(mState), startTime, endTime)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new BaseSubscriber<List<WaterQualityTypeNumVO>>(mView.getContextView()) {
-//                    @Override
-//                    public void onNext(List<WaterQualityTypeNumVO> waterQualityTypeNumVOS) {
-//                        dateList.clear();
-//                        dataList.clear();
-//                        int len = waterQualityTypeNumVOS.size();
-//                        WaterQualityTypeNumVO waterQualityTypeNumVO;
-//                        String numStr;
-//                        float num;
-//                        for(int i=0;i<len;i++){
-//                            waterQualityTypeNumVO = waterQualityTypeNumVOS.get(i);
-//
-//                            numStr = waterQualityTypeNumVO.getReturnDateValue();
-//                            num = Float.parseFloat(numStr);
-//                            dataList.add(num);
-//
-//                            dateList.add(waterQualityTypeNumVO.getCollectionTime());
-//                        }
-//
-//                        mView.showTabSelected(mState);
-//                        mView.showChartUnit(mChartUnit[mState]);
-//                        mView.configChartMarkerView(mEntry[mState]+":", mChartUnit[mState]);
-//                        mView.showWaterQualityChart(dateList, dataList);
-//                    }
-//                });
+    public void loadInitLocation() {
+        SharedPreferences sharedPreferences = mView.getContextView().getSharedPreferences(SharePreferencesConstant.APP_NAME, Context.MODE_PRIVATE);
+        float latitude = sharedPreferences.getFloat(SharePreferencesConstant.LATITUDE, CommonConstant.LATITUDE_OF_NJ);
+        float longitude = sharedPreferences.getFloat(SharePreferencesConstant.LONGITUDE, CommonConstant.LONGITUDE_OF_NJ);
+        mView.showCenterPoint(latitude, longitude);
     }
 
     @Override
     public void loadBoatCurrentLocation() {
+        List<LatLng> latLngList = new ArrayList<>();
+        Observable.interval(1000, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .flatMap(aLong -> RetrofitHelper.getWaterQualityInterface().getUnmannedBoatInfo(mStnId))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(vo -> {
+                    float latitude = (float) vo.getLatitude();
+                    float longitude = (float) vo.getLongitude();
 
-        //TODO 应该用后端接口
-//        Random random = new Random();
-//        List<LatLng> latLngList = new ArrayList<>();
-//        Observable.interval(500, TimeUnit.MILLISECONDS)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe( aLong -> {
-//                    float latitude = 39.904989f + random.nextFloat()/10000;
-//                    float longitude = 116.405285f + random.nextFloat()/10000;
-//
-//                    mView.showCenterPoint(latitude, longitude);
-//                    latLngList.add(new LatLng(latitude, longitude));
-//                    mView.addBoatLocation(latLngList);
-//                });
 
+                    latLngList.add(new LatLng(latitude, longitude));
+                    mView.addBoatLocation(latLngList);
+
+                    String today = TimeUtil.getCurrentTime();
+                    StringBuilder tPh_sb = new StringBuilder();
+                    tPh_sb.append("温度:");
+                    tPh_sb.append(vo.getTemperature());
+                    tPh_sb.append("°C  ");
+                    tPh_sb.append("ph:");
+                    tPh_sb.append(vo.getPh());
+                    StringBuilder o2_sb = new StringBuilder();
+                    o2_sb.append("溶解氧:");
+                    o2_sb.append(vo.getDissolvedOxygen());
+                    o2_sb.append("  ");
+                    o2_sb.append("氧化还原:");
+                    o2_sb.append(vo.getRedox());
+                    mView.showWaterQualityNum(today, tPh_sb.toString(), o2_sb.toString());
+                });
     }
 }
