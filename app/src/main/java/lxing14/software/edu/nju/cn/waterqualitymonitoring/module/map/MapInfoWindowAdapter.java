@@ -83,6 +83,7 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putFloat(SharePreferencesConstant.LATITUDE, latitude);
                     editor.putFloat(SharePreferencesConstant.LONGITUDE, longitude);
+                    editor.putString(SharePreferencesConstant.STATION_NAME, name);
                     editor.apply();
                 });
             }

@@ -14,5 +14,6 @@ public class SharePreferencesConstant {
     public static final String PASSWORD ="password";
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
+    public static final String STATION_NAME = "stationName";
 
 }

@@ -2,6 +2,7 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFlow;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import com.fantasy.doubledatepicker.DoubleDateSelectDialog;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.DateConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ActivityUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 
@@ -37,7 +39,9 @@ public class WaterFlowActivity extends AppCompatActivity {
 
         //set the text of the toolbar
         TextView toolBarTV = findViewById(R.id.toolbar);
-        toolBarTV.setText(R.string.waterFlow);
+        SharedPreferences sharedPreferences = getSharedPreferences(SharePreferencesConstant.APP_NAME, Context.MODE_PRIVATE);
+        String stationName = sharedPreferences.getString(SharePreferencesConstant.STATION_NAME, "");
+        toolBarTV.setText(stationName +"-"+getString(R.string.waterFlow));
 
         //pop the date picker
         ImageView date_iv = findViewById(R.id.date_iv);
