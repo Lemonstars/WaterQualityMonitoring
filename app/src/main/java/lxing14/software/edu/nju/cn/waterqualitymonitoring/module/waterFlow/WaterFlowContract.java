@@ -20,6 +20,12 @@ public interface WaterFlowContract {
     interface View extends BaseView<WaterFlowContract.Presenter>{
 
         /**
+         * 显示n个相机
+         * @param num
+         */
+        void showCameraLayout(int num);
+
+        /**
          * 显示站点位置
          * @param markerOptionsList
          */

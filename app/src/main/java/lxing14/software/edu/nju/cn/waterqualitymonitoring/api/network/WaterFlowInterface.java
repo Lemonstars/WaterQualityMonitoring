@@ -43,6 +43,6 @@ public interface WaterFlowInterface {
      * @return
      */
     @GET("speedflow/queryLastSpeedFlowByStdId/{stnId}")
-    Observable<List<WaterFlowCameraInfoVO>> getCameraInfo(@Path("stnId")int stnId);
+    Observable<WaterFlowCameraInfoVO> getCameraInfo(@Path("stnId")int stnId);
 
 }

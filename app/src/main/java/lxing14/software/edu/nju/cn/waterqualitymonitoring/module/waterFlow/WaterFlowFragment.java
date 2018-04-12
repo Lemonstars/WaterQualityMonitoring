@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
@@ -50,6 +51,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     private TextView mDateNum_tv;
     private CameraChoiceView[] mCameraChoiceView;
 
+    private LinearLayout mCamera_layout;
     private ImageDialog mImageDialog;
     private MapView mMapView;
     private AMap mAMap;
@@ -106,6 +108,17 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     @Override
     public void setPresenter(WaterFlowContract.Presenter presenter) {
         this.mPresenter = presenter;
+    }
+
+    @Override
+    public void showCameraLayout(int num) {
+        mCameraChoiceView = new CameraChoiceView[num];
+        for(int i=0;i<num;i++){
+            int j = i;
+            CameraChoiceView cameraChoiceView = new CameraChoiceView(getContext(), j+1, () -> mPresenter.loadCameraInfo(j));
+            mCamera_layout.addView(cameraChoiceView);
+            mCameraChoiceView[i] = cameraChoiceView;
+        }
     }
 
     @Override
@@ -166,21 +179,6 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
             case R.id.threeMonth_tv:
                 clickTab(CommonConstant.THREE_MONTH);
                 break;
-            case R.id.camera1:
-                mPresenter.loadCameraInfo(0);
-                break;
-            case R.id.camera2:
-                mPresenter.loadCameraInfo(1);
-                break;
-            case R.id.camera3:
-                mPresenter.loadCameraInfo(2);
-                break;
-            case R.id.camera4:
-                mPresenter.loadCameraInfo(3);
-                break;
-            case R.id.camera5:
-                mPresenter.loadCameraInfo(4);
-                break;
             case R.id.flow_iv:
                 showSelectedPic(mFlow_iv);
                 break;
@@ -238,6 +236,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         TextView threeMonth_tv = root.findViewById(R.id.threeMonth_tv);
         mTab_tv = new TextView[]{oneWeek_tv, oneMonth_tv, threeMonth_tv};
 
+        mCamera_layout = root.findViewById(R.id.camera_layout);
         mWebView = root.findViewById(R.id.webView);
         mFlow_iv = root.findViewById(R.id.flow_iv);
         mCameraHint_tv = root.findViewById(R.id.cameraHint_tv);
@@ -246,12 +245,6 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         mDateNum_tv = root.findViewById(R.id.dateNum_tv);
         mBig_iv = root.findViewById(R.id.big_iv);
 
-        CameraChoiceView camera1 = root.findViewById(R.id.camera1);
-        CameraChoiceView camera2 = root.findViewById(R.id.camera2);
-        CameraChoiceView camera3 = root.findViewById(R.id.camera3);
-        CameraChoiceView camera4 = root.findViewById(R.id.camera4);
-        CameraChoiceView camera5 = root.findViewById(R.id.camera5);
-        mCameraChoiceView = new CameraChoiceView[]{camera1, camera2, camera3, camera4, camera5};
     }
 
     //configure the listener
@@ -261,9 +254,6 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         }
         mFlow_iv.setOnClickListener(this);
         mBig_iv.setOnClickListener(this);
-        for(CameraChoiceView cameraChoiceView: mCameraChoiceView){
-            cameraChoiceView.setOnClickListener(this);
-        }
     }
 
     //show the current location
