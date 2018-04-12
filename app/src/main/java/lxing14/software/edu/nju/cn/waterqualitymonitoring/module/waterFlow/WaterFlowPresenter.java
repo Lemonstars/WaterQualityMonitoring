@@ -16,8 +16,6 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFlowVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFlowVideoUrlVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.OrderConstant;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterTypeEnum;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import rx.android.schedulers.AndroidSchedulers;
@@ -86,31 +84,34 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
         RetrofitHelper.getWaterFlowInterface().getCameraInfo(mStnId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<List<WaterFlowCameraInfoVO>>(mView.getContextView()) {
+                .subscribe(new BaseSubscriber<WaterFlowCameraInfoVO>(mView.getContextView()) {
                     @Override
-                    public void onNext(List<WaterFlowCameraInfoVO> waterFlowCameraInfoVOS) {
-                        WaterFlowCameraInfoVO vo = waterFlowCameraInfoVOS.get(0);
-                        cameraPic[0]=vo.getFilePath1();
-                        cameraPic[1]=vo.getFilePath2();
-                        cameraPic[2]=vo.getFilePath3();
-                        cameraPic[3]=vo.getFilePath4();
-                        cameraPic[4]=vo.getFilePath5();
+                    public void onNext(WaterFlowCameraInfoVO vo) {
 
-                        cameraWaterFlow[0]=vo.getWaterFlow1();
-                        cameraWaterFlow[1]=vo.getWaterFlow2();
-                        cameraWaterFlow[2]=vo.getWaterFlow3();
-                        cameraWaterFlow[3]=vo.getWaterFlow4();
-                        cameraWaterFlow[4]=vo.getWaterFlow5();
 
-                        cameraWaterSpeed[0]=vo.getWaterSpeed1();
-                        cameraWaterSpeed[1]=vo.getWaterSpeed2();
-                        cameraWaterSpeed[2]=vo.getWaterSpeed3();
-                        cameraWaterSpeed[3]=vo.getWaterSpeed4();
-                        cameraWaterSpeed[4]=vo.getWaterSpeed5();
 
-                        mCollectTime = vo.getCollectionTime();
-
-                        loadCameraInfo(0);
+//                        WaterFlowCameraInfoVO vo = waterFlowCameraInfoVOS.get(0);
+//                        cameraPic[0]=vo.getFilePath1();
+//                        cameraPic[1]=vo.getFilePath2();
+//                        cameraPic[2]=vo.getFilePath3();
+//                        cameraPic[3]=vo.getFilePath4();
+//                        cameraPic[4]=vo.getFilePath5();
+//
+//                        cameraWaterFlow[0]=vo.getWaterFlow1();
+//                        cameraWaterFlow[1]=vo.getWaterFlow2();
+//                        cameraWaterFlow[2]=vo.getWaterFlow3();
+//                        cameraWaterFlow[3]=vo.getWaterFlow4();
+//                        cameraWaterFlow[4]=vo.getWaterFlow5();
+//
+//                        cameraWaterSpeed[0]=vo.getWaterSpeed1();
+//                        cameraWaterSpeed[1]=vo.getWaterSpeed2();
+//                        cameraWaterSpeed[2]=vo.getWaterSpeed3();
+//                        cameraWaterSpeed[3]=vo.getWaterSpeed4();
+//                        cameraWaterSpeed[4]=vo.getWaterSpeed5();
+//
+//                        mCollectTime = vo.getCollectionTime();
+//
+//                        loadCameraInfo(0);
                     }
                 });
     }
