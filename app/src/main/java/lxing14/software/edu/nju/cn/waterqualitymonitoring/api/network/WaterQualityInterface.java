@@ -2,6 +2,7 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.api.network;
 
 import java.util.List;
 
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.UnmannedBoatVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityTypeNumVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterQualityVO;
 import retrofit2.http.GET;
@@ -37,5 +38,13 @@ public interface WaterQualityInterface {
     @GET("waterquality/lastWaterQualityByType/{siteId}/{param}/{startTime}/{endTime}")
     Observable<List<WaterQualityTypeNumVO>> getWaterQualityInfo(@Path("siteId")int siteId, @Path("param")String type,
                                                          @Path("startTime")String startTime, @Path("endTime")String endTime);
+
+    /**
+     * 获取无人船采集的最新水质信息和当前经纬度坐标
+     * @param stnId
+     * @return
+     */
+    @GET("waterquality/UnmannedBoat/{stnId}")
+    Observable<UnmannedBoatVO> getUnmannedBoatInfo(@Path("stnId")int stnId);
 
 }
