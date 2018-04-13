@@ -90,6 +90,7 @@ public class RecordFragment extends Fragment implements RecordContract.View{
         Context context = getContext();
         for(PdfVO vo: list){
             TableRow tableRow = new TableRow(context);
+
             TextView name_tv = new TextView(context);
             name_tv.setText(vo.getName());
             TextView time_tv = new TextView(context);

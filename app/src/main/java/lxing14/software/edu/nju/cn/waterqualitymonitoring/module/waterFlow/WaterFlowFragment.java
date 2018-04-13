@@ -8,8 +8,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -294,9 +296,10 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
 
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        mWebView.loadUrl("file:///android_asset/index.html");
+//        mWebView.loadUrl("http://www.baidu.com");
 
-        mWebView.loadUrl("javascript:getRealTimeStream('ws://47.92.84.138:8599/123')");
+        mWebView.loadUrl("file:///android_asset/index.html");
+//        mWebView.loadUrl("javascript:getRealTimeStream('ws://47.92.84.138:8599/123')");
     }
 
 }

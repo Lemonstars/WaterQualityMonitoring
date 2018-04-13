@@ -30,6 +30,7 @@ public class WaterStationInfoVO {
     private boolean hasWaterFlow;
     private boolean hasFloatingMaterial;
     private boolean hasUnmannedShip;
+//    private boolean hasHistoryRecord;
 
     public boolean isHasWaterFlow() {
         return hasWaterFlow;
