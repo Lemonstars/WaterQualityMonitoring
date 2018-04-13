@@ -1,5 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.record;
 
+import android.widget.Toast;
+
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
 
@@ -11,6 +13,8 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHel
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.HistoryRecordVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.PdfVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
+import okhttp3.ResponseBody;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -48,6 +52,19 @@ public class RecordPresenter implements RecordContract.Presenter {
                         if(pdfVOList!=null&&vo.getPdfVOList().size()!=0){
                             mView.showPDFData(pdfVOList);
                         }
+                    }
+                });
+    }
+
+    @Override
+    public void downloadPdfFile(String url) {
+        RetrofitHelper.getWaterStationInterface().downloadFile(WebSite.PIC_Prefix+"/"+url)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<ResponseBody>(mView.getContextView()) {
+                    @Override
+                    public void onCompleted() {
+                        Toast.makeText( mView.getContextView(),"文件下载成功", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

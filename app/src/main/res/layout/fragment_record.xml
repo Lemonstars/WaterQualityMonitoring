@@ -29,11 +29,6 @@
                     android:text="时间"
                     style="@style/TableTextViewStyle"/>
 
-
-                <TextView
-                    android:text="备注"
-                    style="@style/TableTextViewStyle"/>
-
                 <TextView
                     android:text="下载"
                     style="@style/TableTextViewStyle"/>

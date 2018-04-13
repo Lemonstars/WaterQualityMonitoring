@@ -46,6 +46,7 @@
     <style name="TableTextViewStyle">
         <item name="android:lines">1</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/black</item>

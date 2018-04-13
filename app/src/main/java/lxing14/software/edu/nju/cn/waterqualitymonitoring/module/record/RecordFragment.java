@@ -104,18 +104,16 @@ public class RecordFragment extends Fragment implements RecordContract.View{
             name_tv.setText(vo.getName());
             TextView time_tv = new TextView(context);
             time_tv.setText(vo.getTime());
-            TextView note_tv = new TextView(context);
-            note_tv.setText(vo.getNote());
             TextView download_tv = new TextView(context);
-            download_tv.setText(vo.getUrl());
+            String url = vo.getUrl();
+            download_tv.setText(url);
+            download_tv.setOnClickListener( v -> mPresenter.downloadPdfFile(url));
 
             configTextView(name_tv);
             configTextView(time_tv);
-            configTextView(note_tv);
             configTextView(download_tv);
             tableRow.addView(name_tv);
             tableRow.addView(time_tv);
-            tableRow.addView(note_tv);
             tableRow.addView(download_tv);
             mPdf_layout.addView(tableRow);
         }
@@ -124,12 +122,12 @@ public class RecordFragment extends Fragment implements RecordContract.View{
     @Override
     public void showPic(List<String> picUrlList) {
         Context context = getContext();
-        for(int i=0;i<3;i++){
+        for(String str: picUrlList){
             ImageView imageView = new ImageView(context);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
             params.weight = 1;
             imageView.setLayoutParams(params);
-            PicassoUtil.loadUrl(context, WebSite.PIC_Prefix+"/"+picUrlList.get(i), imageView);
+            PicassoUtil.loadUrl(context, WebSite.PIC_Prefix+"/"+str, imageView);
             mPicture_layout.addView(imageView);
         }
     }
@@ -150,6 +148,7 @@ public class RecordFragment extends Fragment implements RecordContract.View{
         textView.setTextColor(getResources().getColor(R.color.lightGray));
         TableRow.LayoutParams params = new TableRow.LayoutParams();
         params.gravity= Gravity.CENTER;
+        params.width=1;
         textView.setLayoutParams(params);
     }
 

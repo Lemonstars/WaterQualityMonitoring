@@ -51,6 +51,11 @@ public interface RecordContract {
          */
         void loadRecordData();
 
+        /**
+         * 下载PDF文件
+         * @param url
+         */
+        void downloadPdfFile(String url);
     }
 
 }

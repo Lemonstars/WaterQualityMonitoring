@@ -36,7 +36,6 @@ public class RetrofitHelper {
     private static void initRetrofit(){
         OkHttpClient okHttpClient= new OkHttpClient.Builder()
                 .addNetworkInterceptor(new LogInterceptor())
-                .connectTimeout(5, TimeUnit.SECONDS)
                 .build();
 
         Gson gson = new GsonBuilder()
