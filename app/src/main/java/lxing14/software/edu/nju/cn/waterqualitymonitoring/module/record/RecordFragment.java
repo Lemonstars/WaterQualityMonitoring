@@ -54,6 +54,7 @@ public class RecordFragment extends Fragment implements RecordContract.View{
         findView(root);
 
         mPresenter.loadRecordData();
+        mPresenter.loadAllStationInfo();
         mMapView.onCreate(savedInstanceState);
 
         return root;
