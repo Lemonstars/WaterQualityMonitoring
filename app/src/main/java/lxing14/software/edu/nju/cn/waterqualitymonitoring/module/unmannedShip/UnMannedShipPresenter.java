@@ -55,7 +55,6 @@ public class UnMannedShipPresenter implements UnMannedShipContract.Presenter {
                     float latitude = (float) vo.getLatitude();
                     float longitude = (float) vo.getLongitude();
 
-
                     latLngList.add(new LatLng(latitude, longitude));
                     mView.addBoatLocation(latLngList);
 
@@ -66,13 +65,7 @@ public class UnMannedShipPresenter implements UnMannedShipContract.Presenter {
                     tPh_sb.append("°C  ");
                     tPh_sb.append("ph:");
                     tPh_sb.append(vo.getPh());
-                    StringBuilder o2_sb = new StringBuilder();
-                    o2_sb.append("溶解氧:");
-                    o2_sb.append(vo.getDissolvedOxygen());
-                    o2_sb.append("  ");
-                    o2_sb.append("氧化还原:");
-                    o2_sb.append(vo.getRedox());
-                    mView.showWaterQualityNum(today, tPh_sb.toString(), o2_sb.toString());
+                    mView.showWaterQualityNum(today, tPh_sb.toString());
                 });
     }
 }

@@ -79,8 +79,6 @@
             android:id="@+id/cameraVideo_layout"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="15dp"

@@ -37,8 +37,9 @@ public class TimeUtil {
 
     public static String getCurrentTime(){
         Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd mm:ss");
-        return dateFormat.format(date);
+        DateFormat simpleDateFormat = SimpleDateFormat.getDateTimeInstance();
+
+        return simpleDateFormat.format(date);
     }
 
     /**

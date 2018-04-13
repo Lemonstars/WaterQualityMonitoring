@@ -29,7 +29,6 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
     private AMap mAMap;
     private TextView time_tv;
     private TextView tPh_tv;
-    private TextView o2_tv;
 
     public static UnMannedShipFragment generateFragment(){
         return new UnMannedShipFragment();
@@ -74,14 +73,13 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
 
     @Override
     public void showCenterPoint(float latitude, float longitude) {
-        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 50f));
+        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 16f));
     }
 
     @Override
-    public void showWaterQualityNum(String date, String tPh, String o2) {
+    public void showWaterQualityNum(String date, String tPh) {
         time_tv.setText(date);
         tPh_tv.setText(tPh);
-        o2_tv.setText(o2);
     }
 
     @Override
@@ -113,7 +111,6 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
         mAMap = mMapView.getMap();
         time_tv = root.findViewById(R.id.time_tv);
         tPh_tv = root.findViewById(R.id.tPh_tv);
-        o2_tv = root.findViewById(R.id.o2_tv);
     }
 
 }

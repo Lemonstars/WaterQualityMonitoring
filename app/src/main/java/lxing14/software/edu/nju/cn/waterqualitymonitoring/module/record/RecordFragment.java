@@ -32,7 +32,9 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.PdfVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map.MapInfoWindowAdapter;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ChartMarkerView;
 
 public class RecordFragment extends Fragment implements RecordContract.View{
 
@@ -52,6 +54,7 @@ public class RecordFragment extends Fragment implements RecordContract.View{
         View root = inflater.inflate(R.layout.fragment_record, container, false);
 
         findView(root);
+        configChartMarkerView();
 
         mPresenter.loadRecordData();
         mPresenter.loadAllStationInfo();
@@ -173,4 +176,10 @@ public class RecordFragment extends Fragment implements RecordContract.View{
 
         mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 10f));
     }
+
+    //configure the markerView
+    private void configChartMarkerView(){
+        mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getActivity(), false));
+    }
+
 }
