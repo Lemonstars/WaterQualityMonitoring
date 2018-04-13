@@ -40,6 +40,7 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
                                           Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_un_manned_ship, container, false);
         findView(root);
+        configMapview();
 
         mPresenter.loadInitLocation();
 
@@ -101,6 +102,9 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
         return getContext();
     }
 
+    private void configMapview(){
+        mAMap.setMapType(AMap.MAP_TYPE_SATELLITE);
+    }
 
     //find the view
     private void findView(android.view.View root){

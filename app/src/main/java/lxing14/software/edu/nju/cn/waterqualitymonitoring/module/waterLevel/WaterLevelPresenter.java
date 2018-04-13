@@ -15,8 +15,6 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterLevelHisto
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterLevelVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.OrderConstant;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WaterTypeEnum;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import rx.android.schedulers.AndroidSchedulers;

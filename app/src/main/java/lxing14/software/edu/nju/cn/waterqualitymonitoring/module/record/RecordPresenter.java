@@ -8,6 +8,7 @@ import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscriber;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.HistoryRecordVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.PdfVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,18 +34,22 @@ public class RecordPresenter implements RecordContract.Presenter {
 
     @Override
     public void loadRecordData() {
-        mView.showPic(null);
-
-        List<PdfVO> list = new ArrayList<>();
-        for(int i=0;i<3;i++){
-            PdfVO vo = new PdfVO();
-            vo.setName("water.pdf");
-            vo.setTime("2018-4-1 10:00");
-            vo.setNote("");
-            vo.setUrl("www.baidu.com");
-            list.add(vo);
-        }
-        mView.showPDFData(list);
+        RetrofitHelper.getWaterStationInterface().getStationHistoryInfo(mStnId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<HistoryRecordVO>(mView.getContextView()) {
+                    @Override
+                    public void onNext(HistoryRecordVO vo) {
+                        List<String> picList = vo.getPicList();
+                        List<PdfVO> pdfVOList = vo.getPdfVOList();
+                        if(picList!=null && picList.size()!=0){
+                            mView.showPic(picList);
+                        }
+                        if(pdfVOList!=null&&vo.getPdfVOList().size()!=0){
+                            mView.showPDFData(pdfVOList);
+                        }
+                    }
+                });
     }
 
     @Override

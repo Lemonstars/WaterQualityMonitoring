@@ -1,6 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.record;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -16,7 +17,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -24,6 +27,10 @@ import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.PdfVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
 
 public class RecordFragment extends Fragment implements RecordContract.View{
 
@@ -54,6 +61,8 @@ public class RecordFragment extends Fragment implements RecordContract.View{
     public void onResume() {
         super.onResume();
         mMapView.onResume();
+
+        showCurrentLocation();
     }
 
     @Override
@@ -120,7 +129,7 @@ public class RecordFragment extends Fragment implements RecordContract.View{
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
             params.weight = 1;
             imageView.setLayoutParams(params);
-            imageView.setImageResource(R.drawable.ic_default_pic);
+            PicassoUtil.loadUrl(context, WebSite.PIC_Prefix+"/"+picUrlList.get(i), imageView);
             mPicture_layout.addView(imageView);
         }
     }
@@ -142,5 +151,14 @@ public class RecordFragment extends Fragment implements RecordContract.View{
         TableRow.LayoutParams params = new TableRow.LayoutParams();
         params.gravity= Gravity.CENTER;
         textView.setLayoutParams(params);
+    }
+
+    //show the current location
+    private void showCurrentLocation(){
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SharePreferencesConstant.APP_NAME, Context.MODE_PRIVATE);
+        float latitude = sharedPreferences.getFloat(SharePreferencesConstant.LATITUDE, CommonConstant.LATITUDE_OF_NJ);
+        float longitude = sharedPreferences.getFloat(SharePreferencesConstant.LONGITUDE, CommonConstant.LONGITUDE_OF_NJ);
+
+        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 10f));
     }
 }
