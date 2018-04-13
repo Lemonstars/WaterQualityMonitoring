@@ -52,6 +52,12 @@ public interface WaterFlowContract {
          * 隐藏摄像机
          */
         void hideCameraLayout();
+
+        /**
+         * 显示摄像头的视频
+         * @param url
+         */
+        void showCameraVideo(String url);
     }
 
     interface Presenter extends BasePresenter{

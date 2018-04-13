@@ -179,6 +179,11 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     }
 
     @Override
+    public void showCameraVideo(String url) {
+        mWebView.loadUrl("javascript:getRealTimeStream('"+url+"')");
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.oneWeek_tv:
@@ -296,10 +301,7 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
 
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-//        mWebView.loadUrl("http://www.baidu.com");
-
         mWebView.loadUrl("file:///android_asset/index.html");
-//        mWebView.loadUrl("javascript:getRealTimeStream('ws://47.92.84.138:8599/123')");
     }
 
 }

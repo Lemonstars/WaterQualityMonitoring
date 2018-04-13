@@ -88,8 +88,12 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
                 .subscribe(new BaseSubscriber<WaterFlowCameraInfoVO>(mView.getContextView()) {
                     @Override
                     public void onNext(WaterFlowCameraInfoVO waterFlowCameraInfoVO) {
-                        mCollectTime = waterFlowCameraInfoVO.getCollectionTime();
                         List<CameraVO> cameraVOList = waterFlowCameraInfoVO.getList();
+                        if(cameraVOList==null||cameraVOList.size()==0){
+                            return;
+                        }
+
+                        mCollectTime = waterFlowCameraInfoVO.getCollectionTime();
                         for(CameraVO vo: cameraVOList){
                             cameraPicList.add(vo.getFilePath());
                             cameraWaterFlowList.add(vo.getFlow());
@@ -103,6 +107,7 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
 
     @Override
     public void loadCameraInfo(int i) {
+        mView.showCameraVideo(videoUrlList.get(i));
         mView.showCameraInfo(i, mCollectTime, cameraPicList.get(i), cameraWaterFlowList.get(i), cameraWaterSpeedList.get(i));
     }
 
