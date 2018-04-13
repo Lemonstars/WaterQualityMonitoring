@@ -99,15 +99,16 @@ public class RecordFragment extends Fragment implements RecordContract.View{
         Context context = getContext();
         for(PdfVO vo: list){
             TableRow tableRow = new TableRow(context);
+            String name = vo.getName();
+            String url = vo.getUrl();
 
             TextView name_tv = new TextView(context);
-            name_tv.setText(vo.getName());
+            name_tv.setText(name);
             TextView time_tv = new TextView(context);
             time_tv.setText(vo.getTime());
             TextView download_tv = new TextView(context);
-            String url = vo.getUrl();
             download_tv.setText(url);
-            download_tv.setOnClickListener( v -> mPresenter.downloadPdfFile(url));
+            download_tv.setOnClickListener( v -> mPresenter.downloadPdfFile(url, name));
 
             configTextView(name_tv);
             configTextView(time_tv);

@@ -55,7 +55,7 @@ public interface RecordContract {
          * 下载PDF文件
          * @param url
          */
-        void downloadPdfFile(String url);
+        void downloadPdfFile(String url, String name);
     }
 
 }

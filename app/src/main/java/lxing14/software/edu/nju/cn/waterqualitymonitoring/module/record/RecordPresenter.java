@@ -14,6 +14,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.HistoryRecordVO
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.PdfVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.WriteUtil;
 import okhttp3.ResponseBody;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -57,14 +58,13 @@ public class RecordPresenter implements RecordContract.Presenter {
     }
 
     @Override
-    public void downloadPdfFile(String url) {
+    public void downloadPdfFile(String url, String name) {
         RetrofitHelper.getWaterStationInterface().downloadFile(WebSite.PIC_Prefix+"/"+url)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<ResponseBody>(mView.getContextView()) {
                     @Override
-                    public void onCompleted() {
-                        Toast.makeText( mView.getContextView(),"文件下载成功", Toast.LENGTH_SHORT).show();
+                    public void onNext(ResponseBody responseBody) {
+                        WriteUtil.write(responseBody, name);
                     }
                 });
     }
