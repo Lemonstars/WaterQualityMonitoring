@@ -30,6 +30,12 @@ public interface WaterFloatingContract {
          * @param url3
          */
         void showFloatingPic(String url1, String url2, String url3);
+
+        /**
+         * 显示摄像头视频
+         * @param url
+         */
+        void showCameraVideo(String url);
     }
 
     interface Presenter extends BasePresenter{

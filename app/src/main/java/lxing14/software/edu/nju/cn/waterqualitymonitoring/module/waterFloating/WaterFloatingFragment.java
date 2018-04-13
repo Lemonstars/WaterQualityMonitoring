@@ -99,6 +99,13 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         PicassoUtil.loadUrl(getContext(), url3, mImage3);
     }
 
+
+    @Override
+    public void showCameraVideo(String url) {
+        String jsCall = "javascript:getRealTimeStream('"+url+"')";
+        mWebView.loadUrl(jsCall);
+    }
+
     @Override
     public void onClick(android.view.View view) {
         switch (view.getId()){
@@ -183,8 +190,6 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         mWebView.loadUrl("file:///android_asset/index.html");
-
-        mWebView.loadUrl("javascript:getRealTimeStream('ws://47.92.84.138:8599/123')");
     }
 
 }

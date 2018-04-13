@@ -115,6 +115,17 @@ public class MapPresenter implements MapContract.Presenter {
     }
 
     @Override
+    public void loadHisRecordInfo() {
+        List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
+        for(WaterStationInfoVO vo: mWaterStationInfoList){
+            if(vo.isHasHistoryRecord()){
+                waterStationInfoVOS.add(vo);
+            }
+        }
+        onRequestStationInfo(waterStationInfoVOS);
+    }
+
+    @Override
     public void search(String input) {
         if(StringUtil.isEmpty(input)){
             return;

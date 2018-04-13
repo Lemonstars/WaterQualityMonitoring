@@ -123,10 +123,10 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
                             return;
                         }
 
-                         for(WaterFlowVideoUrlVO vo: waterFlowVideoUrlVOList){
-                             videoUrlList.add(vo.getUrl());
-                         }
-                         mView.showCameraLayout(videoUrlList.size());
+                        for(WaterFlowVideoUrlVO vo: waterFlowVideoUrlVOList){
+                            videoUrlList.add(vo.getUrl());
+                        }
+                        mView.showCameraLayout(videoUrlList.size());
                     }
                 });
     }

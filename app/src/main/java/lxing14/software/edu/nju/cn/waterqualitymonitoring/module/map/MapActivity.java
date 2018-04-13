@@ -30,6 +30,7 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
     private ViewGroup mWaterFlowLayout;
     private ViewGroup mFloatingLayout;
     private ViewGroup mBoatLayout;
+    private ViewGroup mRecordLayout;
 
     public static Intent generateIntent(Context context, String userName){
         Intent intent = new Intent(context, MapActivity.class);
@@ -42,16 +43,8 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        mUserName_tv = findViewById(R.id.username_tv);
-        mExit_layout = findViewById(R.id.exit_layout);
-        mWaterLevelLayout = findViewById(R.id.waterLevel_layout);
-        mWaterQualityLayout = findViewById(R.id.waterQuality_layout);
-        mFloatingLayout = findViewById(R.id.floating_layout);
-        mBoatLayout = findViewById(R.id.boat_layout);
-        mWaterFlowLayout = findViewById(R.id.waterFlow_layout);
-
+        findView();
         getIntentData();
-
         configListener();
 
         // generate the view and the presenter
@@ -85,6 +78,9 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
             case R.id.boat_layout:
                 presenter.loadUnmannedShipInfo();
                 break;
+            case R.id.record_layout:
+                presenter.loadHisRecordInfo();
+                break;
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -111,6 +107,7 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         mFloatingLayout.setOnClickListener(this);
         mBoatLayout.setOnClickListener(this);
         mWaterFlowLayout.setOnClickListener(this);
+        mRecordLayout.setOnClickListener(this);
     }
 
     //get the data of the intent
@@ -118,6 +115,17 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         Intent intent = getIntent();
         String userName = intent.getStringExtra(USER_NAME);
         mUserName_tv.setText(userName);
+    }
+
+    private void findView(){
+        mUserName_tv = findViewById(R.id.username_tv);
+        mExit_layout = findViewById(R.id.exit_layout);
+        mWaterLevelLayout = findViewById(R.id.waterLevel_layout);
+        mWaterQualityLayout = findViewById(R.id.waterQuality_layout);
+        mFloatingLayout = findViewById(R.id.floating_layout);
+        mBoatLayout = findViewById(R.id.boat_layout);
+        mWaterFlowLayout = findViewById(R.id.waterFlow_layout);
+        mRecordLayout = findViewById(R.id.record_layout);
     }
 
 }

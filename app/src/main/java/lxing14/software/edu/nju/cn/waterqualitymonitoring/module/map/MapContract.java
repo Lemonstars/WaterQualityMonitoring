@@ -74,6 +74,11 @@ public interface MapContract {
         void loadUnmannedShipInfo();
 
         /**
+         * 加载历史记录
+         */
+        void loadHisRecordInfo();
+
+        /**
          * 搜索
          * @param input
          */
