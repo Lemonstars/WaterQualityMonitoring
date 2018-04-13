@@ -85,7 +85,7 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
     @Override
     public void addBoatLocation(List<LatLng> points) {
         mAMap.clear();
-        mAMap.addPolyline(new PolylineOptions().addAll(points).width(8).color(R.color.skyBlue));
+        mAMap.addPolyline(new PolylineOptions().addAll(points).width(8).color(R.color.lightRed));
         LatLng currentLatLng = points.get(points.size()-1);
 
         ArrayList<MarkerOptions>  markerOptionList = new ArrayList<>();

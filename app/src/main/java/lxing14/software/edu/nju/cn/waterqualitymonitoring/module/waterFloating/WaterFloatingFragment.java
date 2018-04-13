@@ -1,16 +1,23 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -54,7 +61,7 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
 
         findView(root);
         ChartUtil.configLineChart(mLineChart);
-        loadWebFile();
+        configUnit();
         configListener();
         configChartMarkerView();
 
@@ -62,6 +69,12 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         mPresenter.loadWaterFloatingPicURl();
 
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadWebFile();
     }
 
     @Override
@@ -186,10 +199,38 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         mImage3 = root.findViewById(R.id.image3);
     }
 
+    //load the web view
     private void loadWebFile(){
+        mWebView.setWebChromeClient(new WebChromeClient() );
+        mWebView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    view.loadUrl(request.getUrl().toString());
+                } else {
+                    view.loadUrl(request.toString());
+                }
+                return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                view.loadUrl("javascript:getRealTimeStream('ws://47.92.84.138:8600/123')");
+            }
+        });
+
         WebSettings webSettings = mWebView.getSettings();
+
         webSettings.setJavaScriptEnabled(true);
-        mWebView.loadUrl("file:///android_asset/index.html");
+        webSettings.setAllowContentAccess(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setDomStorageEnabled(true);
+    }
+
+    private void configUnit(){
+        Description description = mLineChart.getDescription();
+        description.setText("个");
     }
 
 }

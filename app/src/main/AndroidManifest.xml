@@ -49,9 +49,9 @@
         <activity android:name=".module.waterQuality.WaterQualityActivity" />
         <activity android:name=".module.waterFlow.WaterFlowActivity" />
         <activity android:name=".module.waterFloating.WaterFloatingActivity" />
-        <activity android:name=".module.unmannedShip.UnMannedShipActivity" />
+        <activity android:name=".module.unmannedShip.UnMannedShipActivity"
+            android:screenOrientation="landscape"/>
         <activity android:name=".module.chart.ChartActivity" />
-        <activity android:name=".module.record.RecordActivity"></activity>
+        <activity android:name=".module.record.RecordActivity" />
     </application>
-
 </manifest>

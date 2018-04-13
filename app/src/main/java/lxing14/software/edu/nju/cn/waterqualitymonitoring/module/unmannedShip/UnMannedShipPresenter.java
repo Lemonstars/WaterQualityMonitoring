@@ -29,7 +29,6 @@ public class UnMannedShipPresenter implements UnMannedShipContract.Presenter {
     private UnMannedShipContract.View mView;
     private int mStnId;
 
-
     public UnMannedShipPresenter(UnMannedShipContract.View mView, int stnId) {
         this.mView = mView;
         this.mStnId = stnId;
@@ -81,7 +80,6 @@ public class UnMannedShipPresenter implements UnMannedShipContract.Presenter {
                             LatLng latLng = new LatLng(vo.getLatitude(), vo.getLongitude());
                             latLngs.add(latLng);
                         }
-
                         mView.addBoatLocation(latLngs);
 
                         String today = TimeUtil.getCurrentTime();
