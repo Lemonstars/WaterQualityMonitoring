@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">Intelligent Water</string>
-    <string name="title_activity_map">MapActivity</string>
-
+    <string name="app_name">IW</string>
     <string name="action_settings">Settings</string>
 
     <string name="waterLevel">水位</string>
@@ -22,22 +20,11 @@
     <string name="photoBy">拍摄于：</string>
 
     <string name="MORE">MORE</string>
-    <string name="title_activity_water_level">WaterLevelActivity</string>
 
-    <!-- 实时变为一周内 按天变成一月内 按月变成三月内  -->
+    <!-- 一周内 一月内 三月内  -->
     <string name="oneWeek">一周内</string>
     <string name="oneMonth">一月内</string>
     <string name="threeMonth">三月内</string>
-
-    <string name="temperature">温度</string>
-    <string name="conductivity">电导率</string>
-    <string name="ph">PH值</string>
-    <string name="dissolvedOxygen">溶解氧</string>
-    <string name="redox">氧化还原</string>
-    <string name="turbidity">浊度</string>
-    <string name="transparency">透明度</string>
-    <string name="NH3">氨氮</string>
-
     <string name="pleaseInputUserName">请输入用户名</string>
     <string name="pleaseInputPassword">请输入密码</string>
     <string name="pleaseInputCorrectUserName">请输入正确的用户名</string>
@@ -45,6 +32,5 @@
 
     <string name="login">登  录</string>
     <string name="exitCurrentAccount">退出当前账号</string>
-    <string name="intellgenceWater">INTELLGENCE WATER</string>
 
 </resources>

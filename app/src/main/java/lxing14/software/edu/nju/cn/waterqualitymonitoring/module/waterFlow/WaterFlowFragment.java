@@ -60,6 +60,8 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     private ImageView mBig_iv;
     private WebView mWebView;
     private ChartMarkerView mChartMarkerView;
+    private ViewGroup cameraVideo_layout;
+    private ViewGroup cameraData_layout;
 
     public static WaterFlowFragment generateFragment() {
         return new WaterFlowFragment();
@@ -168,6 +170,12 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     }
 
     @Override
+    public void hideCameraLayout() {
+        cameraVideo_layout.setVisibility(View.GONE);
+        cameraData_layout.setVisibility(View.GONE);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.oneWeek_tv:
@@ -245,6 +253,8 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         mDateNum_tv = root.findViewById(R.id.dateNum_tv);
         mBig_iv = root.findViewById(R.id.big_iv);
 
+        cameraVideo_layout = root.findViewById(R.id.cameraVideo_layout);
+        cameraData_layout = root.findViewById(R.id.cameraData_layout);
     }
 
     //configure the listener

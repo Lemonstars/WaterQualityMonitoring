@@ -1,7 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -77,6 +76,7 @@
         </LinearLayout>
 
         <FrameLayout
+            android:id="@+id/cameraVideo_layout"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:paddingLeft="15dp"
@@ -92,6 +92,7 @@
         </FrameLayout>
 
         <LinearLayout
+            android:id="@+id/cameraData_layout"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:orientation="vertical"
@@ -180,7 +181,6 @@
                     android:textSize="12sp"
                     android:textColor="@color/black"
                     android:text="拍摄于："/>
-
 
                 <TextView
                     android:id="@+id/flowNum_tv"

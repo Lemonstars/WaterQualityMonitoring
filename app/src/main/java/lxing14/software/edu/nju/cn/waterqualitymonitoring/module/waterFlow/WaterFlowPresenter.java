@@ -114,6 +114,11 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
                 .subscribe(new BaseSubscriber<List<WaterFlowVideoUrlVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterFlowVideoUrlVO> waterFlowVideoUrlVOList) {
+                        if(waterFlowVideoUrlVOList==null || waterFlowVideoUrlVOList.size()==0){
+                            mView.hideCameraLayout();
+                            return;
+                        }
+
                          for(WaterFlowVideoUrlVO vo: waterFlowVideoUrlVOList){
                              videoUrlList.add(vo.getUrl());
                          }

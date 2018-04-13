@@ -48,6 +48,10 @@ public interface WaterFlowContract {
          */
         void showCameraInfo(int index, String date, String picUrl, double waterFlow, double waterSpeed);
 
+        /**
+         * 隐藏摄像机
+         */
+        void hideCameraLayout();
     }
 
     interface Presenter extends BasePresenter{
