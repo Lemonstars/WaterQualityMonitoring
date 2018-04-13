@@ -30,7 +30,7 @@
                     style="@style/TableTextViewStyle"/>
 
                 <TextView
-                    android:text="下载"
+                    android:text="点击下载"
                     style="@style/TableTextViewStyle"/>
             </TableRow>
 

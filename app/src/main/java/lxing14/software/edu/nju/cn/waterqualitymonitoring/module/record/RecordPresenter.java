@@ -47,6 +47,7 @@ public class RecordPresenter implements RecordContract.Presenter {
                         }else {
                             mView.hidePicLayout();
                         }
+
                         if(pdfVOList!=null&&vo.getPdfVOList().size()!=0){
                             mView.showPDFData(pdfVOList);
                         }else {
