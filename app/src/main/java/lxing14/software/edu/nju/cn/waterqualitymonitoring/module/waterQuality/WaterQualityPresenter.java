@@ -162,6 +162,8 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
                             sb.append(' ');
                             sb.append(vo.isHasUnmannedShip()? 1:0); // boat
                             sb.append(' ');
+                            sb.append(vo.isHasHistoryRecord()? 1:0); // record
+                            sb.append(' ');
                             sb.append(y);
                             sb.append(' ');
                             sb.append(x);

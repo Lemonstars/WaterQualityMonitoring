@@ -30,7 +30,55 @@ public class WaterStationInfoVO {
     private boolean hasWaterFlow;
     private boolean hasFloatingMaterial;
     private boolean hasUnmannedShip;
-//    private boolean hasHistoryRecord;
+    private boolean hasHistoryRecord;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getX() {
+        return x;
+    }
+
+    public void setX(String x) {
+        this.x = x;
+    }
+
+    public String getY() {
+        return y;
+    }
+
+    public void setY(String y) {
+        this.y = y;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isHasWaterLevel() {
+        return hasWaterLevel;
+    }
+
+    public void setHasWaterLevel(boolean hasWaterLevel) {
+        this.hasWaterLevel = hasWaterLevel;
+    }
+
+    public boolean isHasWaterQuality() {
+        return hasWaterQuality;
+    }
+
+    public void setHasWaterQuality(boolean hasWaterQuality) {
+        this.hasWaterQuality = hasWaterQuality;
+    }
 
     public boolean isHasWaterFlow() {
         return hasWaterFlow;
@@ -48,59 +96,19 @@ public class WaterStationInfoVO {
         this.hasFloatingMaterial = hasFloatingMaterial;
     }
 
-    public boolean isHasWaterQuality() {
-        return hasWaterQuality;
-    }
-
-    public void setHasWaterQuality(boolean hasWaterQuality) {
-        this.hasWaterQuality = hasWaterQuality;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getX() {
-        return x;
-    }
-
-    public void setX(String x) {
-        this.x = x;
-    }
-
-    public boolean isHasWaterLevel() {
-        return hasWaterLevel;
-    }
-
-    public void setHasWaterLevel(boolean hasWaterLevel) {
-        this.hasWaterLevel = hasWaterLevel;
-    }
-
-    public String getY() {
-        return y;
-    }
-
-    public void setY(String y) {
-        this.y = y;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public boolean isHasUnmannedShip() {
         return hasUnmannedShip;
     }
 
     public void setHasUnmannedShip(boolean hasUnmannedShip) {
         this.hasUnmannedShip = hasUnmannedShip;
+    }
+
+    public boolean isHasHistoryRecord() {
+        return hasHistoryRecord;
+    }
+
+    public void setHasHistoryRecord(boolean hasHistoryRecord) {
+        this.hasHistoryRecord = hasHistoryRecord;
     }
 }

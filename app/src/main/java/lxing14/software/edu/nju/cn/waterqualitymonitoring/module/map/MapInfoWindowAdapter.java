@@ -41,7 +41,7 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
         this.context = context;
         this.isFrontPage = isFrontPage;
 
-        type = new int[]{R.string.waterLevel, R.string.waterQuality, R.string.waterFlow, R.string.floatingMaterial, R.string.unmannedShip};
+        type = new int[]{R.string.waterLevel, R.string.waterQuality, R.string.waterFlow, R.string.floatingMaterial, R.string.unmannedShip, R.string.record};
     }
 
     @Override
@@ -57,9 +57,10 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
         boolean hasWaterFlow = Integer.parseInt(data[4])==1;
         boolean hasFloating = Integer.parseInt(data[5])==1;
         boolean hasBoat = Integer.parseInt(data[6])==1;
-        boolean[] typeExisted = new boolean[]{hasWaterLevel, hasWaterQuality, hasWaterFlow, hasFloating, hasBoat};
-        float latitude = Float.parseFloat(data[7]);
-        float longitude = Float.parseFloat(data[8]);
+        boolean hasRecord = Integer.parseInt(data[7])==1;
+        boolean[] typeExisted = new boolean[]{hasWaterLevel, hasWaterQuality, hasWaterFlow, hasFloating, hasBoat, hasRecord};
+        float latitude = Float.parseFloat(data[8]);
+        float longitude = Float.parseFloat(data[9]);
 
         LinearLayout infoWindow = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bg_info_window, null);
         TextView name_tv = infoWindow.findViewById(R.id.name_tv);
@@ -114,6 +115,9 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
                 intent = WaterFloatingActivity.generateIntent(context, stnId);
                 break;
             case 4:
+                intent = UnMannedShipActivity.generateIntent(context, stnId);
+                break;
+            case 5:
                 intent = RecordActivity.generateIntent(context, stnId);
                 break;
             default:
