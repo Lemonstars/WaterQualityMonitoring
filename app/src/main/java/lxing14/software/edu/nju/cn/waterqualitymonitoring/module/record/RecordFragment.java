@@ -3,6 +3,7 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.record;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -107,8 +109,8 @@ public class RecordFragment extends Fragment implements RecordContract.View{
             TextView time_tv = new TextView(context);
             time_tv.setText(vo.getTime());
             TextView download_tv = new TextView(context);
-            download_tv.setText(url);
-            download_tv.setOnClickListener( v -> mPresenter.downloadPdfFile(url, name));
+            download_tv.setText(WebSite.PIC_Prefix +"/"+url);
+            download_tv.setOnClickListener(v -> Toast.makeText(context, "请用浏览器下载", Toast.LENGTH_SHORT).show());
 
             configTextView(name_tv);
             configTextView(time_tv);
@@ -153,7 +155,6 @@ public class RecordFragment extends Fragment implements RecordContract.View{
 
     //configure the text view
     private void configTextView(TextView textView){
-        textView.setLines(1);
         textView.setEllipsize(TextUtils.TruncateAt.END);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
         textView.setTextColor(getResources().getColor(R.color.lightGray));

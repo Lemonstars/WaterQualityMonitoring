@@ -60,12 +60,6 @@ public interface RecordContract {
          * 加载记录信息
          */
         void loadRecordData();
-
-        /**
-         * 下载PDF文件
-         * @param url
-         */
-        void downloadPdfFile(String url, String name);
     }
 
 }

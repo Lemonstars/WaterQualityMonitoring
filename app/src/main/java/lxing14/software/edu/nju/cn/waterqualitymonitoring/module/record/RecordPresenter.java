@@ -1,7 +1,5 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.record;
 
-import android.widget.Toast;
-
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
 
@@ -13,9 +11,6 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHel
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.HistoryRecordVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.PdfVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.WriteUtil;
-import okhttp3.ResponseBody;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -57,18 +52,6 @@ public class RecordPresenter implements RecordContract.Presenter {
                         }else {
                             mView.hidePDFLayout();
                         }
-                    }
-                });
-    }
-
-    @Override
-    public void downloadPdfFile(String url, String name) {
-        RetrofitHelper.getWaterStationInterface().downloadFile(WebSite.PIC_Prefix+"/"+url)
-                .subscribeOn(Schedulers.io())
-                .subscribe(new BaseSubscriber<ResponseBody>(mView.getContextView()) {
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        WriteUtil.write(responseBody, name);
                     }
                 });
     }

@@ -184,7 +184,8 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
 
     @Override
     public void showCameraVideo(String url) {
-        mWebView.loadUrl("javascript:getRealTimeStream('"+url+"')");
+        String jsCall = "javascript:getRealTimeStream('"+url+"')";
+        mWebView.loadUrl(jsCall);
     }
 
     @Override
@@ -306,12 +307,6 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClient(){
             @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                Log.i("TAG", url);
-            }
-
-            @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     view.loadUrl(request.getUrl().toString());
@@ -323,9 +318,10 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
         });
 
         WebSettings webSettings = mWebView.getSettings();
+
         webSettings.setJavaScriptEnabled(true);
         webSettings.setAllowContentAccess(true);
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        webSettings.setAllowFileAccess(true);
         webSettings.setDomStorageEnabled(true);
         mWebView.loadUrl("file:///android_asset/index.html");
     }
