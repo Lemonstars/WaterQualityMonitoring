@@ -121,6 +121,16 @@ public class RecordFragment extends Fragment implements RecordContract.View{
     }
 
     @Override
+    public void hidePDFLayout() {
+        mPdf_layout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hidePicLayout() {
+        mPicture_layout.setVisibility(View.GONE);
+    }
+
+    @Override
     public void showPic(List<String> picUrlList) {
         Context context = getContext();
         for(String str: picUrlList){

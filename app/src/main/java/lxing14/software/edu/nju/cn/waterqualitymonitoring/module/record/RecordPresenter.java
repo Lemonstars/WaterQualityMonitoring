@@ -49,9 +49,13 @@ public class RecordPresenter implements RecordContract.Presenter {
                         List<PdfVO> pdfVOList = vo.getPdfVOList();
                         if(picList!=null && picList.size()!=0){
                             mView.showPic(picList);
+                        }else {
+                            mView.hidePicLayout();
                         }
                         if(pdfVOList!=null&&vo.getPdfVOList().size()!=0){
                             mView.showPDFData(pdfVOList);
+                        }else {
+                            mView.hidePDFLayout();
                         }
                     }
                 });

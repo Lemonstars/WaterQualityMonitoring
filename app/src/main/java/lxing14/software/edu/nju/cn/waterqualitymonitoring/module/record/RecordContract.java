@@ -33,6 +33,16 @@ public interface RecordContract {
         void showPDFData(List<PdfVO> list);
 
         /**
+         * 隐藏pdf的布局
+         */
+        void hidePDFLayout();
+
+        /**
+         * 隐藏图片布局
+         */
+        void hidePicLayout();
+
+        /**
          * 显示图片
          * @param picUrlList
          */
