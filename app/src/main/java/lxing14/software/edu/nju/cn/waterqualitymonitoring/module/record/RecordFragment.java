@@ -1,7 +1,9 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.record;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
@@ -113,8 +115,13 @@ public class RecordFragment extends Fragment implements RecordContract.View{
             TextView time_tv = new TextView(context);
             time_tv.setText(vo.getTime());
             TextView download_tv = new TextView(context);
-            download_tv.setText(WebSite.PIC_Prefix +"/"+url);
-            download_tv.setOnClickListener(v -> Toast.makeText(context, "请用浏览器下载", Toast.LENGTH_SHORT).show());
+            String realUrl = WebSite.PIC_Prefix +"/"+url;
+            download_tv.setText(realUrl);
+            download_tv.setOnClickListener(v -> {
+                Uri uri = Uri.parse(realUrl);
+                Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(it);
+            });
 
             configTextView(name_tv);
             configTextView(time_tv);
