@@ -54,7 +54,6 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
         mView.setPresenter(this);
     }
 
-
     @Override
     public void loadWaterFlowDataByDate(String startTime, String endTime) {
         this.startTime = startTime;

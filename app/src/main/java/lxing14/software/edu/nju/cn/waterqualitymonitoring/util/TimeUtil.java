@@ -14,17 +14,6 @@ import java.util.Date;
 
 public class TimeUtil {
 
-    public static long convertToNum(String date){
-        DateFormat sdf = SimpleDateFormat.getDateInstance();
-        Date targetDate = null;
-        try {
-            targetDate = sdf.parse(date);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return targetDate==null? 0:targetDate.getTime();
-    }
-
     /**
      * 获取当天的日期
      * @return

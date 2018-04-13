@@ -14,8 +14,6 @@ public class UnmannedBoatVO {
     private double latitude;
     private String temperature;
     private double ph;
-    private double dissolvedOxygen;
-    private double redox;
 
     public int getStnId() {
         return stnId;
@@ -55,21 +53,5 @@ public class UnmannedBoatVO {
 
     public void setPh(double ph) {
         this.ph = ph;
-    }
-
-    public double getDissolvedOxygen() {
-        return dissolvedOxygen;
-    }
-
-    public void setDissolvedOxygen(double dissolvedOxygen) {
-        this.dissolvedOxygen = dissolvedOxygen;
-    }
-
-    public double getRedox() {
-        return redox;
-    }
-
-    public void setRedox(double redox) {
-        this.redox = redox;
     }
 }

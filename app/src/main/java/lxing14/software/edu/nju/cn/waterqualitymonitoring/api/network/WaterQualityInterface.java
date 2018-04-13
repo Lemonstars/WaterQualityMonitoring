@@ -47,4 +47,13 @@ public interface WaterQualityInterface {
     @GET("waterquality/UnmannedBoat/{stnId}")
     Observable<UnmannedBoatVO> getUnmannedBoatInfo(@Path("stnId")int stnId);
 
+
+    /**
+     * 获取无人船采集的历史水质信息和当前经纬度坐标
+     * @param stnId
+     * @return
+     */
+    @GET("waterquality/UnmannedBoatHisInfo/{stnId}")
+    Observable<List<UnmannedBoatVO>> getUnmannedBoatHisInfo(@Path("stnId")int stnId);
+
 }

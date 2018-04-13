@@ -7,13 +7,13 @@ import com.amap.api.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscriber;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.UnmannedBoatVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -47,25 +47,56 @@ public class UnMannedShipPresenter implements UnMannedShipContract.Presenter {
     @Override
     public void loadBoatCurrentLocation() {
         List<LatLng> latLngList = new ArrayList<>();
-        Observable.interval(1000, TimeUnit.MILLISECONDS)
+        // TODO 实时的数据获取
+//        Observable.interval(1000, TimeUnit.MILLISECONDS)
+//                .subscribeOn(Schedulers.io())
+//                .flatMap(aLong -> RetrofitHelper.getWaterQualityInterface().getUnmannedBoatInfo(mStnId))
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(vo -> {
+//                    float latitude = (float) vo.getLatitude();
+//                    float longitude = (float) vo.getLongitude();
+//
+//                    latLngList.add(new LatLng(latitude, longitude));
+//                    mView.addBoatLocation(latLngList);
+//
+//                    String today = TimeUtil.getCurrentTime();
+//                    StringBuilder tPh_sb = new StringBuilder();
+//                    tPh_sb.append("温度:");
+//                    tPh_sb.append(vo.getTemperature());
+//                    tPh_sb.append("°C  ");
+//                    tPh_sb.append("ph:");
+//                    tPh_sb.append(vo.getPh());
+//                    mView.showWaterQualityNum(today, tPh_sb.toString());
+//                });
+
+        // TODO 获取历史数据
+        RetrofitHelper.getWaterQualityInterface().getUnmannedBoatHisInfo(mStnId)
                 .subscribeOn(Schedulers.io())
-                .flatMap(aLong -> RetrofitHelper.getWaterQualityInterface().getUnmannedBoatInfo(mStnId))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(vo -> {
-                    float latitude = (float) vo.getLatitude();
-                    float longitude = (float) vo.getLongitude();
+                .subscribe(new BaseSubscriber<List<UnmannedBoatVO>>(mView.getContextView()) {
+                    @Override
+                    public void onNext(List<UnmannedBoatVO> unmannedBoatVOS) {
+                        List<LatLng> latLngs = new ArrayList<>();
+                        for(UnmannedBoatVO vo: unmannedBoatVOS){
+                            LatLng latLng = new LatLng(vo.getLatitude(), vo.getLongitude());
+                            latLngs.add(latLng);
+                        }
 
-                    latLngList.add(new LatLng(latitude, longitude));
-                    mView.addBoatLocation(latLngList);
+                        mView.addBoatLocation(latLngs);
 
-                    String today = TimeUtil.getCurrentTime();
-                    StringBuilder tPh_sb = new StringBuilder();
-                    tPh_sb.append("温度:");
-                    tPh_sb.append(vo.getTemperature());
-                    tPh_sb.append("°C  ");
-                    tPh_sb.append("ph:");
-                    tPh_sb.append(vo.getPh());
-                    mView.showWaterQualityNum(today, tPh_sb.toString());
+                        String today = TimeUtil.getCurrentTime();
+                        UnmannedBoatVO unmannedBoatVO = unmannedBoatVOS.get(0);
+                        StringBuilder tPh_sb = new StringBuilder();
+                        tPh_sb.append("温度:");
+                        tPh_sb.append(unmannedBoatVO.getTemperature());
+                        tPh_sb.append("°C  ");
+                        tPh_sb.append("ph:");
+                        tPh_sb.append(unmannedBoatVO.getPh());
+                        mView.showWaterQualityNum(today, tPh_sb.toString());
+                    }
                 });
+
+
     }
+
 }
