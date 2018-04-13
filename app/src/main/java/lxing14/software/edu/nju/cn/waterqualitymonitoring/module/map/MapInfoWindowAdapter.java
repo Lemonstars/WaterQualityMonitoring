@@ -16,6 +16,7 @@ import com.amap.api.maps.model.MarkerOptions;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.record.RecordActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.unmannedShip.UnMannedShipActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating.WaterFloatingActivity;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFlow.WaterFlowActivity;
@@ -113,7 +114,7 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
                 intent = WaterFloatingActivity.generateIntent(context, stnId);
                 break;
             case 4:
-                intent = UnMannedShipActivity.generateIntent(context, stnId);
+                intent = RecordActivity.generateIntent(context, stnId);
                 break;
             default:
                 throw new IllegalArgumentException();

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,11 +15,11 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map.MapActivity;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class LoginFragment extends Fragment implements LoginContract.ILoginView, View.OnClickListener{
+public class LoginFragment extends Fragment implements LoginContract.View, android.view.View.OnClickListener{
 
     public static final int TIME_SHOW_MILLISECOND = 1000;
 
-    private LoginContract.ILoginPresenter mPresenter;
+    private LoginContract.Presenter mPresenter;
 
     private ViewGroup mUserNameHint_layout;
     private ViewGroup mPasswordHint_layout;
@@ -41,9 +40,9 @@ public class LoginFragment extends Fragment implements LoginContract.ILoginView,
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_login, container, false);
+    public android.view.View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                          Bundle savedInstanceState) {
+        android.view.View root = inflater.inflate(R.layout.fragment_login, container, false);
         mUserNameHint_layout = root.findViewById(R.id.userNameHint_layout);
         mPasswordHint_layout = root.findViewById(R.id.passwordHint_layout);
         mUserNameHint_tv = root.findViewById(R.id.userNameHint_tv);
@@ -58,44 +57,44 @@ public class LoginFragment extends Fragment implements LoginContract.ILoginView,
     }
 
     @Override
-    public void setPresenter(LoginContract.ILoginPresenter presenter) {
+    public void setPresenter(LoginContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
 
     @Override
     public void onUserNameNotInput() {
-        mUserNameHint_layout.setVisibility(View.VISIBLE);
+        mUserNameHint_layout.setVisibility(android.view.View.VISIBLE);
         mUserNameHint_tv.setText(R.string.pleaseInputUserName);
         rx.Observable.timer(TIME_SHOW_MILLISECOND, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(e -> mUserNameHint_layout.setVisibility(View.GONE));
+                .subscribe(e -> mUserNameHint_layout.setVisibility(android.view.View.GONE));
     }
 
     @Override
     public void onPasswordNotInput() {
-        mPasswordHint_layout.setVisibility(View.VISIBLE);
+        mPasswordHint_layout.setVisibility(android.view.View.VISIBLE);
         mPasswordHint_tv.setText(R.string.pleaseInputPassword);
         rx.Observable.timer(TIME_SHOW_MILLISECOND, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(e -> mPasswordHint_layout.setVisibility(View.GONE));
+                .subscribe(e -> mPasswordHint_layout.setVisibility(android.view.View.GONE));
     }
 
     @Override
     public void onUserNameInputError() {
-        mUserNameHint_layout.setVisibility(View.VISIBLE);
+        mUserNameHint_layout.setVisibility(android.view.View.VISIBLE);
         mUserNameHint_tv.setText(R.string.pleaseInputCorrectUserName);
         rx.Observable.timer(TIME_SHOW_MILLISECOND, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(e -> mUserNameHint_layout.setVisibility(View.GONE));
+                .subscribe(e -> mUserNameHint_layout.setVisibility(android.view.View.GONE));
     }
 
     @Override
     public void onPasswordInputError() {
-        mPasswordHint_layout.setVisibility(View.VISIBLE);
+        mPasswordHint_layout.setVisibility(android.view.View.VISIBLE);
         mPasswordHint_tv.setText(R.string.pleaseInputCorrectPassword);
         rx.Observable.timer(TIME_SHOW_MILLISECOND, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(e -> mPasswordHint_layout.setVisibility(View.GONE));
+                .subscribe(e -> mPasswordHint_layout.setVisibility(android.view.View.GONE));
     }
 
     @Override
@@ -111,7 +110,7 @@ public class LoginFragment extends Fragment implements LoginContract.ILoginView,
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(android.view.View view) {
         switch (view.getId()){
             case R.id.login_tv:
                 String userName = mUserName_et.getText().toString();

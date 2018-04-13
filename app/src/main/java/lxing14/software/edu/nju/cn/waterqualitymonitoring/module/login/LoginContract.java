@@ -1,7 +1,5 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.login;
 
-import android.content.Context;
-
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BasePresenter;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BaseView;
 
@@ -14,7 +12,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.BaseView;
 
 public interface LoginContract {
 
-    interface ILoginView extends BaseView<ILoginPresenter>{
+    interface View extends BaseView<Presenter>{
 
         /**
          * 提示输入用户名
@@ -45,7 +43,7 @@ public interface LoginContract {
 
     }
 
-    interface ILoginPresenter extends BasePresenter{
+    interface Presenter extends BasePresenter{
 
         /**
          * 验证用户名密码的正确性

@@ -31,7 +31,6 @@ public class WaterStationInfoVO {
     private boolean hasFloatingMaterial;
     private boolean hasUnmannedShip;
 
-
     public boolean isHasWaterFlow() {
         return hasWaterFlow;
     }

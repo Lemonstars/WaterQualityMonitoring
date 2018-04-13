@@ -17,11 +17,11 @@ import rx.schedulers.Schedulers;
  * @time : 下午2:03
  */
 
-public class LoginPresenter implements LoginContract.ILoginPresenter {
+public class LoginPresenter implements LoginContract.Presenter {
 
-    private LoginContract.ILoginView mView;
+    private LoginContract.View mView;
 
-    public LoginPresenter(LoginContract.ILoginView mView) {
+    public LoginPresenter(LoginContract.View mView) {
         this.mView = mView;
         mView.setPresenter(this);
     }
