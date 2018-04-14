@@ -226,6 +226,7 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         webSettings.setAllowContentAccess(true);
         webSettings.setAllowFileAccess(true);
         webSettings.setDomStorageEnabled(true);
+        mWebView.loadUrl("file:///android_asset/index.html");
     }
 
     private void configUnit(){

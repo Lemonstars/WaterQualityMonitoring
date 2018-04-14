@@ -3,10 +3,8 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.record;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -14,12 +12,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -37,7 +36,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferen
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map.MapInfoWindowAdapter;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ChartMarkerView;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
 
 public class RecordFragment extends Fragment implements RecordContract.View{
 
@@ -46,8 +45,7 @@ public class RecordFragment extends Fragment implements RecordContract.View{
     private AMap mAMap;
     private LinearLayout mPicture_layout;
     private TableLayout mPdf_layout;
-
-    ImageView test_iv;
+    private ImageDialog mImageDialog;
 
     public static RecordFragment generateFragment(){
         return new RecordFragment();
@@ -151,11 +149,13 @@ public class RecordFragment extends Fragment implements RecordContract.View{
         Context context = getContext();
         for(String str: picUrlList){
             ImageView imageView = new ImageView(context);
-            mPicture_layout.addView(imageView);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
+            imageView.setPadding(10, 10, 10,10);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(300, LinearLayout.LayoutParams.MATCH_PARENT);
             params.weight = 1;
             imageView.setLayoutParams(params);
+            mPicture_layout.addView(imageView);
             PicassoUtil.loadUrl(context, str, imageView);
+            imageView.setOnClickListener( v -> showSelectedPic((ImageView) v));
         }
     }
 
@@ -165,9 +165,6 @@ public class RecordFragment extends Fragment implements RecordContract.View{
         mAMap = mMapView.getMap();
         mPicture_layout = root.findViewById(R.id.picture_layout);
         mPdf_layout = root.findViewById(R.id.pdf_layout);
-
-
-        test_iv = root.findViewById(R.id.test_iv);
     }
 
     //configure the text view
@@ -193,6 +190,16 @@ public class RecordFragment extends Fragment implements RecordContract.View{
     //configure the markerView
     private void configChartMarkerView(){
         mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getActivity(), false));
+    }
+
+    //show the selected picture
+    private void showSelectedPic(ImageView imageView){
+        if(mImageDialog == null){
+            mImageDialog = new ImageDialog(getContext(), imageView.getDrawable());
+        }else {
+            mImageDialog.setImage(imageView.getDrawable());
+        }
+        mImageDialog.show();
     }
 
 }

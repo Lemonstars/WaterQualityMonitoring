@@ -301,19 +301,6 @@ public class WaterFlowFragment extends Fragment implements WaterFlowContract.Vie
     }
 
     private void loadWebFile(){
-        mWebView.setWebChromeClient(new WebChromeClient());
-        mWebView.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    view.loadUrl(request.getUrl().toString());
-                } else {
-                    view.loadUrl(request.toString());
-                }
-                return true;
-            }
-        });
-
         WebSettings webSettings = mWebView.getSettings();
 
         webSettings.setJavaScriptEnabled(true);

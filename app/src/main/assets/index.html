@@ -8,15 +8,15 @@
     </div>
 	<script type="text/javascript" src="jsmpeg.min.js"></script>
     <script type="text/javascript">
-        var player;
-		function getRealTimeStream(url){
-			var canvas = document.getElementById('video-canvas');
-			if (player != null){
-			    player.stop();
-			    player.destroy();
-			}
+		var canvas = document.getElementById('video-canvas');
+        var player = new JSMpeg.Player('ws://47.92.84.138:8600/123', {canvas: canvas});
 
-		    player = new JSMpeg.Player(url, {canvas: canvas});
+		function getRealTimeStream(url){
+			player.stop();
+			player.destroy();
+
+            player = new JSMpeg.Player(url, {canvas: canvas});
+		    player.play();
 		}
 	</script>
 </body>
