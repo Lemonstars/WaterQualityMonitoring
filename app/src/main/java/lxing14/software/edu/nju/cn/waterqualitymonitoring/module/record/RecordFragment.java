@@ -3,6 +3,7 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.record;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -45,6 +46,8 @@ public class RecordFragment extends Fragment implements RecordContract.View{
     private AMap mAMap;
     private LinearLayout mPicture_layout;
     private TableLayout mPdf_layout;
+
+    ImageView test_iv;
 
     public static RecordFragment generateFragment(){
         return new RecordFragment();
@@ -148,11 +151,11 @@ public class RecordFragment extends Fragment implements RecordContract.View{
         Context context = getContext();
         for(String str: picUrlList){
             ImageView imageView = new ImageView(context);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
+            mPicture_layout.addView(imageView);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
             params.weight = 1;
             imageView.setLayoutParams(params);
-            PicassoUtil.loadUrl(context, WebSite.PIC_Prefix+"/"+str, imageView);
-            mPicture_layout.addView(imageView);
+            PicassoUtil.loadUrl(context, str, imageView);
         }
     }
 
@@ -162,6 +165,9 @@ public class RecordFragment extends Fragment implements RecordContract.View{
         mAMap = mMapView.getMap();
         mPicture_layout = root.findViewById(R.id.picture_layout);
         mPdf_layout = root.findViewById(R.id.pdf_layout);
+
+
+        test_iv = root.findViewById(R.id.test_iv);
     }
 
     //configure the text view

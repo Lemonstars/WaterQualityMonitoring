@@ -22,8 +22,10 @@ public class PicassoUtil {
             return;
         }
 
+        String targetUrl = WebSite.PIC_Prefix+url.replace(" ", "%20");
+
         Picasso.with(context)
-                .load(WebSite.PIC_Prefix+url.replace(" ", "%20"))
+                .load(targetUrl)
                 .fit()
                 .into(imageView);
     }

@@ -48,6 +48,12 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/bg_white_radius_corner">
 
+            <ImageView
+                android:id="@+id/test_iv"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_default_pic"/>
+
 
         </LinearLayout>
 
@@ -76,7 +82,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
 
 </ScrollView>
 
