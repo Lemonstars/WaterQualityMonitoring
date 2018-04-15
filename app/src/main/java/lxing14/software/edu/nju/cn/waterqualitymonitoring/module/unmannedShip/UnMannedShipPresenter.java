@@ -36,14 +36,6 @@ public class UnMannedShipPresenter implements UnMannedShipContract.Presenter {
     }
 
     @Override
-    public void loadInitLocation() {
-        SharedPreferences sharedPreferences = mView.getContextView().getSharedPreferences(SharePreferencesConstant.APP_NAME, Context.MODE_PRIVATE);
-        float latitude = sharedPreferences.getFloat(SharePreferencesConstant.LATITUDE, CommonConstant.LATITUDE_OF_NJ);
-        float longitude = sharedPreferences.getFloat(SharePreferencesConstant.LONGITUDE, CommonConstant.LONGITUDE_OF_NJ);
-        mView.showCenterPoint(latitude, longitude);
-    }
-
-    @Override
     public void loadBoatCurrentLocation() {
         List<LatLng> latLngList = new ArrayList<>();
         // TODO 实时的数据获取

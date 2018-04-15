@@ -19,13 +19,6 @@ public interface UnMannedShipContract {
     interface View extends BaseView<Presenter>{
 
         /**
-         * 显示中心点
-         * @param latitude
-         * @param longitude
-         */
-        void showCenterPoint(float latitude, float longitude);
-
-        /**
          * 显示水质数据
          * @param date
          * @param tPh
@@ -51,11 +44,6 @@ public interface UnMannedShipContract {
          * 加载无人船当前位置
          */
         void loadBoatCurrentLocation();
-
-        /**
-         * 加载初始位置
-         */
-        void loadInitLocation();
 
     }
 

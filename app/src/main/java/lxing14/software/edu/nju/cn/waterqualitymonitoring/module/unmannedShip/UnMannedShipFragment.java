@@ -42,9 +42,6 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
         View root = inflater.inflate(R.layout.fragment_un_manned_ship, container, false);
         findView(root);
         configMapView();
-
-        mPresenter.loadInitLocation();
-
         mMapView.onCreate(savedInstanceState);
         return root;
     }
@@ -74,11 +71,6 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
     }
 
     @Override
-    public void showCenterPoint(float latitude, float longitude) {
-        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 16f));
-    }
-
-    @Override
     public void showWaterQualityNum(String date, String tPh) {
         time_tv.setText(date);
         tPh_tv.setText(tPh);
@@ -103,7 +95,8 @@ public class UnMannedShipFragment extends Fragment implements UnMannedShipContra
         mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 20));
         SmoothMoveMarker smoothMarker = new SmoothMoveMarker(mAMap);
         smoothMarker.setDescriptor(BitmapDescriptorFactory.fromResource(R.drawable.ic_moving_boat));
-        smoothMarker.setTotalDuration(40);
+        smoothMarker.setPoints(points);
+        smoothMarker.setTotalDuration(20);
         smoothMarker.startSmoothMove();
     }
 

@@ -74,6 +74,12 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
             case R.id.waterFlow_layout:
                 presenter.loadWaterFlowInfo();
                 break;
+            case R.id.wave_layout:
+                presenter.loadWaveInfo();
+                break;
+            case R.id.weather_layout:
+                presenter.loadWeatherInfo();
+                break;
             case R.id.floating_layout:
                 presenter.loadFloatingMaterialInfo();
                 break;
@@ -82,12 +88,6 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.record_layout:
                 presenter.loadHisRecordInfo();
-                break;
-            case R.id.wave_layout:
-                presenter.loadWaveInfo();
-                break;
-            case R.id.weather_layout:
-                presenter.loadWeatherInfo();
                 break;
         }
 
