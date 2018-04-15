@@ -1,14 +1,19 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map;
 
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
+import com.amap.api.maps.model.BitmapDescriptor;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscriber;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
@@ -35,7 +40,6 @@ public class MapPresenter implements MapContract.Presenter {
         mView = view;
         mView.setPresenter(this);
     }
-
 
     @Override
     public void loadAllWaterTypeInfo() {
@@ -156,6 +160,7 @@ public class MapPresenter implements MapContract.Presenter {
     //process the data
     private void onRequestStationInfo(List<WaterStationInfoVO> waterStationInfoVOS){
         LatLng latLng;
+        Resources resources = mView.getContextView().getResources();
         ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>(waterStationInfoVOS.size());
         for(WaterStationInfoVO vo: waterStationInfoVOS){
             double x = Double.parseDouble(vo.getX());
@@ -185,6 +190,15 @@ public class MapPresenter implements MapContract.Presenter {
             sb.append(x);
 
             markerOptions.position(latLng).snippet(sb.toString());
+            BitmapDescriptor targetIcon;
+            if(vo.isHasHistoryRecord()){
+                targetIcon = BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(resources, R.drawable.ic_location_blue));
+            }else{
+                targetIcon = BitmapDescriptorFactory.fromBitmap(BitmapFactory
+                        .decodeResource(resources, R.drawable.ic_location_red));
+            }
+            markerOptions.icon(targetIcon);
             markerOptionsArrayList.add(markerOptions);
         }
 
