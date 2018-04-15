@@ -41,7 +41,8 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
         this.context = context;
         this.isFrontPage = isFrontPage;
 
-        type = new int[]{R.string.waterLevel, R.string.waterQuality, R.string.waterFlow, R.string.floatingMaterial, R.string.unmannedShip, R.string.record, R.string.wave, R.string.weather};
+        type = new int[]{R.string.waterLevel, R.string.waterQuality, R.string.waterFlow, R.string.floatingMaterial,
+                R.string.unmannedShip, R.string.record, R.string.wave, R.string.weather};
     }
 
     @Override
