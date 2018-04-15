@@ -8,7 +8,7 @@ public class CameraVO {
     private Double speed;
     private Double flow;
     private Integer state;
-    private String FilePath;
+    private String filePath;
     private String collectionTime;
     private String instockTime;
 
@@ -61,11 +61,11 @@ public class CameraVO {
     }
 
     public String getFilePath() {
-        return FilePath;
+        return filePath;
     }
 
     public void setFilePath(String filePath) {
-        FilePath = filePath;
+        this.filePath = filePath;
     }
 
     public String getCollectionTime() {
