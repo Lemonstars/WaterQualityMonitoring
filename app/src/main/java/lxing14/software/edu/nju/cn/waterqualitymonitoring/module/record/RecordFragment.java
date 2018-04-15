@@ -150,7 +150,7 @@ public class RecordFragment extends Fragment implements RecordContract.View{
         for(String str: picUrlList){
             ImageView imageView = new ImageView(context);
             imageView.setPadding(10, 10, 10,10);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(300, LinearLayout.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(500, LinearLayout.LayoutParams.MATCH_PARENT);
             params.weight = 1;
             imageView.setLayoutParams(params);
             mPicture_layout.addView(imageView);
