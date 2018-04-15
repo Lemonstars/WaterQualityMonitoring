@@ -1,18 +1,10 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,7 +35,6 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
     private LineChart mLineChart;
     private TextView[] mTab_tv;
     private ImageView mBig_iv;
-    private WebView mWebView;
     private ImageView mImage1;
     private ImageView mImage2;
     private ImageView mImage3;
@@ -74,7 +65,6 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
     @Override
     public void onResume() {
         super.onResume();
-        loadWebFile();
     }
 
     @Override
@@ -110,13 +100,6 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         PicassoUtil.loadUrl(getContext(), url1, mImage1);
         PicassoUtil.loadUrl(getContext(), url2, mImage2);
         PicassoUtil.loadUrl(getContext(), url3, mImage3);
-    }
-
-
-    @Override
-    public void showCameraVideo(String url) {
-        String jsCall = "javascript:getRealTimeStream('"+url+"')";
-        mWebView.loadUrl(jsCall);
     }
 
     @Override
@@ -193,40 +176,9 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         mTab_tv = new TextView[]{oneWeek_tv, oneMonth_tv, threeMonth_tv};
         mLineChart = root.findViewById(R.id.lineChart);
         mBig_iv = root.findViewById(R.id.big_iv);
-        mWebView = root.findViewById(R.id.webView);
         mImage1 = root.findViewById(R.id.image1);
         mImage2 = root.findViewById(R.id.image2);
         mImage3 = root.findViewById(R.id.image3);
-    }
-
-    //load the web view
-    private void loadWebFile(){
-        mWebView.setWebChromeClient(new WebChromeClient() );
-        mWebView.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    view.loadUrl(request.getUrl().toString());
-                } else {
-                    view.loadUrl(request.toString());
-                }
-                return true;
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                view.loadUrl("javascript:getRealTimeStream('ws://47.92.84.138:8600/123')");
-            }
-        });
-
-        WebSettings webSettings = mWebView.getSettings();
-
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setAllowContentAccess(true);
-        webSettings.setAllowFileAccess(true);
-        webSettings.setDomStorageEnabled(true);
-        mWebView.loadUrl("file:///android_asset/index.html");
     }
 
     private void configUnit(){
