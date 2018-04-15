@@ -41,7 +41,7 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
         this.context = context;
         this.isFrontPage = isFrontPage;
 
-        type = new int[]{R.string.waterLevel, R.string.waterQuality, R.string.waterFlow, R.string.floatingMaterial, R.string.unmannedShip, R.string.record};
+        type = new int[]{R.string.waterLevel, R.string.waterQuality, R.string.waterFlow, R.string.floatingMaterial, R.string.unmannedShip, R.string.record, R.string.wave, R.string.weather};
     }
 
     @Override
@@ -58,9 +58,12 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
         boolean hasFloating = Integer.parseInt(data[5])==1;
         boolean hasBoat = Integer.parseInt(data[6])==1;
         boolean hasRecord = Integer.parseInt(data[7])==1;
-        boolean[] typeExisted = new boolean[]{hasWaterLevel, hasWaterQuality, hasWaterFlow, hasFloating, hasBoat, hasRecord};
-        float latitude = Float.parseFloat(data[8]);
-        float longitude = Float.parseFloat(data[9]);
+        boolean hasWave = Integer.parseInt(data[8])==1;
+        boolean hasWeather = Integer.parseInt(data[9])==1;
+        boolean[] typeExisted = new boolean[]{hasWaterLevel, hasWaterQuality, hasWaterFlow,
+                hasFloating, hasBoat, hasRecord, hasWave, hasWeather};
+        float latitude = Float.parseFloat(data[10]);
+        float longitude = Float.parseFloat(data[11]);
 
         LinearLayout infoWindow = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.bg_info_window, null);
         TextView name_tv = infoWindow.findViewById(R.id.name_tv);
@@ -73,21 +76,25 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
             if(typeExisted[i]){
                 waterInfoView = new WaterInfoView(context, context.getString(type[i]));
                 infoWindow.addView(waterInfoView);
-                Intent intent = generateIntent(i, stn);
-                waterInfoView.setOnClickListener(v -> {
-                    context.startActivity(intent);
-                    marker.hideInfoWindow();
-                    if(!isFrontPage){
-                        context.finish();
-                    }
-                    SharedPreferences sharedPreferences =
-                            context.getSharedPreferences(SharePreferencesConstant.APP_NAME, Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putFloat(SharePreferencesConstant.LATITUDE, latitude);
-                    editor.putFloat(SharePreferencesConstant.LONGITUDE, longitude);
-                    editor.putString(SharePreferencesConstant.STATION_NAME, name);
-                    editor.apply();
-                });
+                Intent intent;
+                if(i>=0&&i<=5){
+                    //TODO 暂时只有五个指标
+                    intent = generateIntent(i, stn);
+                    waterInfoView.setOnClickListener(v -> {
+                        context.startActivity(intent);
+                        marker.hideInfoWindow();
+                        if(!isFrontPage){
+                            context.finish();
+                        }
+                        SharedPreferences sharedPreferences =
+                                context.getSharedPreferences(SharePreferencesConstant.APP_NAME, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putFloat(SharePreferencesConstant.LATITUDE, latitude);
+                        editor.putFloat(SharePreferencesConstant.LONGITUDE, longitude);
+                        editor.putString(SharePreferencesConstant.STATION_NAME, name);
+                        editor.apply();
+                    });
+                }
             }
         }
 
@@ -100,7 +107,7 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
     }
 
     private Intent generateIntent(int index, int stnId){
-        Intent intent;
+        Intent intent = null;
         switch (index){
             case 0:
                 intent = WaterLevelActivity.generateIntent(context, stnId);
@@ -119,6 +126,12 @@ public class MapInfoWindowAdapter implements AMap.InfoWindowAdapter {
                 break;
             case 5:
                 intent = RecordActivity.generateIntent(context, stnId);
+                break;
+            case 6:
+                //TODO 波浪
+                break;
+            case 7:
+                //TODO 气象
                 break;
             default:
                 throw new IllegalArgumentException();

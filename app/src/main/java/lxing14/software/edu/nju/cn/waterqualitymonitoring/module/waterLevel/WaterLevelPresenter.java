@@ -3,7 +3,6 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterLevel;
 import android.content.Context;
 import android.content.Intent;
 
-import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterLevelVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.MapMarkerConfig;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -136,40 +136,12 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
                 .subscribe(new BaseSubscriber<List<WaterStationInfoVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterStationInfoVO> waterStationInfoVOS) {
-                        LatLng latLng;
-                        ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>(waterStationInfoVOS.size());
-                        for(WaterStationInfoVO vo: waterStationInfoVOS){
-                            double x = Double.parseDouble(vo.getX());
-                            double y = Double.parseDouble(vo.getY());
-
-                            latLng = new LatLng(y, x);
-                            MarkerOptions markerOptions = new MarkerOptions();
-                            StringBuilder sb = new StringBuilder();
-                            sb.append(String.valueOf(vo.getId()));
-                            sb.append(' ');
-                            sb.append(vo.getName());
-                            sb.append(' ');
-                            sb.append(vo.isHasWaterLevel()? 1:0); // water level
-                            sb.append(' ');
-                            sb.append(vo.isHasWaterQuality()? 1:0); // water quality
-                            sb.append(' ');
-                            sb.append(vo.isHasWaterFlow()? 1:0); // water flow
-                            sb.append(' ');
-                            sb.append(vo.isHasFloatingMaterial()? 1:0); // floating
-                            sb.append(' ');
-                            sb.append(vo.isHasUnmannedShip()? 1:0); // boat
-                            sb.append(' ');
-                            sb.append(vo.isHasHistoryRecord()? 1:0); // record
-                            sb.append(' ');
-                            sb.append(y);
-                            sb.append(' ');
-                            sb.append(x);
-
-                            markerOptions.position(latLng).snippet(sb.toString());
-                            markerOptionsArrayList.add(markerOptions);
-                        }
-
-                        mView.showStationLocation(markerOptionsArrayList);
+                         new MapMarkerConfig(){
+                             @Override
+                             public void showStationLocation(ArrayList<MarkerOptions> list) {
+                                 mView.showStationLocation(list);
+                             }
+                         }.onRequestStationInfo(mView.getContextView(), waterStationInfoVOS);
                     }
                 });
     }

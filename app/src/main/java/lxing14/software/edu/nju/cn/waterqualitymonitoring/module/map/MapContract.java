@@ -79,6 +79,16 @@ public interface MapContract {
         void loadHisRecordInfo();
 
         /**
+         * 加载波浪信息
+         */
+        void loadWaveInfo();
+
+        /**
+         * 加载气象信息
+         */
+        void loadWeatherInfo();
+
+        /**
          * 搜索
          * @param input
          */

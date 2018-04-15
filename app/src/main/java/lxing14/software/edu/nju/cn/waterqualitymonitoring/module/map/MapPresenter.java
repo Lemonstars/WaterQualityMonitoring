@@ -1,23 +1,18 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map;
 
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import com.amap.api.maps.model.BitmapDescriptor;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscriber;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.MapMarkerConfig;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.StringUtil;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -35,6 +30,12 @@ public class MapPresenter implements MapContract.Presenter {
 
     private List<WaterStationInfoVO> mWaterStationInfoList;
     private List<String> completeDataList;
+    private MapMarkerConfig mapMarkerConfig = new MapMarkerConfig() {
+        @Override
+        public void showStationLocation(ArrayList<MarkerOptions> list) {
+            mView.showStationLocation(list);
+        }
+    };
 
     public MapPresenter(@NonNull MapContract.View view){
         mView = view;
@@ -50,7 +51,7 @@ public class MapPresenter implements MapContract.Presenter {
                     @Override
                     public void onNext(List<WaterStationInfoVO> waterStationInfoVOS) {
                         mWaterStationInfoList = waterStationInfoVOS;
-                        onRequestStationInfo(waterStationInfoVOS);
+                        mapMarkerConfig.onRequestStationInfo(mView.getContextView(), waterStationInfoVOS);
 
                         completeDataList = new ArrayList<>(waterStationInfoVOS.size());
                         WaterStationInfoVO stationInfoVO;
@@ -71,7 +72,7 @@ public class MapPresenter implements MapContract.Presenter {
                 waterStationInfoVOS.add(vo);
             }
         }
-        onRequestStationInfo(waterStationInfoVOS);
+        mapMarkerConfig.onRequestStationInfo(mView.getContextView(), waterStationInfoVOS);
     }
 
     @Override
@@ -82,7 +83,7 @@ public class MapPresenter implements MapContract.Presenter {
                 waterStationInfoVOS.add(vo);
             }
         }
-        onRequestStationInfo(waterStationInfoVOS);
+        mapMarkerConfig.onRequestStationInfo(mView.getContextView(), waterStationInfoVOS);
     }
 
     @Override
@@ -93,7 +94,7 @@ public class MapPresenter implements MapContract.Presenter {
                 waterStationInfoVOS.add(vo);
             }
         }
-        onRequestStationInfo(waterStationInfoVOS);
+        mapMarkerConfig.onRequestStationInfo(mView.getContextView(), waterStationInfoVOS);
     }
 
     @Override
@@ -104,7 +105,7 @@ public class MapPresenter implements MapContract.Presenter {
                 waterStationInfoVOS.add(vo);
             }
         }
-        onRequestStationInfo(waterStationInfoVOS);
+        mapMarkerConfig.onRequestStationInfo(mView.getContextView(), waterStationInfoVOS);
     }
 
     @Override
@@ -115,7 +116,7 @@ public class MapPresenter implements MapContract.Presenter {
                 waterStationInfoVOS.add(vo);
             }
         }
-        onRequestStationInfo(waterStationInfoVOS);
+        mapMarkerConfig.onRequestStationInfo(mView.getContextView(), waterStationInfoVOS);
     }
 
     @Override
@@ -126,7 +127,29 @@ public class MapPresenter implements MapContract.Presenter {
                 waterStationInfoVOS.add(vo);
             }
         }
-        onRequestStationInfo(waterStationInfoVOS);
+        mapMarkerConfig.onRequestStationInfo(mView.getContextView(), waterStationInfoVOS);
+    }
+
+    @Override
+    public void loadWaveInfo() {
+        List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
+        for(WaterStationInfoVO vo: mWaterStationInfoList){
+            if(vo.isHasWave()){
+                waterStationInfoVOS.add(vo);
+            }
+        }
+        mapMarkerConfig.onRequestStationInfo(mView.getContextView(), waterStationInfoVOS);
+    }
+
+    @Override
+    public void loadWeatherInfo() {
+        List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
+        for(WaterStationInfoVO vo: mWaterStationInfoList){
+            if(vo.isHasWeather()){
+                waterStationInfoVOS.add(vo);
+            }
+        }
+        mapMarkerConfig.onRequestStationInfo(mView.getContextView(), waterStationInfoVOS);
     }
 
     @Override
@@ -149,60 +172,12 @@ public class MapPresenter implements MapContract.Presenter {
         if(target.size()==0){
             Toast.makeText(mView.getContextView(), "未查询到相关站点", Toast.LENGTH_SHORT);
         }else if(target.size()==1){
-            onRequestStationInfo(target);
+            mapMarkerConfig.onRequestStationInfo(mView.getContextView(), target);
             mView.showLocation(latitude, longitude);
         }else {
             Toast.makeText(mView.getContextView(), "查询失败", Toast.LENGTH_SHORT);
         }
 
-    }
-
-    //process the data
-    private void onRequestStationInfo(List<WaterStationInfoVO> waterStationInfoVOS){
-        LatLng latLng;
-        Resources resources = mView.getContextView().getResources();
-        ArrayList<MarkerOptions> markerOptionsArrayList = new ArrayList<>(waterStationInfoVOS.size());
-        for(WaterStationInfoVO vo: waterStationInfoVOS){
-            double x = Double.parseDouble(vo.getX());
-            double y = Double.parseDouble(vo.getY());
-
-            latLng = new LatLng(y, x);
-            MarkerOptions markerOptions = new MarkerOptions();
-            StringBuilder sb = new StringBuilder();
-            sb.append(String.valueOf(vo.getId()));
-            sb.append(' ');
-            sb.append(vo.getName());
-            sb.append(' ');
-            sb.append(vo.isHasWaterLevel()? 1:0); // water level
-            sb.append(' ');
-            sb.append(vo.isHasWaterQuality()? 1:0); // water quality
-            sb.append(' ');
-            sb.append(vo.isHasWaterFlow()? 1:0); // water flow
-            sb.append(' ');
-            sb.append(vo.isHasFloatingMaterial()? 1:0); // floating
-            sb.append(' ');
-            sb.append(vo.isHasUnmannedShip()? 1:0); // boat
-            sb.append(' ');
-            sb.append(vo.isHasHistoryRecord()? 1:0); // record
-            sb.append(' ');
-            sb.append(y);
-            sb.append(' ');
-            sb.append(x);
-
-            markerOptions.position(latLng).snippet(sb.toString());
-            BitmapDescriptor targetIcon;
-            if(vo.isHasHistoryRecord()){
-                targetIcon = BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                        .decodeResource(resources, R.drawable.ic_location_blue));
-            }else{
-                targetIcon = BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                        .decodeResource(resources, R.drawable.ic_location_red));
-            }
-            markerOptions.icon(targetIcon);
-            markerOptionsArrayList.add(markerOptions);
-        }
-
-        mView.showStationLocation(markerOptionsArrayList);
     }
 
 

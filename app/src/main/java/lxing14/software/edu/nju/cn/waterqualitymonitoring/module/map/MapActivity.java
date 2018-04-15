@@ -31,6 +31,8 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
     private ViewGroup mFloatingLayout;
     private ViewGroup mBoatLayout;
     private ViewGroup mRecordLayout;
+    private ViewGroup mWaveLayout;
+    private ViewGroup mWeatherLayout;
 
     public static Intent generateIntent(Context context, String userName){
         Intent intent = new Intent(context, MapActivity.class);
@@ -81,6 +83,12 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
             case R.id.record_layout:
                 presenter.loadHisRecordInfo();
                 break;
+            case R.id.wave_layout:
+                presenter.loadWaveInfo();
+                break;
+            case R.id.weather_layout:
+                presenter.loadWeatherInfo();
+                break;
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -108,6 +116,8 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         mBoatLayout.setOnClickListener(this);
         mWaterFlowLayout.setOnClickListener(this);
         mRecordLayout.setOnClickListener(this);
+        mWaveLayout.setOnClickListener(this);
+        mWeatherLayout.setOnClickListener(this);
     }
 
     //get the data of the intent
@@ -126,6 +136,8 @@ public class MapActivity extends AppCompatActivity implements View.OnClickListen
         mBoatLayout = findViewById(R.id.boat_layout);
         mWaterFlowLayout = findViewById(R.id.waterFlow_layout);
         mRecordLayout = findViewById(R.id.record_layout);
+        mWaveLayout = findViewById(R.id.wave_layout);
+        mWeatherLayout = findViewById(R.id.weather_layout);
     }
 
 }

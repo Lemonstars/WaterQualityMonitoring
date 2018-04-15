@@ -5,10 +5,11 @@
     <string name="waterLevel">水位</string>
     <string name="waterFlow">流量</string>
     <string name="waterQuality">水质</string>
-    <string name="waterForce">水动力</string>
     <string name="floatingMaterial">漂浮物</string>
     <string name="unmannedShip">无人船</string>
     <string name="record">历史记录</string>
+    <string name="wave">波浪</string>
+    <string name="weather">气象</string>
 
     <string name="standardMap">标准图</string>
     <string name="satelliteMap">卫星图</string>
