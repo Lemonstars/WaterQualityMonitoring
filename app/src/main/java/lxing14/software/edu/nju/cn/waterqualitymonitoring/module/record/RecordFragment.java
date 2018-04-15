@@ -116,7 +116,7 @@ public class RecordFragment extends Fragment implements RecordContract.View{
             TextView time_tv = new TextView(context);
             time_tv.setText(vo.getTime());
             TextView download_tv = new TextView(context);
-            String realUrl = WebSite.PIC_Prefix +"/"+url;
+            String realUrl = WebSite.PIC_Prefix+url;
             download_tv.setText(realUrl);
             download_tv.setOnClickListener(v -> {
                 Uri uri = Uri.parse(realUrl);

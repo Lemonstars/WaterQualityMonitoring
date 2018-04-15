@@ -56,7 +56,7 @@ public class UnMannedShipPresenter implements UnMannedShipContract.Presenter {
 //                    float longitude = (float) vo.getLongitude();
 //
 //                    latLngList.add(new LatLng(latitude, longitude));
-//                    mView.addBoatLocation(latLngList);
+//                    mView.addBoatRealTimeLocation(latLngList);
 //
 //                    String today = TimeUtil.getCurrentTime();
 //                    StringBuilder tPh_sb = new StringBuilder();
@@ -80,17 +80,17 @@ public class UnMannedShipPresenter implements UnMannedShipContract.Presenter {
                             LatLng latLng = new LatLng(vo.getLatitude(), vo.getLongitude());
                             latLngs.add(latLng);
                         }
-                        mView.addBoatLocation(latLngs);
+                        mView.addBoatHistoryLocation(latLngs);
 
-                        String today = TimeUtil.getCurrentTime();
-                        UnmannedBoatVO unmannedBoatVO = unmannedBoatVOS.get(0);
+                        String currentTime = TimeUtil.getCurrentTime();
+                        UnmannedBoatVO vo = unmannedBoatVOS.get(0);
                         StringBuilder tPh_sb = new StringBuilder();
                         tPh_sb.append("温度:");
-                        tPh_sb.append(unmannedBoatVO.getTemperature());
+                        tPh_sb.append(vo.getTemperature());
                         tPh_sb.append("°C  ");
                         tPh_sb.append("ph:");
-                        tPh_sb.append(unmannedBoatVO.getPh());
-                        mView.showWaterQualityNum(today, tPh_sb.toString());
+                        tPh_sb.append(vo.getPh());
+                        mView.showWaterQualityNum(currentTime, tPh_sb.toString());
                     }
                 });
 

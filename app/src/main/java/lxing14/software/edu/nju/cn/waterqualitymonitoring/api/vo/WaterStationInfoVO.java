@@ -9,76 +9,34 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo;
 
 public class WaterStationInfoVO {
 
+
     /**
      * hasWaterFlow : true
+     * hasWeather : false
      * hasFloatingMaterial : true
      * hasWaterQuality : true
+     * hasWave : false
      * name : 前垾水文站
      * x : 118.87056
      * hasWaterLevel : true
      * y : 31.864978
+     * hasHistoryRecord : false
      * id : 1
-     * hasUnmannedShip : true
+     * hasUnmannedShip : false
      */
 
-    private int id;
-    private String x;
-    private String y;
-    private String name;
-    private boolean hasWaterLevel;
-    private boolean hasWaterQuality;
     private boolean hasWaterFlow;
+    private boolean hasWeather;
     private boolean hasFloatingMaterial;
+    private boolean hasWaterQuality;
+    private boolean hasWave;
+    private boolean hasWaterLevel;
     private boolean hasUnmannedShip;
     private boolean hasHistoryRecord;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getX() {
-        return x;
-    }
-
-    public void setX(String x) {
-        this.x = x;
-    }
-
-    public String getY() {
-        return y;
-    }
-
-    public void setY(String y) {
-        this.y = y;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isHasWaterLevel() {
-        return hasWaterLevel;
-    }
-
-    public void setHasWaterLevel(boolean hasWaterLevel) {
-        this.hasWaterLevel = hasWaterLevel;
-    }
-
-    public boolean isHasWaterQuality() {
-        return hasWaterQuality;
-    }
-
-    public void setHasWaterQuality(boolean hasWaterQuality) {
-        this.hasWaterQuality = hasWaterQuality;
-    }
+    private String name;
+    private String x;
+    private String y;
+    private int id;
 
     public boolean isHasWaterFlow() {
         return hasWaterFlow;
@@ -86,6 +44,14 @@ public class WaterStationInfoVO {
 
     public void setHasWaterFlow(boolean hasWaterFlow) {
         this.hasWaterFlow = hasWaterFlow;
+    }
+
+    public boolean isHasWeather() {
+        return hasWeather;
+    }
+
+    public void setHasWeather(boolean hasWeather) {
+        this.hasWeather = hasWeather;
     }
 
     public boolean isHasFloatingMaterial() {
@@ -96,12 +62,52 @@ public class WaterStationInfoVO {
         this.hasFloatingMaterial = hasFloatingMaterial;
     }
 
-    public boolean isHasUnmannedShip() {
-        return hasUnmannedShip;
+    public boolean isHasWaterQuality() {
+        return hasWaterQuality;
     }
 
-    public void setHasUnmannedShip(boolean hasUnmannedShip) {
-        this.hasUnmannedShip = hasUnmannedShip;
+    public void setHasWaterQuality(boolean hasWaterQuality) {
+        this.hasWaterQuality = hasWaterQuality;
+    }
+
+    public boolean isHasWave() {
+        return hasWave;
+    }
+
+    public void setHasWave(boolean hasWave) {
+        this.hasWave = hasWave;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getX() {
+        return x;
+    }
+
+    public void setX(String x) {
+        this.x = x;
+    }
+
+    public boolean isHasWaterLevel() {
+        return hasWaterLevel;
+    }
+
+    public void setHasWaterLevel(boolean hasWaterLevel) {
+        this.hasWaterLevel = hasWaterLevel;
+    }
+
+    public String getY() {
+        return y;
+    }
+
+    public void setY(String y) {
+        this.y = y;
     }
 
     public boolean isHasHistoryRecord() {
@@ -110,5 +116,21 @@ public class WaterStationInfoVO {
 
     public void setHasHistoryRecord(boolean hasHistoryRecord) {
         this.hasHistoryRecord = hasHistoryRecord;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isHasUnmannedShip() {
+        return hasUnmannedShip;
+    }
+
+    public void setHasUnmannedShip(boolean hasUnmannedShip) {
+        this.hasUnmannedShip = hasUnmannedShip;
     }
 }

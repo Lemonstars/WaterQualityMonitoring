@@ -33,11 +33,16 @@ public interface UnMannedShipContract {
         void showWaterQualityNum(String date, String tPh);
 
         /**
-         * 添加无人船位置标记
+         * 添加无人船位置实时标记
          * @param points
          */
-        void addBoatLocation(List<LatLng> points);
+        void addBoatRealTimeLocation(List<LatLng> points);
 
+        /**
+         * 添加无人船历史标记
+         * @param points
+         */
+        void addBoatHistoryLocation(List<LatLng> points);
     }
 
     interface Presenter extends BasePresenter{
