@@ -17,7 +17,7 @@ import rx.Observable;
 
 public interface WaterStationInterface {
 
-    @GET("waterStation/allStationInfo")
+    @GET("water/queryAllWaterStation/0")
     Observable<List<WaterStationInfoVO>> getAllStationInfo();
 
 

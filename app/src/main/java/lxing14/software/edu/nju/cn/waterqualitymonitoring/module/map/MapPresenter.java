@@ -57,7 +57,7 @@ public class MapPresenter implements MapContract.Presenter {
                         WaterStationInfoVO stationInfoVO;
                         for(int i=0;i<waterStationInfoVOS.size();i++){
                             stationInfoVO = waterStationInfoVOS.get(i);
-                            completeDataList.add(stationInfoVO.getName());
+                            completeDataList.add(stationInfoVO.getStnName());
                         }
                         mView.setCompleteAdapter(completeDataList);
                     }
@@ -68,7 +68,8 @@ public class MapPresenter implements MapContract.Presenter {
     public void loadWaterLevelInfo() {
         List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
         for(WaterStationInfoVO vo: mWaterStationInfoList){
-            if(vo.isHasWaterLevel()){
+            String stnType = vo.getStnType();
+            if(stnType.contains("1")){
                 waterStationInfoVOS.add(vo);
             }
         }
@@ -79,7 +80,8 @@ public class MapPresenter implements MapContract.Presenter {
     public void loadWaterFlowInfo() {
         List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
         for(WaterStationInfoVO vo: mWaterStationInfoList){
-            if(vo.isHasWaterFlow()){
+            String stnType = vo.getStnType();
+            if(stnType.contains("3")){
                 waterStationInfoVOS.add(vo);
             }
         }
@@ -90,7 +92,8 @@ public class MapPresenter implements MapContract.Presenter {
     public void loadWaterQualityInfo() {
         List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
         for(WaterStationInfoVO vo: mWaterStationInfoList){
-            if(vo.isHasWaterQuality()){
+            String stnType = vo.getStnType();
+            if(stnType.contains("2")){
                 waterStationInfoVOS.add(vo);
             }
         }
@@ -101,7 +104,8 @@ public class MapPresenter implements MapContract.Presenter {
     public void loadFloatingMaterialInfo() {
         List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
         for(WaterStationInfoVO vo: mWaterStationInfoList){
-            if(vo.isHasFloatingMaterial()){
+            String stnType = vo.getStnType();
+            if(stnType.contains("4")){
                 waterStationInfoVOS.add(vo);
             }
         }
@@ -112,7 +116,8 @@ public class MapPresenter implements MapContract.Presenter {
     public void loadUnmannedShipInfo() {
         List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
         for(WaterStationInfoVO vo: mWaterStationInfoList){
-            if(vo.isHasUnmannedShip()){
+            String stnType = vo.getStnType();
+            if(stnType.contains("8")){
                 waterStationInfoVOS.add(vo);
             }
         }
@@ -123,7 +128,8 @@ public class MapPresenter implements MapContract.Presenter {
     public void loadHisRecordInfo() {
         List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
         for(WaterStationInfoVO vo: mWaterStationInfoList){
-            if(vo.isHasHistoryRecord()){
+            String stnType = vo.getStnType();
+            if(stnType.contains("7")){
                 waterStationInfoVOS.add(vo);
             }
         }
@@ -134,7 +140,8 @@ public class MapPresenter implements MapContract.Presenter {
     public void loadWaveInfo() {
         List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
         for(WaterStationInfoVO vo: mWaterStationInfoList){
-            if(vo.isHasWave()){
+            String stnType = vo.getStnType();
+            if(stnType.contains("6")){
                 waterStationInfoVOS.add(vo);
             }
         }
@@ -145,7 +152,8 @@ public class MapPresenter implements MapContract.Presenter {
     public void loadWeatherInfo() {
         List<WaterStationInfoVO> waterStationInfoVOS = new ArrayList<>();
         for(WaterStationInfoVO vo: mWaterStationInfoList){
-            if(vo.isHasWeather()){
+            String stnType = vo.getStnType();
+            if(stnType.contains("5")){
                 waterStationInfoVOS.add(vo);
             }
         }
@@ -162,7 +170,7 @@ public class MapPresenter implements MapContract.Presenter {
         double latitude = CommonConstant.LATITUDE_OF_NJ;
         double longitude = CommonConstant.LONGITUDE_OF_NJ;
         for(WaterStationInfoVO vo: mWaterStationInfoList){
-            if(input.equals(vo.getName())){
+            if(input.equals(vo.getStnName())){
                 target.add(vo);
                 latitude = Double.parseDouble(vo.getY());
                 longitude = Double.parseDouble(vo.getX());

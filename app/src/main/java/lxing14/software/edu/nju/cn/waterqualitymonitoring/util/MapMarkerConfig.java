@@ -37,23 +37,24 @@ public abstract class MapMarkerConfig {
             StringBuilder sb = new StringBuilder();
             sb.append(String.valueOf(vo.getId()));
             sb.append(' ');
-            sb.append(vo.getName());
+            sb.append(vo.getStnName());
             sb.append(' ');
-            sb.append(vo.isHasWaterLevel()? 1:0); // water level
+            String stnType = vo.getStnType();
+            sb.append(stnType.contains("1")? 1:0); // water level
             sb.append(' ');
-            sb.append(vo.isHasWaterQuality()? 1:0); // water quality
+            sb.append(stnType.contains("2")? 1:0); // water quality
             sb.append(' ');
-            sb.append(vo.isHasWaterFlow()? 1:0); // water flow
+            sb.append(stnType.contains("3")? 1:0); // water flow
             sb.append(' ');
-            sb.append(vo.isHasFloatingMaterial()? 1:0); // floating
+            sb.append(stnType.contains("4")? 1:0); // floating
             sb.append(' ');
-            sb.append(vo.isHasUnmannedShip()? 1:0); // boat
+            sb.append(stnType.contains("8")? 1:0); // boat
             sb.append(' ');
-            sb.append(vo.isHasHistoryRecord()? 1:0); // record
+            sb.append(stnType.contains("7")? 1:0); // record
             sb.append(' ');
-            sb.append(vo.isHasWave()? 1:0); // wave
+            sb.append(stnType.contains("6")? 1:0); // wave
             sb.append(' ');
-            sb.append(vo.isHasWeather()? 1:0); // weather
+            sb.append(stnType.contains("5")? 1:0); // weather
             sb.append(' ');
             sb.append(y);
             sb.append(' ');
@@ -61,7 +62,7 @@ public abstract class MapMarkerConfig {
 
             markerOptions.position(latLng).snippet(sb.toString());
             BitmapDescriptor targetIcon;
-            if(vo.isHasHistoryRecord()){
+            if(stnType.contains("7")){
                 targetIcon = BitmapDescriptorFactory.fromBitmap(BitmapFactory
                         .decodeResource(resources, R.drawable.ic_location_blue));
             }else{

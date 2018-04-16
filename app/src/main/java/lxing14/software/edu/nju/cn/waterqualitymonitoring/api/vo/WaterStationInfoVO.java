@@ -9,81 +9,24 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo;
 
 public class WaterStationInfoVO {
 
-
-    /**
-     * hasWaterFlow : true
-     * hasWeather : false
-     * hasFloatingMaterial : true
-     * hasWaterQuality : true
-     * hasWave : false
-     * name : 前垾水文站
-     * x : 118.87056
-     * hasWaterLevel : true
-     * y : 31.864978
-     * hasHistoryRecord : false
-     * id : 1
-     * hasUnmannedShip : false
-     */
-
-    private boolean hasWaterFlow;
-    private boolean hasWeather;
-    private boolean hasFloatingMaterial;
-    private boolean hasWaterQuality;
-    private boolean hasWave;
-    private boolean hasWaterLevel;
-    private boolean hasUnmannedShip;
-    private boolean hasHistoryRecord;
-    private String name;
+    private int id;
     private String x;
     private String y;
-    private int id;
-
-    public boolean isHasWaterFlow() {
-        return hasWaterFlow;
+    private String stnName;
+    private String stnType; // 1水位 2水质 3流量 4漂浮物 5气象 6波浪 7历史数据 8无人船
+    private String picUrl;
+    private String province;
+    private String city;
+    private String stnAddr;
+    private String stnCode;
+    private String institute;
+    private String stnNote;
+    public int getId() {
+        return id;
     }
 
-    public void setHasWaterFlow(boolean hasWaterFlow) {
-        this.hasWaterFlow = hasWaterFlow;
-    }
-
-    public boolean isHasWeather() {
-        return hasWeather;
-    }
-
-    public void setHasWeather(boolean hasWeather) {
-        this.hasWeather = hasWeather;
-    }
-
-    public boolean isHasFloatingMaterial() {
-        return hasFloatingMaterial;
-    }
-
-    public void setHasFloatingMaterial(boolean hasFloatingMaterial) {
-        this.hasFloatingMaterial = hasFloatingMaterial;
-    }
-
-    public boolean isHasWaterQuality() {
-        return hasWaterQuality;
-    }
-
-    public void setHasWaterQuality(boolean hasWaterQuality) {
-        this.hasWaterQuality = hasWaterQuality;
-    }
-
-    public boolean isHasWave() {
-        return hasWave;
-    }
-
-    public void setHasWave(boolean hasWave) {
-        this.hasWave = hasWave;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getX() {
@@ -94,14 +37,6 @@ public class WaterStationInfoVO {
         this.x = x;
     }
 
-    public boolean isHasWaterLevel() {
-        return hasWaterLevel;
-    }
-
-    public void setHasWaterLevel(boolean hasWaterLevel) {
-        this.hasWaterLevel = hasWaterLevel;
-    }
-
     public String getY() {
         return y;
     }
@@ -110,27 +45,75 @@ public class WaterStationInfoVO {
         this.y = y;
     }
 
-    public boolean isHasHistoryRecord() {
-        return hasHistoryRecord;
+    public String getStnName() {
+        return stnName;
     }
 
-    public void setHasHistoryRecord(boolean hasHistoryRecord) {
-        this.hasHistoryRecord = hasHistoryRecord;
+    public void setStnName(String stnName) {
+        this.stnName = stnName;
     }
 
-    public int getId() {
-        return id;
+    public String getStnType() {
+        return stnType;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setStnType(String stnType) {
+        this.stnType = stnType;
     }
 
-    public boolean isHasUnmannedShip() {
-        return hasUnmannedShip;
+    public String getPicUrl() {
+        return picUrl;
     }
 
-    public void setHasUnmannedShip(boolean hasUnmannedShip) {
-        this.hasUnmannedShip = hasUnmannedShip;
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStnAddr() {
+        return stnAddr;
+    }
+
+    public void setStnAddr(String stnAddr) {
+        this.stnAddr = stnAddr;
+    }
+
+    public String getStnCode() {
+        return stnCode;
+    }
+
+    public void setStnCode(String stnCode) {
+        this.stnCode = stnCode;
+    }
+
+    public String getInstitute() {
+        return institute;
+    }
+
+    public void setInstitute(String institute) {
+        this.institute = institute;
+    }
+
+    public String getStnNote() {
+        return stnNote;
+    }
+
+    public void setStnNote(String stnNote) {
+        this.stnNote = stnNote;
     }
 }
