@@ -78,7 +78,7 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
                         WaterLevelVO waterLevelVO;
                         int len = waterLevelVOS.size();
                         for(int i=0;i<len;i++){
-                            waterLevelVO = waterLevelVOS.get(i);
+                            waterLevelVO = waterLevelVOS.get(len-1-i);
                             waterLevelDateList.add(waterLevelVO.getC_time());
                             waterLevelDataList.add(waterLevelVO.getWaterLevel());
                         }

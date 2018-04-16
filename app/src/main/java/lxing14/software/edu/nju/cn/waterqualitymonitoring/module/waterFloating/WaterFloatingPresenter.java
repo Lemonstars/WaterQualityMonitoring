@@ -49,7 +49,10 @@ public class WaterFloatingPresenter implements WaterFloatingContract.Presenter {
                     public void onNext(List<WaterFloatingByDateVO> waterFloatingByDateVOS) {
                         dateList.clear();
                         dataList.clear();
-                        for(WaterFloatingByDateVO vo: waterFloatingByDateVOS){
+                        int len = waterFloatingByDateVOS.size();
+                        WaterFloatingByDateVO vo;
+                        for(int i=0;i<len;i++){
+                            vo = waterFloatingByDateVOS.get(len-1-i);
                             dateList.add(vo.getDays());
                             dataList.add((vo.getNums()) );
                         }

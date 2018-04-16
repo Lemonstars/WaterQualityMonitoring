@@ -72,7 +72,7 @@ public class WaterQualityPresenter implements WaterQualityContract.Presenter {
                         String numStr;
                         float num;
                         for(int i=0;i<len;i++){
-                            waterQualityTypeNumVO = waterQualityTypeNumVOS.get(i);
+                            waterQualityTypeNumVO = waterQualityTypeNumVOS.get(len-1-i);
 
                             numStr = waterQualityTypeNumVO.getReturnDateValue();
                             num = Float.parseFloat(numStr);

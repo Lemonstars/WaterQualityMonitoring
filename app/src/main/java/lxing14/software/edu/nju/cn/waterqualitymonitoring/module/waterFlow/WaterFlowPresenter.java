@@ -70,7 +70,7 @@ public class WaterFlowPresenter implements WaterFlowContract.Presenter {
                         int len = waterFlowVOList.size();
                         WaterFlowVO waterFlowVO;
                         for(int i=0;i<len;i++){
-                            waterFlowVO = waterFlowVOList.get(i);
+                            waterFlowVO = waterFlowVOList.get(len-1-i);
                             dateList.add(waterFlowVO.getCollectionTime());
                             dataList.add((float)(waterFlowVO.getAvgFlow()));
                         }
