@@ -75,20 +75,6 @@
 
         </LinearLayout>
 
-        <FrameLayout
-            android:id="@+id/cameraVideo_layout"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/bg_white_radius_corner">
-            <WebView
-                android:id="@+id/webView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </FrameLayout>
-
         <LinearLayout
             android:id="@+id/cameraData_layout"
             android:layout_width="match_parent"
@@ -213,6 +199,20 @@
             </RelativeLayout>
 
         </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/cameraVideo_layout"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bg_white_radius_corner">
+            <WebView
+                android:id="@+id/webView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

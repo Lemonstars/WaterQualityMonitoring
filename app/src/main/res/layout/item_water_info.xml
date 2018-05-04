@@ -12,7 +12,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
 
         <TextView
@@ -23,7 +23,7 @@
             android:layout_centerVertical="true"
             android:padding="5dp"
             android:background="@drawable/bg_blue_radius_corner"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textColor="@color/white"
             android:text="@string/MORE"/>
 
