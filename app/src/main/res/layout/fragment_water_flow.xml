@@ -123,7 +123,7 @@
                     android:src="@drawable/ic_default_pic"/>
 
                 <TextView
-                    android:id="@+id/flowSpeed_tv"
+                    android:id="@+id/averageFlowSpeed_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -131,21 +131,10 @@
                     android:layout_marginTop="10dp"
                     android:textSize="12sp"
                     android:textColor="@color/black"
-                    android:text="流量："/>
-
-                <TextView
-                    android:id="@+id/averageFlowSpeed_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@id/flowSpeed_tv"
-                    android:layout_marginTop="5dp"
-                    android:textSize="12sp"
-                    android:textColor="@color/black"
                     android:text="平均流速："/>
 
                 <TextView
-                    android:id="@+id/photoByDate_tv"
+                    android:id="@+id/flowSpeed_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -153,24 +142,36 @@
                     android:layout_marginTop="5dp"
                     android:textSize="12sp"
                     android:textColor="@color/black"
-                    android:text="拍摄于："/>
+                    android:text="流量："/>
 
                 <TextView
-                    android:id="@+id/flowNum_tv"
+                    android:id="@+id/photoByDate_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/flowSpeed_tv"
-                    android:layout_below="@id/flow_iv"
-                    android:layout_marginTop="10dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/flowSpeed_tv"
+                    android:layout_marginTop="5dp"
                     android:textSize="12sp"
-                    android:textColor="@color/lightRed" />
+                    android:textColor="@color/black"
+                    android:text="拍摄于："/>
+
 
                 <TextView
                     android:id="@+id/averageFlowSpeedNum_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/averageFlowSpeed_tv"
-                    android:layout_below="@id/flowSpeed_tv"
+                    android:layout_below="@id/flow_iv"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/lightRed" />
+
+                <TextView
+                    android:id="@+id/flowNum_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/flowSpeed_tv"
+                    android:layout_below="@id/averageFlowSpeedNum_tv"
                     android:layout_marginTop="5dp"
                     android:textSize="12sp"
                     android:textColor="@color/lightRed" />
@@ -180,7 +181,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/photoByDate_tv"
-                    android:layout_below="@id/averageFlowSpeed_tv"
+                    android:layout_below="@id/flowNum_tv"
                     android:layout_marginTop="5dp"
                     android:textSize="12sp"
                     android:textColor="@color/lightRed" />
