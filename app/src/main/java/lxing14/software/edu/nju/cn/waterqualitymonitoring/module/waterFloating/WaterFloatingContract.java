@@ -1,5 +1,8 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating;
 
+import com.amap.api.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.BasePresenter;
@@ -15,6 +18,12 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.BaseView;
 public interface WaterFloatingContract {
 
     interface View extends BaseView<Presenter> {
+        /**
+         * 显示站点位置
+         * @param markerOptionsList
+         */
+        void showStationLocation(ArrayList<MarkerOptions> markerOptionsList);
+
 
         /**
          * 显示漂浮物图表
@@ -58,6 +67,11 @@ public interface WaterFloatingContract {
          */
         void processTab(int index);
 
+
+        /**
+         * 加载所有站点信息
+         */
+        void loadAllStationInfo();
     }
 
 }

@@ -1,6 +1,7 @@
 package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
@@ -21,6 +27,8 @@ import java.util.List;
 
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.R;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map.MapInfoWindowAdapter;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.ChartUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
@@ -33,6 +41,8 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
     private WaterFloatingContract.Presenter mPresenter;
 
     private LineChart mLineChart;
+    private MapView mMapView;
+    private AMap mAMap;
     private TextView[] mTab_tv;
     private ImageView mBig_iv;
     private ImageView mImage1;
@@ -58,6 +68,9 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
 
         mPresenter.loadWaterFloatingChartByDate(TimeUtil.getDateBeforeNum(7), TimeUtil.getTodayDate());
         mPresenter.loadWaterFloatingPicURl();
+        mPresenter.loadAllStationInfo();
+
+        mMapView.onCreate(savedInstanceState);
 
         return root;
     }
@@ -65,11 +78,33 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
     @Override
     public void onResume() {
         super.onResume();
+        mMapView.onResume();
+
+        showCurrentLocation();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroyView() {
+        mMapView.onDestroy();
+        super.onDestroyView();
     }
 
     @Override
     public void setPresenter(WaterFloatingContract.Presenter presenter) {
         this.mPresenter = presenter;
+    }
+
+    @Override
+    public void showStationLocation(ArrayList<MarkerOptions> markerOptionsList) {
+        AMap aMap = mMapView.getMap();
+        aMap.clear();
+        aMap.addMarkers(markerOptionsList, false);
     }
 
     @Override
@@ -136,6 +171,7 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
 
     //configure the name and the unit
     private void configChartMarkerView(){
+        mAMap.setInfoWindowAdapter(new MapInfoWindowAdapter(getActivity(), false));
         mChartMarkerView = new ChartMarkerView(getContext(),  "漂浮物:", "个");
     }
 
@@ -170,6 +206,8 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
 
     //find the view by the id
     private void findView(android.view.View root){
+        mMapView = root.findViewById(R.id.map);
+        mAMap = mMapView.getMap();
         TextView oneWeek_tv = root.findViewById(R.id.oneWeek_tv);
         TextView oneMonth_tv = root.findViewById(R.id.oneMonth_tv);
         TextView threeMonth_tv = root.findViewById(R.id.threeMonth_tv);
@@ -185,5 +223,15 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         Description description = mLineChart.getDescription();
         description.setText("个");
     }
+
+    //show the current location
+    private void showCurrentLocation(){
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SharePreferencesConstant.APP_NAME, Context.MODE_PRIVATE);
+        float latitude = sharedPreferences.getFloat(SharePreferencesConstant.LATITUDE, CommonConstant.LATITUDE_OF_NJ);
+        float longitude = sharedPreferences.getFloat(SharePreferencesConstant.LONGITUDE, CommonConstant.LONGITUDE_OF_NJ);
+
+        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 10f));
+    }
+
 
 }

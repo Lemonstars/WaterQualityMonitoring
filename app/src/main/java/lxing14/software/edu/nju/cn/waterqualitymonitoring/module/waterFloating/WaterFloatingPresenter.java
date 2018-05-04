@@ -3,6 +3,8 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.module.waterFloating;
 import android.content.Context;
 import android.content.Intent;
 
+import com.amap.api.maps.model.MarkerOptions;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +12,10 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscri
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFloatingByDateVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterFloatingPicVO;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.vo.WaterStationInfoVO;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.CommonConstant;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.chart.ChartActivity;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.MapMarkerConfig;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -104,5 +108,23 @@ public class WaterFloatingPresenter implements WaterFloatingContract.Presenter {
         Context context = mView.getContextView();
         Intent intent = ChartActivity.generateIntent(context, "漂浮物", "个",startTime, endTime, dateList, dataStrList);
         context.startActivity(intent);
+    }
+
+    @Override
+    public void loadAllStationInfo() {
+        RetrofitHelper.getWaterStationInterface().getAllStationInfo()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<List<WaterStationInfoVO>>(mView.getContextView()) {
+                    @Override
+                    public void onNext(List<WaterStationInfoVO> waterStationInfoVOS) {
+                        new MapMarkerConfig(){
+                            @Override
+                            public void showStationLocation(ArrayList<MarkerOptions> list) {
+                                mView.showStationLocation(list);
+                            }
+                        }.onRequestStationInfo(mView.getContextView(), waterStationInfoVOS);
+                    }
+                });
     }
 }
