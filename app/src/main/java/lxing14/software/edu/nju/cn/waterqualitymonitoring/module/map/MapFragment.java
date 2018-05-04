@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -170,6 +172,26 @@ public class MapFragment extends Fragment implements MapContract.View, View.OnCl
         mStandard_tv.setOnClickListener(this);
         mSatellite_tv.setOnClickListener(this);
         mSearch_iv.setOnClickListener(this);
+
+        mSearch_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String str = editable.toString();
+                if(str.length() == 0){
+                    mPresenter.loadAllWaterTypeInfo();
+                }
+            }
+        });
     }
 
     //find the view
