@@ -45,6 +45,7 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
     private AMap mAMap;
     private TextView[] mTab_tv;
     private ImageView mBig_iv;
+    private ImageView mImage0;
     private ImageView mImage1;
     private ImageView mImage2;
     private ImageView mImage3;
@@ -131,10 +132,12 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
     }
 
     @Override
-    public void showFloatingPic(String url1, String url2, String url3) {
-        PicassoUtil.loadUrl(getContext(), url1, mImage1);
-        PicassoUtil.loadUrl(getContext(), url2, mImage2);
-        PicassoUtil.loadUrl(getContext(), url3, mImage3);
+    public void showFloatingPic(String url0, String url1, String url2, String url3) {
+        Context context = getContext();
+        PicassoUtil.loadUrl(context, url0, mImage0);
+        PicassoUtil.loadUrl(context, url1, mImage1);
+        PicassoUtil.loadUrl(context, url2, mImage2);
+        PicassoUtil.loadUrl(context, url3, mImage3);
     }
 
     @Override
@@ -149,6 +152,8 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
             case R.id.threeMonth_tv:
                 clickTab(CommonConstant.THREE_MONTH);
                 break;
+            case R.id.image0:
+                showSelectedPic(mImage0);
             case R.id.image1:
                 showSelectedPic(mImage1);
                 break;
@@ -198,6 +203,7 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         for(TextView textView: mTab_tv){
             textView.setOnClickListener(this);
         }
+        mImage0.setOnClickListener(this);
         mImage1.setOnClickListener(this);
         mImage2.setOnClickListener(this);
         mImage3.setOnClickListener(this);
@@ -214,6 +220,7 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         mTab_tv = new TextView[]{oneWeek_tv, oneMonth_tv, threeMonth_tv};
         mLineChart = root.findViewById(R.id.lineChart);
         mBig_iv = root.findViewById(R.id.big_iv);
+        mImage0 = root.findViewById(R.id.image0);
         mImage1 = root.findViewById(R.id.image1);
         mImage2 = root.findViewById(R.id.image2);
         mImage3 = root.findViewById(R.id.image3);

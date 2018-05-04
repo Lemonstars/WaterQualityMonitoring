@@ -73,10 +73,11 @@ public class WaterFloatingPresenter implements WaterFloatingContract.Presenter {
                 .subscribe(new BaseSubscriber<List<WaterFloatingPicVO>>(mView.getContextView()) {
                     @Override
                     public void onNext(List<WaterFloatingPicVO> waterFloatingPicVOS) {
-                        String url1 = waterFloatingPicVOS.get(0).getFilePathResult();
-                        String url2 = waterFloatingPicVOS.get(1).getFilePathResult();
-                        String url3 = waterFloatingPicVOS.get(2).getFilePathResult();
-                        mView.showFloatingPic(url1, url2, url3);
+                        String url0 = waterFloatingPicVOS.get(0).getFilePathResult();
+                        String url1 = waterFloatingPicVOS.get(1).getFilePathResult();
+                        String url2 = waterFloatingPicVOS.get(2).getFilePathResult();
+                        String url3 = waterFloatingPicVOS.get(3).getFilePathResult();
+                        mView.showFloatingPic(url0, url1, url2, url3);
                     }
                 });
     }

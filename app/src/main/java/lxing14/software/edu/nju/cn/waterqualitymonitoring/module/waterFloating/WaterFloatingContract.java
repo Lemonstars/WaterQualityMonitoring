@@ -34,11 +34,12 @@ public interface WaterFloatingContract {
 
         /**
          * 显示漂浮物图片
+         * @param url0
          * @param url1
          * @param url2
          * @param url3
          */
-        void showFloatingPic(String url1, String url2, String url3);
+        void showFloatingPic(String url0, String url1, String url2, String url3);
 
     }
 
