@@ -78,7 +78,7 @@
         <LinearLayout
             android:id="@+id/cameraData_layout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -104,41 +104,30 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp">
-
-                <ImageView
-                    android:id="@+id/flow_iv"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="20dp"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_default_pic"/>
 
                 <TextView
                     android:id="@+id/cameraHint_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/flow_iv"
-                    android:layout_toRightOf="@id/flow_iv"
                     android:textSize="14sp"
                     android:textColor="@color/black" />
 
-                <View
-                    android:id="@+id/split_view"
+                <ImageView
+                    android:id="@+id/flow_iv"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_toRightOf="@id/flow_iv"
+                    android:layout_height="140dp"
                     android:layout_below="@id/cameraHint_tv"
-                    android:background="@color/lightGray"/>
+                    android:src="@drawable/ic_default_pic"/>
 
                 <TextView
                     android:id="@+id/flowSpeed_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/flow_iv"
-                    android:layout_below="@id/split_view"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/flow_iv"
                     android:layout_marginTop="10dp"
                     android:textSize="12sp"
                     android:textColor="@color/black"
@@ -148,7 +137,7 @@
                     android:id="@+id/averageFlowSpeed_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/flow_iv"
+                    android:layout_alignParentLeft="true"
                     android:layout_below="@id/flowSpeed_tv"
                     android:layout_marginTop="5dp"
                     android:textSize="12sp"
@@ -159,7 +148,7 @@
                     android:id="@+id/photoByDate_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/flow_iv"
+                    android:layout_alignParentLeft="true"
                     android:layout_below="@id/averageFlowSpeed_tv"
                     android:layout_marginTop="5dp"
                     android:textSize="12sp"
@@ -171,7 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/flowSpeed_tv"
-                    android:layout_below="@id/split_view"
+                    android:layout_below="@id/flow_iv"
                     android:layout_marginTop="10dp"
                     android:textSize="12sp"
                     android:textColor="@color/lightRed" />
@@ -181,7 +170,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/averageFlowSpeed_tv"
-                    android:layout_below="@id/flowNum_tv"
+                    android:layout_below="@id/flowSpeed_tv"
                     android:layout_marginTop="5dp"
                     android:textSize="12sp"
                     android:textColor="@color/lightRed" />
@@ -191,7 +180,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/photoByDate_tv"
-                    android:layout_below="@id/averageFlowSpeedNum_tv"
+                    android:layout_below="@id/averageFlowSpeed_tv"
                     android:layout_marginTop="5dp"
                     android:textSize="12sp"
                     android:textColor="@color/lightRed" />
