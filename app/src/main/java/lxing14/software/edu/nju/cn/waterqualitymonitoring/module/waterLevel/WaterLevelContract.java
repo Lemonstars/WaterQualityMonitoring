@@ -34,13 +34,12 @@ public interface WaterLevelContract {
 
         /**
          * 显示当前水位信息
-         * @param stationName
          * @param currentWaterLevel
          * @param historicalWaterLevel
          * @param pic
          * @param date
          */
-        void showCurrentWaterLevelDetailInfo(String stationName, String currentWaterLevel, String historicalWaterLevel,
+        void showCurrentWaterLevelDetailInfo(String currentWaterLevel, String historicalWaterLevel,
                                              String[] pic, String[] date);
 
     }

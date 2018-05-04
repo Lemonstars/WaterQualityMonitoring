@@ -50,7 +50,6 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     private ImageView mImage1;
     private ImageView mImage2;
     private ImageView mImage3;
-    private TextView mStation_tv;
     private TextView mCurrentWaterLevelNum_tv;
     private TextView mHistoricalWaterLevelNum_tv;
     private TextView mPhotoByDate_tv;
@@ -144,9 +143,8 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
     }
 
     @Override
-    public void showCurrentWaterLevelDetailInfo(String stationName, String currentWaterLevel, String historicalWaterLevel,
+    public void showCurrentWaterLevelDetailInfo(String currentWaterLevel, String historicalWaterLevel,
                                                 String[] picUrl, String[] date) {
-        mStation_tv.setText(stationName);
         mCurrentWaterLevelNum_tv.setText(currentWaterLevel);
         mHistoricalWaterLevelNum_tv.setText(historicalWaterLevel);
         mPhotoByDate_tv.setText(date[0]);
@@ -236,7 +234,6 @@ public class WaterLevelFragment extends Fragment implements WaterLevelContract.V
         mMapView = root.findViewById(R.id.map);
         mAMap = mMapView.getMap();
 
-        mStation_tv = root.findViewById(R.id.station_tv);
         mCurrentWaterLevelImg_iv = root.findViewById(R.id.currentWaterLevelImg_iv);
         mImage1 = root.findViewById(R.id.image1);
         mImage2 = root.findViewById(R.id.image2);

@@ -95,7 +95,6 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
                 .subscribe(new BaseSubscriber<WaterLevelHistoricalVO>(mView.getContextView()) {
                     @Override
                     public void onNext(WaterLevelHistoricalVO waterLevelHistoricalVO) {
-                        String stnName = waterLevelHistoricalVO.getStnName();
                         double lastLevel = waterLevelHistoricalVO.getLastWaterLevel();
                         String lastLevelStr = lastLevel + "m";
                         double minLevel = waterLevelHistoricalVO.getMinLevel();
@@ -110,7 +109,7 @@ public class WaterLevelPresenter implements WaterLevelContract.Presenter{
                             picUrl[i] = picListBean.getUrl().replace(" ", "%20");
                         }
 
-                        mView.showCurrentWaterLevelDetailInfo(stnName, lastLevelStr, rangStr, picUrl, picDate);
+                        mView.showCurrentWaterLevelDetailInfo(lastLevelStr, rangStr, picUrl, picDate);
                     }
                 });
 
