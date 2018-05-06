@@ -14,11 +14,11 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MarkerOptions;
-import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
@@ -35,12 +35,11 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.TimeUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ChartMarkerView;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
 
-
 public class WaterFloatingFragment extends Fragment implements WaterFloatingContract.View, android.view.View.OnClickListener{
 
     private WaterFloatingContract.Presenter mPresenter;
 
-    private LineChart mLineChart;
+    private BarChart mBarChart;
     private MapView mMapView;
     private AMap mAMap;
     private TextView[] mTab_tv;
@@ -62,7 +61,7 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         android.view.View root =  inflater.inflate(R.layout.fragment_water_floationg, container, false);
 
         findView(root);
-        ChartUtil.configLineChart(mLineChart);
+        ChartUtil.configBarChart(mBarChart);
         configUnit();
         configListener();
         configChartMarkerView();
@@ -112,23 +111,23 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
     public void showFloatingChart(List<String> dateList, List<Integer> dataList) {
         int len = dateList.size();
         IAxisValueFormatter iAxisValueFormatter = new IndexAxisValueFormatter(dateList);
-        mLineChart.getXAxis().setValueFormatter(iAxisValueFormatter);
+        mBarChart.getXAxis().setValueFormatter(iAxisValueFormatter);
         mChartMarkerView.setIAxisValueFormatter(iAxisValueFormatter);
-        mLineChart.setMarker(mChartMarkerView);
+        mBarChart.setMarker(mChartMarkerView);
 
 
-        List<Entry> lineEntry = new ArrayList<>();
+        List<BarEntry> barEntry = new ArrayList<>();
         for(int i=0;i<len;i++){
-            lineEntry.add(new Entry(i, dataList.get(i)));
+            barEntry.add(new BarEntry(i, dataList.get(i)));
         }
-        LineDataSet lineDataSet = new LineDataSet(lineEntry, "floating");
-        lineDataSet.setLineWidth(2f);
-        LineData lineData = new LineData(lineDataSet);
-        mLineChart.setData(lineData);
-        mLineChart.notifyDataSetChanged();
-        mLineChart.setVisibleXRangeMaximum(15f);
-        mLineChart.moveViewToX(0);
-        mLineChart.invalidate();
+        BarDataSet barDataSet = new BarDataSet(barEntry, "floating");
+//        barDataSet.setLineWidth(2f);
+        BarData barData = new BarData(barDataSet);
+        mBarChart.setData(barData);
+        mBarChart.notifyDataSetChanged();
+        mBarChart.setVisibleXRangeMaximum(15f);
+        mBarChart.moveViewToX(0);
+        mBarChart.invalidate();
     }
 
     @Override
@@ -218,7 +217,7 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
         TextView oneMonth_tv = root.findViewById(R.id.oneMonth_tv);
         TextView threeMonth_tv = root.findViewById(R.id.threeMonth_tv);
         mTab_tv = new TextView[]{oneWeek_tv, oneMonth_tv, threeMonth_tv};
-        mLineChart = root.findViewById(R.id.lineChart);
+        mBarChart = root.findViewById(R.id.barChart);
         mBig_iv = root.findViewById(R.id.big_iv);
         mImage0 = root.findViewById(R.id.image0);
         mImage1 = root.findViewById(R.id.image1);
@@ -227,7 +226,7 @@ public class WaterFloatingFragment extends Fragment implements WaterFloatingCont
     }
 
     private void configUnit(){
-        Description description = mLineChart.getDescription();
+        Description description = mBarChart.getDescription();
         description.setText("个");
     }
 

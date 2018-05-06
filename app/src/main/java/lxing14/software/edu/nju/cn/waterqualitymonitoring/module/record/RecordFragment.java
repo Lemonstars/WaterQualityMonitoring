@@ -34,6 +34,7 @@ import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferen
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.WebSite;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.module.map.MapInfoWindowAdapter;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.PicassoUtil;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.SizeUtil;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.view.ImageDialog;
 
 public class RecordFragment extends Fragment implements RecordContract.View{
@@ -148,8 +149,8 @@ public class RecordFragment extends Fragment implements RecordContract.View{
         for(String str: picUrlList){
             ImageView imageView = new ImageView(context);
             imageView.setPadding(10, 10, 10,10);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(500, LinearLayout.LayoutParams.MATCH_PARENT);
-            params.weight = 1;
+            int widthPix = SizeUtil.dp2px(context, 320);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(widthPix, LinearLayout.LayoutParams.MATCH_PARENT);
             imageView.setLayoutParams(params);
             mPicture_layout.addView(imageView);
             PicassoUtil.loadUrl(context, str, imageView);

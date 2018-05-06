@@ -2,6 +2,7 @@ package lxing14.software.edu.nju.cn.waterqualitymonitoring.util;
 
 import android.graphics.Paint;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -56,6 +57,45 @@ public class ChartUtil {
         lineChart.setScaleYEnabled(false);
         lineChart.setScaleXEnabled(true);
         lineChart.setAutoScaleMinMaxEnabled(true);
+    }
+
+    public static void configBarChart(BarChart barChart){
+        barChart.setNoDataText("正在加载数据");
+        barChart.setNoDataTextColor(R.color.black);
+
+        Description description = barChart.getDescription();
+        description.setPosition(70,20);
+        description.setTextAlign(Paint.Align.RIGHT);
+
+        Legend legend = barChart.getLegend();
+        legend.setEnabled(false);
+
+        XAxis xaxis = barChart.getXAxis();
+        xaxis.setDrawAxisLine(true);
+        xaxis.setDrawGridLines(false);
+        xaxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xaxis.setAvoidFirstLastClipping(true);
+        xaxis.setLabelCount(2);
+        xaxis.setGranularityEnabled(true);
+        xaxis.setGranularity(20f);
+
+        YAxis yAxisLeft = barChart.getAxisLeft();
+        yAxisLeft.setDrawGridLines(true);
+        yAxisLeft.setDrawAxisLine(true);
+        yAxisLeft.setDrawLabels(true);
+        yAxisLeft.enableGridDashedLine(10f, 10f, 0f);
+        yAxisLeft.setLabelCount(5, false);
+        yAxisLeft.setSpaceTop(15f);
+
+        YAxis yAxisRight = barChart.getAxisRight();
+        yAxisRight.setEnabled(false);
+
+        barChart.setTouchEnabled(true);
+        barChart.setDragEnabled(true);
+        barChart.setScaleYEnabled(false);
+        barChart.setScaleXEnabled(true);
+        barChart.setAutoScaleMinMaxEnabled(true);
+        barChart.setMinimumWidth(5);
     }
 
 }
