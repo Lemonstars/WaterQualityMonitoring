@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.BaseSubscriber;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.api.helper.RetrofitHelper;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.constant.SharePreferencesConstant;
+import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.MD5Util;
 import lxing14.software.edu.nju.cn.waterqualitymonitoring.util.StringUtil;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -37,7 +38,8 @@ public class LoginPresenter implements LoginContract.Presenter {
             return;
         }
 
-        RetrofitHelper.getUserInterface().login(userName, password)
+        String encodePassword = MD5Util.encode(password);
+        RetrofitHelper.getUserInterface().login(userName, encodePassword)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<String>(mView.getContextView()) {
